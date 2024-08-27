@@ -1,0 +1,12 @@
+{
+	"//Events": "Added locations that signify plot",
+
+	"//Groups": "Convience wrapper of multiple locations within one map location",
+
+	"//Items": "User facing names of progression Items",
+
+	"//Settings": "Settings as not-Ids",
+
+	"//locations": "//https://github.com/ArchipelagoMW/Archipelago/blob/78bbdc6a7c177df69eebc4839211a89c628848cf/worlds/pokemon_crystal/locations.py",
+
+}

@@ -1,0 +1,78 @@
+/* Johto Badges. Row 1*/
+#Zephyr_Badge {
+	background-image: url(./images/items/Zephyr_Badge.png);
+}
+#Hive_Badge {
+	background-image: url(./images/items/Hive_Badge.png);
+}
+#Plain_Badge {
+	background-image: url(./images/items/Plain_Badge.png);
+}
+#Fog_Badge {
+	background-image: url(./images/items/Fog_Badge.png);
+}
+#Storm_Badge {
+	background-image: url(./images/items/Storm_Badge.png);
+}
+#Mineral_Badge {
+	background-image: url(./images/items/Mineral_Badge.png);
+}
+#Glacier_Badge {
+	background-image: url(./images/items/Glacier_Badge.png);
+}
+#Rising_Badge {
+	background-image: url(./images/items/Rising_Badge.png);
+}
+
+/* HMs, Row 2 */
+#HM01_Cut {
+	background-image: url(./images/items/hm01.png);
+}
+#HM02_Fly {
+	background-image: url(./images/items/hm02.png);
+}
+#HM03_Surf {
+	background-image: url(./images/items/hm03.png);
+}
+#HM04_Strength {
+	background-image: url(./images/items/hm04.png);
+}
+#HM05_Flash {
+	background-image: url(./images/items/hm05.png);
+}
+#HM06_Whirlpool {
+	background-image: url(./images/items/hm06.png);
+}
+#HM07_Waterfall {
+	background-image: url(./images/items/hm07.png);
+}
+
+/* Kanto Badges, Row 3 */
+#Boulder_Badge {
+	background-image: url(./images/items/Boulder_Badge.png);
+}
+#Cascade_Badge {
+	background-image: url(./images/items/Cascade_Badge.png);
+}
+#Thunder_Badge {
+	background-image: url(./images/items/Thunder_Badge.png);
+}
+#Rainbow_Badge {
+	background-image: url(./images/items/Rainbow_Badge.png);
+}
+#Soul_Badge {
+	background-image: url(./images/items/Soul_Badge.png);
+}
+#Marsh_Badge {
+	background-image: url(./images/items/Marsh_Badge.png);
+}
+#Volcano_Badge {
+	background-image: url(./images/items/Volcano_Badge.png);
+}
+#Earth_Badge {
+	background-image: url(./images/items/Earth_Badge.png);
+}
+
+/* Items, Row 3 */
+
+/* Settings */
