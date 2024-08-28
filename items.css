@@ -1,78 +1,134 @@
 /* Johto Badges. Row 1*/
-#Zephyr_Badge {
+#ZEPHYR_BADGE {
 	background-image: url(./images/items/Zephyr_Badge.png);
 }
-#Hive_Badge {
+#HIVE_BADGE {
 	background-image: url(./images/items/Hive_Badge.png);
 }
-#Plain_Badge {
+#PLAIN_BADGE {
 	background-image: url(./images/items/Plain_Badge.png);
 }
-#Fog_Badge {
+#FOG_BADGE {
 	background-image: url(./images/items/Fog_Badge.png);
 }
-#Storm_Badge {
+#STORM_BADGE {
 	background-image: url(./images/items/Storm_Badge.png);
 }
-#Mineral_Badge {
+#MINERAL_BADGE {
 	background-image: url(./images/items/Mineral_Badge.png);
 }
-#Glacier_Badge {
+#GLACIER_BADGE {
 	background-image: url(./images/items/Glacier_Badge.png);
 }
-#Rising_Badge {
+#RISING_BADGE {
 	background-image: url(./images/items/Rising_Badge.png);
 }
 
 /* HMs, Row 2 */
-#HM01_Cut {
+#HM_CUT {
 	background-image: url(./images/items/hm01.png);
 }
-#HM02_Fly {
+#HM_FLY {
 	background-image: url(./images/items/hm02.png);
 }
-#HM03_Surf {
+#HM_SURF {
 	background-image: url(./images/items/hm03.png);
 }
-#HM04_Strength {
+#HM_STRENGTH {
 	background-image: url(./images/items/hm04.png);
 }
-#HM05_Flash {
+#HM_FLASH {
 	background-image: url(./images/items/hm05.png);
 }
-#HM06_Whirlpool {
+#HM_WHIRLPOOL {
 	background-image: url(./images/items/hm06.png);
 }
-#HM07_Waterfall {
+#HM_WATERFALL {
 	background-image: url(./images/items/hm07.png);
 }
 
 /* Kanto Badges, Row 3 */
-#Boulder_Badge {
+#BOULDER_BADGE {
 	background-image: url(./images/items/Boulder_Badge.png);
 }
-#Cascade_Badge {
+#CASCADE_BADGE {
 	background-image: url(./images/items/Cascade_Badge.png);
 }
-#Thunder_Badge {
+#THUNDER_BADGE {
 	background-image: url(./images/items/Thunder_Badge.png);
 }
-#Rainbow_Badge {
+#RAINBOW_BADGE {
 	background-image: url(./images/items/Rainbow_Badge.png);
 }
-#Soul_Badge {
+#SOUL_BADGE {
 	background-image: url(./images/items/Soul_Badge.png);
 }
-#Marsh_Badge {
+#MARSH_BADGE {
 	background-image: url(./images/items/Marsh_Badge.png);
 }
-#Volcano_Badge {
+#VOLCANO_BADGE {
 	background-image: url(./images/items/Volcano_Badge.png);
 }
-#Earth_Badge {
+#EARTH_BADGE {
 	background-image: url(./images/items/Earth_Badge.png);
 }
 
 /* Items, Row 3 */
+#BICYCLE {
+	background-image: url(./images/items/Bicycle.png);
+}
+#ESCAPE_ROPE {
+	background-image: url(./images/items/Escape_Rope.png);
+}
+#WATER_STONE {
+	background-image: url(./images/items/Water_Stone.png);
+}
+#ITEMFINDER {
+	background-image: url(./images/items/Dowsing_MCHN.png);
+}
+#SECRETPOTION {
+	background-image: url(./images/items/Secret_Potion.png);
+}
+#S_S_TICKET {
+	background-image: url(./images/items/S.S._Ticket.png);
+}
+#MYSTERY_EGG {
+	background-image: url(./images/items/Mystery_Egg.png);
+}
+#CLEAR_BELL {
+	background-image: url(./images/items/Clear_Bell.png);
+}
+#CARD_KEY {
+	background-image: url(./images/items/Card_Key.png);
+}
+
+/* Items, Row 4 */
+#MACHINE_PART {
+	background-image: url(./images/items/Machine_Part.png);
+}
+#LOST_ITEM {
+	background-image: url(./images/items/Lost_Item.png);
+}
+#BASEMENT_KEY {
+	background-image: url(./images/items/Basement_Key.png);
+}
+#PASS {
+	background-image: url(./images/items/Pass.png);
+}
+#SQUIRTBOTTLE {
+	background-image: url(./images/items/Squirt_Bottle.png);
+}
+#RADIO_CARD {
+	background-image: url(./images/items/Radio_Card.png);
+}
+#EXPN_CARD {
+	background-image: url(./images/items/Expn_Card.png);
+}
+#POKE_GEAR {
+	background-image: url(./images/items/Poke_Gear.png);
+}
+#TM_ROCK_SMASH {
+	background-image: url(./images/items/TM08.png);
+}
 
 /* Settings */

@@ -23,8 +23,8 @@ body {
 }
 /*Settings*/
 .setting {
-	width: 2vw;
-	height: 2vw;
+	width: 2.22222222222vw;
+	height: 2.22222222222vw;
 	background-size: contain;
 	float: left;
 	cursor: pointer;
@@ -34,7 +34,7 @@ body {
 	color: silver;
 	font-size: 1.2vw;
 	text-align: center;
-	line-height: 2vw;
+	line-height: 2.22222222222vw;
 	box-shadow: 0 1px 0 0 #d3dfeb inset, 1px 0 0 0 #d3dfeb inset, -1px 0 0 0 #d3dfeb inset, 0 -1px 0 0 #d3dfeb inset;
 }
 /*Items*/
@@ -58,7 +58,7 @@ body {
 	background-color: #293541;
 	float: left;
 }
-.smallerItem {
+.smallItem {
 	width: 2.22222222222vw;
 	height: 2.22222222222vw;
 }
@@ -94,7 +94,6 @@ body {
 	max-height: 98vh;
 	background-size: cover;
 	background-repeat: no-repeat;
-	margin-top: 10px;
 }
 /*Locations*/
 .location {
