@@ -132,3 +132,134 @@
 }
 
 /* Settings */
+#RandomizeBerryTrees._0 {
+	background-image: url(./images/settings/hideberry.png);
+}
+#RandomizeBerryTrees._1 {
+	background-image: url(./images/settings/showberry.png);
+}
+
+#RandomizeHiddenItems._0 {
+	background-image: url(./images/settings/hidehidden.png);
+}
+#RandomizeHiddenItems._1 {
+	background-image: url(./images/settings/showhidden.png);
+}
+
+#RandomizeKanto._0 {
+	background-image: url(./images/settings/hidekanto.png);
+}
+#RandomizeKanto._1 {
+	background-image: url(./images/settings/showkanto.png);
+}
+
+#Goal._0 {
+	background-image: url(./images/settings/glance.png);
+}
+#Goal._1 {
+	background-image: url(./images/settings/gred.png);
+}
+
+#EliteFourBadges._0 {
+	background-image: url(./images/settings/e4_0.png);
+}
+#EliteFourBadges._1 {
+	background-image: url(./images/settings/e4_1.png);
+}
+#EliteFourBadges._2 {
+	background-image: url(./images/settings/e4_2.png);
+}
+#EliteFourBadges._3 {
+	background-image: url(./images/settings/e4_3.png);
+}
+#EliteFourBadges._4 {
+	background-image: url(./images/settings/e4_4.png);
+}
+#EliteFourBadges._5 {
+	background-image: url(./images/settings/e4_5.png);
+}
+#EliteFourBadges._6 {
+	background-image: url(./images/settings/e4_6.png);
+}
+#EliteFourBadges._7 {
+	background-image: url(./images/settings/e4_7.png);
+}
+#EliteFourBadges._8 {
+	background-image: url(./images/settings/e4_8.png);
+}
+#EliteFourBadges._9 {
+	background-image: url(./images/settings/e4_9.png);
+}
+#EliteFourBadges._10 {
+	background-image: url(./images/settings/e4_10.png);
+}
+#EliteFourBadges._11 {
+	background-image: url(./images/settings/e4_11.png);
+}
+#EliteFourBadges._12 {
+	background-image: url(./images/settings/e4_12.png);
+}
+#EliteFourBadges._13 {
+	background-image: url(./images/settings/e4_13.png);
+}
+#EliteFourBadges._14 {
+	background-image: url(./images/settings/e4_14.png);
+}
+#EliteFourBadges._15 {
+	background-image: url(./images/settings/e4_15.png);
+}
+#EliteFourBadges._16 {
+	background-image: url(./images/settings/e4_16.png);
+}
+
+#RedBadges._0 {
+	background-image: url(./images/settings/silver_0.png);
+}
+#RedBadges._1 {
+	background-image: url(./images/settings/silver_1.png);
+}
+#RedBadges._2 {
+	background-image: url(./images/settings/silver_2.png);
+}
+#RedBadges._3 {
+	background-image: url(./images/settings/silver_3.png);
+}
+#RedBadges._4 {
+	background-image: url(./images/settings/silver_4.png);
+}
+#RedBadges._5 {
+	background-image: url(./images/settings/silver_5.png);
+}
+#RedBadges._6 {
+	background-image: url(./images/settings/silver_6.png);
+}
+#RedBadges._7 {
+	background-image: url(./images/settings/silver_7.png);
+}
+#RedBadges._8 {
+	background-image: url(./images/settings/silver_8.png);
+}
+#RedBadges._9 {
+	background-image: url(./images/settings/silver_9.png);
+}
+#RedBadges._10 {
+	background-image: url(./images/settings/silver_10.png);
+}
+#RedBadges._11 {
+	background-image: url(./images/settings/silver_11.png);
+}
+#RedBadges._12 {
+	background-image: url(./images/settings/silver_12.png);
+}
+#RedBadges._13 {
+	background-image: url(./images/settings/silver_13.png);
+}
+#RedBadges._14 {
+	background-image: url(./images/settings/silver_14.png);
+}
+#RedBadges._15 {
+	background-image: url(./images/settings/silver_15.png);
+}
+#RedBadges._16 {
+	background-image: url(./images/settings/silver_16.png);
+}
