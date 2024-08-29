@@ -97,12 +97,12 @@ body {
 }
 /*Locations*/
 .location {
-	width: 1vw;
-	height: 1vw;
+	width: .8vw;
+	height: .8vw;
 	background-color: var(--ncolor);
 	position: absolute;
-	margin-top: -.5vw;
-	margin-left: -.5vw;
+	margin-top: -.4vw;
+	margin-left: -.4vw;
 	cursor: pointer;
 	box-shadow: 0 .05vw 0 0 black inset, .05vw 0 0 0 black inset, -.05vw 0 0 0 black inset, 0 -.05vw 0 0 black inset;
 	z-index: 2;
@@ -132,12 +132,12 @@ body {
 }
 /*Groups*/
 .group {
-	width: 1.5vw;
-	height: 1.5vw;
+	width: 1.2vw;
+	height: 1.2vw;
 	background-color: var(--ncolor);
 	position: absolute;
-	margin-top: -.75vw;
-	margin-left: -.75vw;
+	margin-top: -.6vw;
+	margin-left: -.6vw;
 	cursor: pointer;
 	box-shadow: 0 .05vw 0 0 black inset, .05vw 0 0 0 black inset, -.05vw 0 0 0 black inset, 0 -.05vw 0 0 black inset;
 }

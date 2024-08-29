@@ -73,61 +73,61 @@
 	background-image: url(./images/items/Earth_Badge.png);
 }
 
-/* Items, Row 3 */
-#BICYCLE {
+/* Items, Row 4 */
+#ITEM_BICYCLE {
 	background-image: url(./images/items/Bicycle.png);
 }
-#ESCAPE_ROPE {
+#ITEM_ESCAPE_ROPE {
 	background-image: url(./images/items/Escape_Rope.png);
 }
-#WATER_STONE {
+#ITEM_WATER_STONE {
 	background-image: url(./images/items/Water_Stone.png);
 }
-#ITEMFINDER {
+#ITEM_ITEMFINDER {
 	background-image: url(./images/items/Dowsing_MCHN.png);
 }
-#SECRETPOTION {
+#ITEM_SECRETPOTION {
 	background-image: url(./images/items/Secret_Potion.png);
 }
-#S_S_TICKET {
+#ITEM_S_S_TICKET {
 	background-image: url(./images/items/S.S._Ticket.png);
 }
-#MYSTERY_EGG {
+#ITEM_MYSTERY_EGG {
 	background-image: url(./images/items/Mystery_Egg.png);
 }
-#CLEAR_BELL {
+#ITEM_CLEAR_BELL {
 	background-image: url(./images/items/Clear_Bell.png);
 }
-#CARD_KEY {
+#ITEM_CARD_KEY {
 	background-image: url(./images/items/Card_Key.png);
 }
 
-/* Items, Row 4 */
-#MACHINE_PART {
+/* Items, Row 5 */
+#ITEM_MACHINE_PART {
 	background-image: url(./images/items/Machine_Part.png);
 }
-#LOST_ITEM {
+#ITEM_LOST_ITEM {
 	background-image: url(./images/items/Lost_Item.png);
 }
-#BASEMENT_KEY {
+#ITEM_BASEMENT_KEY {
 	background-image: url(./images/items/Basement_Key.png);
 }
-#PASS {
+#ITEM_PASS {
 	background-image: url(./images/items/Pass.png);
 }
-#SQUIRTBOTTLE {
+#ITEM_SQUIRTBOTTLE {
 	background-image: url(./images/items/Squirt_Bottle.png);
 }
-#RADIO_CARD {
+#ITEM_RADIO_CARD {
 	background-image: url(./images/items/Radio_Card.png);
 }
-#EXPN_CARD {
+#ITEM_EXPN_CARD {
 	background-image: url(./images/items/Expn_Card.png);
 }
-#POKE_GEAR {
+#ITEM_POKE_GEAR {
 	background-image: url(./images/items/Poke_Gear.png);
 }
-#TM_ROCK_SMASH {
+#ITEM_TM_ROCK_SMASH {
 	background-image: url(./images/items/TM08.png);
 }
 
