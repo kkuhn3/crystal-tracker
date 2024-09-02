@@ -35,6 +35,7 @@ function isIntLessThan(check, max) {
 	let intValue = parseInt(check, 10);
 	return Number.isInteger(intValue) && intValue <= max && intValue >= 0;
 }
+const hiddenClasses = ["hiddenhidden", "victoryhidden", "kantohidden"];
 
 // Locations
 function locationOnHover(location) {
@@ -113,6 +114,14 @@ function updateLocation(locationId) {
 	}
 	setLogicClass(div, logicClass);
 }
+function ishidden(div) {
+	for (let i of hiddenClasses) {
+		if (div.classList.contains(i)) {
+			return true;
+		}
+	}
+	return false;
+}
 
 // Items
 function itemOnHover(item) {
@@ -163,13 +172,13 @@ function setSettingClass(div, className) {
 function hideToMatch(div, prefix) {
 	let show = parseInt(div.classList[1].substring(1), 10);
 	for (let location of document.getElementsByClassName("location")) {
-		if (location.id.substring(0,prefix.length) === prefix) {
-			ifTrueAddClass(location, !show, "hiddenhidden");
+		if (location.id.includes(prefix)) {
+			ifTrueAddClass(location, !show, hiddenClasses[0]);
 		}
 	}
 	for (let sub of document.getElementsByClassName("sub")) {
-		if (sub.id.substring(0,prefix.length) === prefix) {
-			ifTrueAddClass(sub, !show, "hiddenhidden");
+		if (sub.id.includes(prefix)) {
+			ifTrueAddClass(sub, !show, hiddenClasses[0]);
 		}
 	}
 }
@@ -182,6 +191,18 @@ function settingOnClick(div, prefix) {
 function settingIterateOnClick(div, count) {
 	settingIterate(div, count);
 	updateLocations();
+	updateGroups();
+	countchecks();
+}
+function hideToMatchKanto(div) {
+	let show = parseInt(div.classList[1].substring(1), 10);
+	for (let id of kantoLocations) {
+		ifTrueAddClass(document.getElementById(id), !show, hiddenClasses[2]);
+	}
+}
+function ranomizeKantoOnClick(div) {
+	settingIterate(div, 1);
+	hideToMatchKanto(div);
 	updateGroups();
 	countchecks();
 }
@@ -217,7 +238,7 @@ function updateGroup(group) {
 	let event = false;
 	let checked = true;
 	for (let sub of group.getElementsByClassName("sub")) {
-		if (!sub.classList.contains("hiddenhidden") && !sub.classList.contains("victoryhidden")) {
+		if (!ishidden(sub)) {
 			hidden = false;
 			if (!sub.classList.contains("subchecked")) {
 				checked = false;
@@ -292,7 +313,7 @@ function countchecks() {
 	for (let child of map.children) {
 		if (child.classList.contains("group")) {
 			for (let sub of child.children) {
-				if (!sub.id.includes("EVENT_") && !sub.classList.contains("hiddenhidden") && !sub.classList.contains("victoryhidden")) {
+				if (!sub.id.includes("EVENT_") && !ishidden(sub)) {
 					total = total + 1;
 					if (sub.classList.contains("subchecked")) {
 						checked = checked + 1;
@@ -304,7 +325,7 @@ function countchecks() {
 			}
 		}
 		else if (child.classList.contains("location")) {
-			if (!child.id.includes("EVENT_") && !child.classList.contains("hiddenhidden") && !child.classList.contains("victoryhidden")) {
+			if (!child.id.includes("EVENT_") && !ishidden(child)) {
 				total = total + 1;
 				if (child.classList.contains("locationchecked")) {
 					checked = checked + 1;

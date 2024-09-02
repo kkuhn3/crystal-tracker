@@ -234,6 +234,9 @@ body {
 .victoryhidden {
 	display: none;
 }
+.kantohidden {
+	display: none;
+}
 
 /*highlight options*/
 .possibleHighlight {
