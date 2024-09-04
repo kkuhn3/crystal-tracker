@@ -86,6 +86,9 @@
 #ITEM_ITEMFINDER {
 	background-image: url(./images/items/Dowsing_MCHN.png);
 }
+#ITEM_RED_SCALE {
+	background-image: url(./images/items/Red_Scale.png);
+}
 #ITEM_SECRETPOTION {
 	background-image: url(./images/items/Secret_Potion.png);
 }
@@ -98,11 +101,11 @@
 #ITEM_CLEAR_BELL {
 	background-image: url(./images/items/Clear_Bell.png);
 }
+
+/* Items, Row 5 */
 #ITEM_CARD_KEY {
 	background-image: url(./images/items/Card_Key.png);
 }
-
-/* Items, Row 5 */
 #ITEM_MACHINE_PART {
 	background-image: url(./images/items/Machine_Part.png);
 }

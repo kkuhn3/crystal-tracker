@@ -62,6 +62,10 @@ body {
 	width: 2.22222222222vw;
 	height: 2.22222222222vw;
 }
+.smallerItem {
+	width: 2vw;
+	height: 2vw;
+}
 .itemchecked {
 	filter: grayscale(0%);
 }
