@@ -146,7 +146,7 @@ function can_ecruteak() {
 	if (has("ITEM_SQUIRTBOTTLE")) {
 		return "logical";
 	}
-	if (has("ITEM_PASS") && has("ITEM_S_S_TICKET")) {
+	if (has("ITEM_PASS") && has("ITEM_S_S_TICKET") && !parseInt(RandomizeKanto.classList[1].substring(1), 10)) {
 		return "logical";
 	}
 }

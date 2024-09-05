@@ -5,8 +5,8 @@ let idToString = {};
 let idToItem = {};
 let idToLocation = {};
 let idToEvent = {};
-// guessing?
-const offset = 7680000;
+// https://github.com/ArchipelagoMW/Archipelago/pull/3865
+const offset = 0;
 async function loadStaticContent() {
 	const res1 = await fetch('./static/idToString.json', {
 		method: 'GET'

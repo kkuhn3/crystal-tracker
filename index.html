@@ -13,10 +13,10 @@
 			<div id="settings">
 				<img class="setting _1" id="RandomizeBerryTrees" onclick="settingOnClick(this, 'FRUITTREE_')">
 				<img class="setting _1" id="RandomizeHiddenItems" onclick="settingOnClick(this, '_HIDDEN_')">
-				<img class="setting _1" id="RandomizeKanto" onclick="ranomizeKantoOnClick(this)">
-				<img class="setting _8" id="EliteFourBadges" onclick="settingIterate(this, 16)">
-				<img class="setting _16" id="RedBadges" onclick="settingIterate(this, 16)">
-				<img class="setting _1" id="Goal" onclick="settingIterate(this, 1)">
+				<img class="setting _0" id="RandomizeKanto" onclick="ranomizeKantoOnClick(this)">
+				<img class="setting _8" id="EliteFourBadges" onclick="settingIterateOnClick(this, 16)">
+				<img class="setting _16" id="RedBadges" onclick="settingIterateOnClick(this, 16)">
+				<img class="setting _1" id="Goal" onclick="goalOnClick(this)">
 				<div class="setting notImageImage" id="CHECK_CHECKED">0</div>
 				<div class="setting notImageImage" id="CHECK_LOGICAL">50</div>
 				<div class="setting notImageImage" id="CHECK_TOTAL">300</div>
@@ -644,7 +644,7 @@
 			<div class="location" id="ROUTE_45_REVIVE"></div>
 			<!--46-->
 			<div class="location" id="ROUTE_46_X_SPEED"></div>
-			<div class="group" id="route_42_berry_trees">
+			<div class="group" id="route_46_berry_trees">
 				<div class="sub" id="FRUITTREE_ROUTE_46_1"></div>
 				<div class="sub" id="FRUITTREE_ROUTE_46_2"></div>
 			</div>
@@ -660,6 +660,7 @@
 		hideToMatch(RandomizeBerryTrees, "FRUITTREE_");
 		hideToMatch(RandomizeHiddenItems, "_HIDDEN_");
 		hideToMatchKanto(RandomizeKanto);
+		hideToMatchGoal(Goal)
 		updateLocations();
 		updateGroups();
 		countchecks();

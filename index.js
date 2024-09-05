@@ -161,12 +161,6 @@ function ifTrueAddClass(div, shouldAddClass, className) {
 		div.classList.remove(className);
 	}
 }
-function setSettingClass(div, className) {
-	div.classList.remove("_0", "_1", "_2", "_3", "_4", "_5", "_6", "_7", "_8");
-	if (className) {
-		div.classList.add(className);
-	}
-}
 
 //Settings - items in logic
 function hideToMatch(div, prefix) {
@@ -195,16 +189,53 @@ function settingIterateOnClick(div, count) {
 	countchecks();
 }
 function hideToMatchKanto(div) {
-	let show = parseInt(div.classList[1].substring(1), 10);
+	const set = parseInt(div.classList[1].substring(1), 10);
+	let showKanto = true;
+	let showSilver = true;
+	if (set) {
+		showKanto = false;
+		if (set === 1) {
+			setSettingClass(Goal, "_0");
+			hideToMatchGoal(Goal);
+			showSilver = false;
+		}
+	}
 	for (let id of kantoLocations) {
-		ifTrueAddClass(document.getElementById(id), !show, hiddenClasses[2]);
+		ifTrueAddClass(document.getElementById(id), !showKanto, hiddenClasses[2]);
+	}
+	for (let id of mtSilverLocations) {
+		ifTrueAddClass(document.getElementById(id), !showSilver, hiddenClasses[2]);
 	}
 }
 function ranomizeKantoOnClick(div) {
-	settingIterate(div, 1);
+	settingIterate(div, 2);
+	groupBreakDown.innerHTML = "";
 	hideToMatchKanto(div);
+	updateLocations();
 	updateGroups();
 	countchecks();
+	if (currentGroup) {
+		groupFocus(document.getElementById(currentGroup));
+	}
+}
+function hideToMatchGoal(div) {
+	const isRed = parseInt(div.classList[1].substring(1), 10);
+	for (let id of postE4Locations) {
+		ifTrueAddClass(document.getElementById(id), !isRed, hiddenClasses[1]);
+	}
+}
+function goalOnClick(div) {
+	if (parseInt(RandomizeKanto.classList[1].substring(1), 10) == 1) {
+		return;
+	}
+	settingIterate(div, 1);
+	groupBreakDown.innerHTML = "";
+	hideToMatchGoal(div);
+	updateGroups();
+	countchecks();
+	if (currentGroup) {
+		groupFocus(document.getElementById(currentGroup));
+	}
 }
 
 // Groups
@@ -342,31 +373,31 @@ function countchecks() {
 }
 
 //Parse URL inputs
+function setSettingClass(div, className) {
+	div.classList.remove("_0", "_1", "_2", "_3", "_4", "_5", "_6", "_7", "_8", "_9", "_10", "_11", "_12", "_13", "_14", "_15", "_16");
+	if (className) {
+		div.classList.add(className);
+	}
+}
 function parseSettings() {
 	const urlSearch = new URLSearchParams(window.location.search);
+	if (isIntLessThan(urlSearch.get("bt"), 1)) {
+		setSettingClass(RandomizeBerryTrees, "_" + urlSearch.get("bt"));
+	}
 	if (isIntLessThan(urlSearch.get("hi"), 1)) {
-		setSettingClass(HIDDEN_ITEMS, "_" + urlSearch.get("hi"));
+		setSettingClass(RandomizeHiddenItems, "_" + urlSearch.get("hi"));
 	}
-	if (isIntLessThan(urlSearch.get("r3"), 1)) {
-		setSettingClass(ROUTE_3_CONDITION, "_" + urlSearch.get("r3"));
+	if (isIntLessThan(urlSearch.get("jo"), 2)) {
+		setSettingClass(RandomizeKanto, "_" + urlSearch.get("jo"));
 	}
-	if (isIntLessThan(urlSearch.get("fc"), 1)) {
-		setSettingClass(FOSSILS_CONDITION, "_" + urlSearch.get("fc"));
+	if (isIntLessThan(urlSearch.get("vr"), 16)) {
+		setSettingClass(EliteFourBadges, "_" + urlSearch.get("vr"));
 	}
-	if (isIntLessThan(urlSearch.get("vg"), 7)) {
-		setSettingClass(VIRIDIAN_GYM_CONDITION, "_" + urlSearch.get("vg"));
+	if (isIntLessThan(urlSearch.get("ms"), 16)) {
+		setSettingClass(RedBadges, "_" + urlSearch.get("ms"));
 	}
-	if (isIntLessThan(urlSearch.get("r22"), 1)) {
-		setSettingClass(ROUTE_22_CONDITION, "_" + urlSearch.get("r22"));
-	}
-	if (isIntLessThan(urlSearch.get("vr"), 8)) {
-		setSettingClass(VICTORY_ROAD_CONDITION, "_" + urlSearch.get("vr"));
-	}
-	if (isIntLessThan(urlSearch.get("e4"), 2)) {
-		setSettingClass(ELITE_4_CONDITION, "_" + urlSearch.get("e4"));
-	}
-	if (isIntLessThan(urlSearch.get("cc"), 2)) {
-		setSettingClass(CERULEAN_CAVE_CONDITION, "_" + urlSearch.get("cc"));
+	if (isIntLessThan(urlSearch.get("g"), 1)) {
+		setSettingClass(Goal, "_" + urlSearch.get("g"));
 	}
 
 	if (urlSearch.get("name") && urlSearch.get("port")) {

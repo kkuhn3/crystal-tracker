@@ -150,10 +150,13 @@
 }
 
 #RandomizeKanto._0 {
-	background-image: url(./images/settings/hidekanto.png);
+	background-image: url(./images/settings/showkanto.png);
 }
 #RandomizeKanto._1 {
-	background-image: url(./images/settings/showkanto.png);
+	background-image: url(./images/settings/hidekanto.png);
+}
+#RandomizeKanto._2 {
+	background-image: url(./images/settings/showsilver.png);
 }
 
 #Goal._0 {

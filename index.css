@@ -29,6 +29,8 @@ body {
 	float: left;
 	cursor: pointer;
 	background-color: #293541;
+	background-repeat: no-repeat;
+    background-position: center;
 }
 .notImageImage {
 	color: silver;
