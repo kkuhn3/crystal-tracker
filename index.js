@@ -171,10 +171,12 @@ function hideToMatch(div, prefix) {
 		}
 	}
 	for (let sub of document.getElementsByClassName("sub")) {
-		if (sub.id.includes(prefix)) {
+		//TM10_HIDDEN_POWER is not "hidden" despite the name
+		if (sub.id.includes(prefix) && sub.id !== "TM10_HIDDEN_POWER") {
 			ifTrueAddClass(sub, !show, hiddenClasses[0]);
 		}
 	}
+	//CERULEAN_CITY_BERSERK_GENE is a "hidden" item
 	if ("_HIDDEN_" === prefix) {
 		ifTrueAddClass(CERULEAN_CITY_BERSERK_GENE, !show, hiddenClasses[0]);
 	}
