@@ -313,9 +313,7 @@ const locationLogic = {
 		return "logical";
 	},
 	"KURT_GAVE_YOU_LURE_BALL": function() {
-		if (has("EVENT_HELP_KURT")) {
-			return "logical";
-		}
+		return "logical";
 	},
 	"CHARCOAL_IN_CHARCOAL_KILN": function() {
 		return "logical";
