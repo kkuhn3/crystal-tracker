@@ -175,6 +175,9 @@ function hideToMatch(div, prefix) {
 			ifTrueAddClass(sub, !show, hiddenClasses[0]);
 		}
 	}
+	if ("_HIDDEN_" === prefix) {
+		ifTrueAddClass(CERULEAN_CITY_BERSERK_GENE, !show, hiddenClasses[0]);
+	}
 }
 function settingOnClick(div, prefix) {
 	settingIterate(div, 1);
