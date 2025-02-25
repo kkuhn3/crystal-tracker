@@ -4,12 +4,14 @@ function launch() {
 		url = url + "&name=" + PNAME.value;
 		url = url + "&port=" + APORT.value;
 	}
-	url = url + "&bt=" + BT.value;
-	url = url + "&hi=" + HI.value;
-	url = url + "&jo=" + JO.value;
-	url = url + "&vr=" + VR.value;
-	url = url + "&ms=" + MS.value;
-	url = url + "&g=" + G.value;
+	for (let select of document.getElementsByTagName('select')) {
+		if (select.value) {
+			url = url + '&' + select.id.toLowerCase() + '=' + select.value;
+		}
+	}
 	url = url.replace("?&", "?");
+	if (url === "../?") {
+		url = "../";
+	}
 	window.open(url, "_self");
 }
