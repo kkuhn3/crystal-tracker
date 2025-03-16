@@ -1,26 +1,28 @@
+let ahost = "archipelago.gg";
 let aport = false;
-let pname = false;
+let aname = false;
+let apass = "";
 
 // https://github.com/ArchipelagoMW/Archipelago/pull/3865
 const offset = 0;
 
 function connect() {
-	if (!aport || !pname) {
+	if (!aport || !aname) {
 		return;
 	}
-	socket = new WebSocket("wss://archipelago.gg:" + aport);
+	socket = new WebSocket("wss://" + ahost + ":" + aport);
 
 	socket.addEventListener('open', function (event) {
 		socket.send(`[{
 			"cmd" : "Connect",
-			"password" : "",
+			"password" : "` + apass + `",
 			"game" : "Pokemon Crystal",
-			"name" : "` + pname + `",
+			"name" : "` + aname + `",
 			"tags" : ["Tracker"],
 			"version" : {
 				"major": 0,
 				"minor": 5,
-				"build": 0,
+				"build": 1,
 				"class": "Version"
 			},
 			"items_handling" : 7,
