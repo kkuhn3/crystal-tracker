@@ -98,5 +98,7 @@ const mtSilverLocations = [
 ];
 
 const postE4Locations = [
-	"SS_TICKET_FROM_ELM"
+	"SS_TICKET_FROM_ELM",
+	"TIN_TOWER_1F_RAINBOW_WING",
+	"GS_BALL_FROM_GOLDENROD_POKEMON_CENTER"
 ];

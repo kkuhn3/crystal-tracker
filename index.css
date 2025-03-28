@@ -23,8 +23,8 @@ body {
 }
 /*Settings*/
 .setting {
-	width: 2.22222222222vw;
-	height: 2.22222222222vw;
+	width: 1.66666666667vw;
+	height: 1.66666666667vw;
 	background-size: contain;
 	float: left;
 	cursor: pointer;
@@ -41,9 +41,9 @@ body {
 .notImageImage {
 	cursor: auto;
 	color: silver;
-	font-size: 1.2vw;
+	font-size: 1vw;
 	text-align: center;
-	line-height: 2.22222222222vw;
+	line-height: 1.66666666667vw;
 	box-shadow: 0 1px 0 0 #d3dfeb inset, 1px 0 0 0 #d3dfeb inset, -1px 0 0 0 #d3dfeb inset, 0 -1px 0 0 #d3dfeb inset;
 }
 .setting.notImageImage:hover {
@@ -77,10 +77,6 @@ body {
 	float: left;
 }
 .smallItem {
-	width: 2.22222222222vw;
-	height: 2.22222222222vw;
-}
-.smallerItem {
 	width: 2vw;
 	height: 2vw;
 }

@@ -101,6 +101,9 @@
 #ITEM_CLEAR_BELL {
 	background-image: url(./images/items/Clear_Bell.png);
 }
+#ITEM_RAINBOW_WING {
+	background-image: url(./images/items/Rainbow_Wing.png);
+}
 
 /* Items, Row 5 */
 #ITEM_CARD_KEY {
@@ -268,4 +271,73 @@
 }
 #RedBadges._16 {
 	background-image: url(./images/settings/silver_16.png);
+}
+
+#Route32Guy._0 {
+	background-image: url(./images/settings/Route32Guy_0.png);
+}
+#Route32Guy._1 {
+	background-image: url(./images/settings/Route32Guy_1.png);
+}
+#Route32Guy._2 {
+	background-image: url(./images/settings/Route32Guy_2.png);
+}
+
+#IlexCutTree._0 {
+	background-image: url(./images/settings/IlexCutTree_0.png);
+}
+#IlexCutTree._1 {
+	background-image: url(./images/settings/IlexCutTree_1.png);
+}
+
+#RadioTowerBadges._0 {
+	background-image: url(./images/settings/RadioTowerBadges_0.png);
+}
+#RadioTowerBadges._1 {
+	background-image: url(./images/settings/RadioTowerBadges_1.png);
+}
+#RadioTowerBadges._2 {
+	background-image: url(./images/settings/RadioTowerBadges_2.png);
+}
+#RadioTowerBadges._3 {
+	background-image: url(./images/settings/RadioTowerBadges_3.png);
+}
+#RadioTowerBadges._4 {
+	background-image: url(./images/settings/RadioTowerBadges_4.png);
+}
+#RadioTowerBadges._5 {
+	background-image: url(./images/settings/RadioTowerBadges_5.png);
+}
+#RadioTowerBadges._6 {
+	background-image: url(./images/settings/RadioTowerBadges_6.png);
+}
+#RadioTowerBadges._7 {
+	background-image: url(./images/settings/RadioTowerBadges_7.png);
+}
+#RadioTowerBadges._8 {
+	background-image: url(./images/settings/RadioTowerBadges_8.png);
+}
+#RadioTowerBadges._9 {
+	background-image: url(./images/settings/RadioTowerBadges_9.png);
+}
+#RadioTowerBadges._10 {
+	background-image: url(./images/settings/RadioTowerBadges_10.png);
+}
+#RadioTowerBadges._11 {
+	background-image: url(./images/settings/RadioTowerBadges_11.png);
+}
+#RadioTowerBadges._12 {
+	background-image: url(./images/settings/RadioTowerBadges_12.png);
+}
+#RadioTowerBadges._13 {
+	background-image: url(./images/settings/RadioTowerBadges_13.png);
+}
+#RadioTowerBadges._14 {
+	background-image: url(./images/settings/RadioTowerBadges_14.png);
+}
+#RadioTowerBadges._15 {
+	background-image: url(./images/settings/RadioTowerBadges_15.png);
+}
+#RadioTowerBadges._16 {
+	background-image: url(./images/settings/RadioTowerBadges_16.png);
 }

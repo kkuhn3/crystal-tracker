@@ -395,6 +395,15 @@ function parseSettings() {
 	if (isIntLessThan(urlSearch.get("jo"), 2)) {
 		setSettingClass(RandomizeKanto, "_" + urlSearch.get("jo"));
 	}
+	if (isIntLessThan(urlSearch.get("r32"), 2)) {
+		setSettingClass(Route32Guy, "_" + urlSearch.get("r32"));
+	}
+	if (isIntLessThan(urlSearch.get("if"), 1)) {
+		setSettingClass(IlexCutTree, "_" + urlSearch.get("if"));
+	}
+	if (isIntLessThan(urlSearch.get("rt"), 16)) {
+		setSettingClass(RadioTowerBadges, "_" + urlSearch.get("rt"));
+	}
 	if (isIntLessThan(urlSearch.get("vr"), 16)) {
 		setSettingClass(EliteFourBadges, "_" + urlSearch.get("vr"));
 	}

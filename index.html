@@ -16,6 +16,9 @@
 				<img class="setting _1" id="RandomizeBerryTrees" onclick="settingOnClick(this, 'FRUITTREE_')">
 				<img class="setting _0" id="RandomizeHiddenItems" onclick="settingOnClick(this, '_HIDDEN_')">
 				<img class="setting _0" id="RandomizeKanto" onclick="ranomizeKantoOnClick(this)">
+				<img class="setting _1" id="Route32Guy" onclick="settingIterateOnClick(this, 2)">
+				<img class="setting _1" id="IlexCutTree" onclick="settingIterateOnClick(this, 1)">
+				<img class="setting _7" id="RadioTowerBadges" onclick="settingIterateOnClick(this, 16)">
 				<img class="setting _8" id="EliteFourBadges" onclick="settingIterateOnClick(this, 16)">
 				<img class="setting _16" id="RedBadges" onclick="settingIterateOnClick(this, 16)">
 				<img class="setting _1" id="Goal" onclick="goalOnClick(this)">
@@ -57,16 +60,17 @@
 				<img class="item smallItem" id="ITEM_S_S_TICKET">
 				<img class="item smallItem" id="ITEM_MYSTERY_EGG">
 				<img class="item smallItem" id="ITEM_CLEAR_BELL">
-				<img class="item smallerItem" id="ITEM_CARD_KEY">
-				<img class="item smallerItem" id="ITEM_MACHINE_PART">
-				<img class="item smallerItem" id="ITEM_LOST_ITEM">
-				<img class="item smallerItem" id="ITEM_BASEMENT_KEY">
-				<img class="item smallerItem" id="ITEM_PASS">
-				<img class="item smallerItem" id="ITEM_SQUIRTBOTTLE">
-				<img class="item smallerItem" id="ITEM_RADIO_CARD">
-				<img class="item smallerItem" id="ITEM_EXPN_CARD">
-				<img class="item smallerItem" id="ITEM_POKE_GEAR">
-				<img class="item smallerItem" id="ITEM_TM_ROCK_SMASH">
+				<img class="item smallItem" id="ITEM_RAINBOW_WING">
+				<img class="item smallItem" id="ITEM_CARD_KEY">
+				<img class="item smallItem" id="ITEM_MACHINE_PART">
+				<img class="item smallItem" id="ITEM_LOST_ITEM">
+				<img class="item smallItem" id="ITEM_BASEMENT_KEY">
+				<img class="item smallItem" id="ITEM_PASS">
+				<img class="item smallItem" id="ITEM_SQUIRTBOTTLE">
+				<img class="item smallItem" id="ITEM_RADIO_CARD">
+				<img class="item smallItem" id="ITEM_EXPN_CARD">
+				<img class="item smallItem" id="ITEM_POKE_GEAR">
+				<img class="item smallItem" id="ITEM_TM_ROCK_SMASH">
 			</div>
 			<div id="itemHoverDesc">
 				&nbsp
@@ -109,6 +113,7 @@
 				<div class="sub" id="ZEPHYR_BADGE_FROM_FALKNER"></div>
 				<div class="sub" id="TM31_MUD_SLAP"></div>
 			</div>
+			<div class="location" id="EVENT_GET_EGG"></div>
 			<!--Azalea Town-->
 			<div class="group" id="azalea_gym">
 				<div class="sub" id="HIVE_BADGE_FROM_BUGSY"></div>
@@ -163,6 +168,7 @@
 				<div class="sub" id="CLEAR_BELL"></div>
 				<div class="sub" id="EVENT_CLEARED_RADIO_TOWER"></div>
 			</div>
+			<div class="location" id="GS_BALL_FROM_GOLDENROD_POKEMON_CENTER"></div>
 			<!--Ecruteak City-->
 			<div class="group" id="burned_tower">
 				<div class="sub" id="BURNED_TOWER_1F_HIDDEN_ETHER"></div>
@@ -178,6 +184,7 @@
 			</div>
 			<div class="location" id="ITEMFINDER"></div>
 			<div class="group" id="tin_tower">
+				<div class="sub" id="TIN_TOWER_1F_RAINBOW_WING"></div>
 				<div class="sub" id="TIN_TOWER_3F_FULL_HEAL"></div>
 				<div class="sub" id="TIN_TOWER_4F_ESCAPE_ROPE"></div>
 				<div class="sub" id="TIN_TOWER_4F_HIDDEN_MAX_POTION"></div>
@@ -520,6 +527,12 @@
 				<div class="sub" id="PICKED_UP_MYSTIC_WATER_FROM_OMANYTE_ITEM_ROOM"></div>
 				<div class="sub" id="PICKED_UP_STAR_PIECE_FROM_OMANYTE_ITEM_ROOM"></div>
 				<div class="sub" id="PICKED_UP_STARDUST_FROM_OMANYTE_ITEM_ROOM"></div>
+			</div>
+			<div class="group" id="ruins_of_alph_hooh">
+				<div class="sub" id="PICKED_UP_GOLD_BERRY_FROM_HO_OH_ITEM_ROOM"></div>
+				<div class="sub" id="PICKED_UP_MYSTERYBERRY_FROM_HO_OH_ITEM_ROOM"></div>
+				<div class="sub" id="PICKED_UP_REVIVAL_HERB_FROM_HO_OH_ITEM_ROOM"></div>
+				<div class="sub" id="PICKED_UP_CHARCOAL_FROM_HO_OH_ITEM_ROOM"></div>
 			</div>
 			<!--37-->
 			<div class="location" id="ROUTE_37_HIDDEN_ETHER"></div>

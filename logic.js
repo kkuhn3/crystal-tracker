@@ -61,9 +61,29 @@ function hidden_logic() {
 	return "possible";
 }
 // Logic Helpers
+function can_route32guy() {
+	const r32 = parseInt(Route32Guy.classList[1].substring(1), 10);
+	if (!r32) {
+		return "logical";
+	}
+	if (r32 === 1 && has("EVENT_GET_EGG")) {
+		return "logical";
+	}
+	if (r32 === 2 && count_badges() > 0) {
+		return "logical";
+	}
+}
+function can_ilextree() {
+	if (can_cut()) {
+		return "logical";
+	}
+	if (!parseInt(IlexCutTree.classList[1].substring(1), 10)) {
+		return "logical";
+	}
+}
 function rocket_took_radio_tower() {
-	const e4Badges = parseInt(EliteFourBadges.classList[1].substring(1), 10);
-	if (count_badges() >= e4Badges - 1) {
+	const rocketBadges = parseInt(RadioTowerBadges.classList[1].substring(1), 10);
+	if (count_badges() >= rocketBadges) {
 		return "logical";
 	}
 }
@@ -139,15 +159,39 @@ function can_route46() {
 // New Bark - logical
 // Cherrygrove - logical
 // Violet - name rival - is this worth an event?
-// Azalea - logical 
-// Goldenrod - logical - cut tree is removed from ilex forest
-// Ecruteak - squirtbottle || pass + ssticket
-function can_ecruteak() {
+// Azalea - logic more complex as of 3.0.0 
+function can_azalea() {
+	// Violet - Goldenrod - Azalea
+	if (has("ITEM_SQUIRTBOTTLE")) {
+		if (can_ilextree()) {
+			return "logical";
+		}
+	}
+	// Violet - Azalea
+	return can_route32guy();
+}
+// Goldenrod - logic more complex as of 3.0.0 
+function can_goldenrod() {
+	// Violet - Goldenrod
 	if (has("ITEM_SQUIRTBOTTLE")) {
 		return "logical";
 	}
-	if (has("ITEM_PASS") && has("ITEM_S_S_TICKET") && !parseInt(RandomizeKanto.classList[1].substring(1), 10)) {
+	// Violet - Azalea - Goldenrod
+	if (can_route32guy()) {
+		return can_ilextree();
+	}
+}
+// Ecruteak - logic more complex as of 3.0.0
+function can_ecruteak() {
+	// Violet - Ecruteak
+	if (has("ITEM_SQUIRTBOTTLE")) {
 		return "logical";
+	}
+	// Violet - Goldenrod - Saffron - Vermilion - Olivine - Ecruteak
+	if (has("ITEM_PASS") && has("ITEM_S_S_TICKET") && !parseInt(RandomizeKanto.classList[1].substring(1), 10)) {
+		if (can_route32guy()) {
+			return can_ilextree();
+		}
 	}
 }
 // Olivine - Ecruteak
@@ -188,11 +232,13 @@ function can_pewter() {
 function can_cerulean() {
 	return can_vermillion();
 }
-// Vermilion - PASS || Ecruteak + SS Ticket
+// Vermilion 
 function can_vermillion() {
-	if (has("ITEM_PASS")) {
+	// Goldenrod + Pass
+	if (has("ITEM_PASS")  && can_goldenrod()) {
 		return "logical";
 	}
+	// Olivine + SS ticket
 	if (has("ITEM_S_S_TICKET")) {
 		return can_olivine();
 	}
@@ -295,158 +341,190 @@ const locationLogic = {
 	"TM31_MUD_SLAP": function() {
 		return "logical";
 	},
+	"EVENT_GET_EGG": function() {
+		return "logical";
+	},
 	// Azalea Town
 	"HIVE_BADGE_FROM_BUGSY": function() {
 		if (has("EVENT_HELP_KURT")) {
-			return "logical";
+			return can_azalea();
 		}
 	},
 	"TM49_FURY_CUTTER": function() {
 		if (has("EVENT_HELP_KURT")) {
-			return "logical";
+			return can_azalea();
 		}
 	},
 	"FRUITTREE_AZALEA_TOWN": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"EVENT_HELP_KURT": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"KURT_GAVE_YOU_LURE_BALL": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"CHARCOAL_IN_CHARCOAL_KILN": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"AZALEA_TOWN_HIDDEN_FULL_HEAL": function() {
-		return hidden_logic();
+		if (can_azalea()) {
+			return hidden_logic();
+		}
 	},
 	"SLOWPOKE_WELL_B1F_SUPER_POTION": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"SLOWPOKE_WELL_B2F_TM_RAIN_DANCE": function() {
 		if (can_surf() && can_strength()) {
-			return "logical";
+			return can_azalea();
 		}
 	},
 	"KINGS_ROCK_IN_SLOWPOKE_WELL": function() {
 		if (can_surf() && can_strength()) {
-			return "logical";
+			return can_azalea();
 		}
 	},
 	// Goldenrod City
 	"BICYCLE": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"GOLDENROD_DEPT_STORE_B1F_BURN_HEAL": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"GOLDENROD_DEPT_STORE_B1F_ETHER": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"GOLDENROD_DEPT_STORE_B1F_ULTRA_BALL": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"GOLDENROD_DEPT_STORE_B1F_AMULET_COIN": function() {
 		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-			return "logical";
+			return can_goldenrod();
 		}
 	},
 	"SQUIRTBOTTLE": function() {
 		if (has("PLAIN_BADGE")) {
-			return "logical";
+			return can_goldenrod();
 		}
 	},
 	"PLAIN_BADGE_FROM_WHITNEY": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"TM45_ATTRACT": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"GOLDENROD_UNDERGROUND_COIN_CASE": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"GOLDENROD_UNDERGROUND_HIDDEN_ANTIDOTE": function() {
-		return hidden_logic();
+		if (can_goldenrod()) {
+			return hidden_logic();
+		}
 	},
 	"GOLDENROD_UNDERGROUND_HIDDEN_PARLYZ_HEAL": function() {
-		return hidden_logic();
+		if (can_goldenrod()) {
+			return hidden_logic();
+		}
 	},
 	"GOLDENROD_UNDERGROUND_HIDDEN_SUPER_POTION": function() {
-		return hidden_logic();
+		if (can_goldenrod()) {
+			return hidden_logic();
+		}
 	},
 	"GOLDENROD_UNDERGROUND_SWITCH_ROOM_ENTRANCES_FULL_HEAL": function() {
 		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-			return "logical";
+			return can_goldenrod();
 		}
 	},
 	"GOLDENROD_UNDERGROUND_SWITCH_ROOM_ENTRANCES_HIDDEN_MAX_POTION": function() {
-		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-			return hidden_logic();
+		if (can_goldenrod()) {
+			if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
+				return hidden_logic();
+			}
 		}
 	},
 	"GOLDENROD_UNDERGROUND_SWITCH_ROOM_ENTRANCES_HIDDEN_REVIVE": function() {
-		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-			return hidden_logic();
+		if (can_goldenrod()) {
+			if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
+				return hidden_logic();
+			}
 		}
 	},
 	"GOLDENROD_UNDERGROUND_SWITCH_ROOM_ENTRANCES_SMOKE_BALL": function() {
-		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-			return "logical";
+		if (can_goldenrod()) {
+			if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
+				return hidden_logic();
+			}
 		}
 	},
 	"GOLDENROD_UNDERGROUND_WAREHOUSE_MAX_ETHER": function() {
-		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-			return "logical";
+		if (can_goldenrod()) {
+			if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
+				return hidden_logic();
+			}
 		}
 	},
 	"GOLDENROD_UNDERGROUND_WAREHOUSE_TM_SLEEP_TALK": function() {
-		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-			return "logical";
+		if (can_goldenrod()) {
+			if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
+				return hidden_logic();
+			}
 		}
 	},
 	"GOLDENROD_UNDERGROUND_WAREHOUSE_ULTRA_BALL": function() {
-		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-			return "logical";
+		if (can_goldenrod()) {
+			if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
+				return hidden_logic();
+			}
 		}
 	},
 	"RECEIVED_CARD_KEY": function() {
-		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-			return "logical";
+		if (can_goldenrod()) {
+			if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
+				return hidden_logic();
+			}
 		}
 	},
 	"RADIO_CARD": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"BUENA_BLUE_CARD": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"SUNNY_DAY_FROM_RADIO_TOWER": function() {
 		if (has("EVENT_CLEARED_RADIO_TOWER")) {
-			return "logical";
+			return can_goldenrod();
 		}
 	},
 	"PINK_BOW_FROM_MARY": function() {
 		if (has("EVENT_CLEARED_RADIO_TOWER")) {
-			return "logical";
+			return can_goldenrod();
 		}
 	},
 	"BEAT_ROCKET_EXECUTIVEM_3": function() {
-		return rocket_took_radio_tower();
+		if (can_goldenrod()) {
+			return rocket_took_radio_tower();
+		}
 	},
 	"RADIO_TOWER_5F_ULTRA_BALL": function() {
-		if (has("ITEM_CARD_KEY")) {
+		if (has("ITEM_CARD_KEY") && can_goldenrod()) {
 			return rocket_took_radio_tower();
 		}
 	},
 	"CLEAR_BELL": function() {
-		if (has("ITEM_CARD_KEY")) {
+		if (has("ITEM_CARD_KEY") && can_goldenrod()) {
 			return rocket_took_radio_tower();
 		}
 	},
 	"EVENT_CLEARED_RADIO_TOWER": function() {
-		if (has("ITEM_CARD_KEY")) {
+		if (has("ITEM_CARD_KEY") && can_goldenrod()) {
 			return rocket_took_radio_tower();
+		}
+	},
+	"GS_BALL_FROM_GOLDENROD_POKEMON_CENTER": function() {
+		if (has("EVENT_DEFEAT_LANCE")) {
+			return can_goldenrod();
 		}
 	},
 	// Ecruteak City
@@ -534,6 +612,11 @@ const locationLogic = {
 	},
 	"TIN_TOWER_9F_HP_UP": function() {
 		return can_tin_tower();
+	},
+	"TIN_TOWER_1F_RAINBOW_WING": function() {
+		if (has("EVENT_DEFEAT_LANCE")) {
+			return can_tin_tower();
+		}
 	},
 	// Olivine City
 	"METAL_COAT_FROM_GRANDPA_ON_SS_AQUA": function() {
@@ -1333,134 +1416,162 @@ const locationLogic = {
 		return "logical";
 	},
 	"TM50_NIGHTMARE": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"EVENT_DELIVERED_KENYA": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"FRUITTREE_ROUTE_31": function() {
 		return "logical";
 	},
 	// 32
 	"ROUTE_32_GREAT_BALL": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"ROUTE_32_HIDDEN_SUPER_POTION": function() {
-		return hidden_logic();
+		if (can_azalea()) {
+			return hidden_logic();
+		}
 	},
 	"ROUTE_32_REPEL": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"TM05_ROAR": function() {
-		return can_cut();
+		if (can_azalea()) {
+			return can_cut();
+		}
 	},
 	"MIRACLE_SEED_IN_ROUTE_32": function() {
 		return has("ZEPHYR_BADGE");
 	},
 	"OLD_ROD": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"POISON_BARB_FROM_FRIEDA": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"ROUTE_32_HIDDEN_GREAT_BALL": function() {
-		return hidden_logic();
+		if (can_azalea()) {
+			return hidden_logic();
+		}
 	},
 	"UNION_CAVE_1F_AWAKENING": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"UNION_CAVE_1F_GREAT_BALL": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"UNION_CAVE_1F_POTION": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"UNION_CAVE_1F_X_ATTACK": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"UNION_CAVE_B1F_TM_SWIFT": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"UNION_CAVE_B1F_X_DEFEND": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"UNION_CAVE_B2F_ELIXER": function() {
-		return can_surf();
+		if (can_azalea()) {
+			return can_surf();
+		}
 	},
 	"UNION_CAVE_B2F_HYPER_POTION": function() {
-		return can_surf();
+		if (can_azalea()) {
+			return can_surf();
+		}
 	},
 	// 33
 	"FRUITTREE_ROUTE_33": function() {
-		return "logical";
+		return can_azalea();
 	},
 	// 34
 	"ILEX_FOREST_ANTIDOTE": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"ILEX_FOREST_ETHER": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"ILEX_FOREST_HIDDEN_ETHER": function() {
-		return hidden_logic();
+		if (can_goldenrod()) {
+			return hidden_logic();
+		}
 	},
 	"ILEX_FOREST_HIDDEN_FULL_HEAL": function() {
-		return hidden_logic();
+		if (can_goldenrod()) {
+			return hidden_logic();
+		}
 	},
 	"ILEX_FOREST_HIDDEN_SUPER_POTION": function() {
-		return hidden_logic();
+		if (can_goldenrod()) {
+			return hidden_logic();
+		}
 	},
 	"ILEX_FOREST_REVIVE": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"ILEX_FOREST_X_ATTACK": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"HM01_CUT": function() {
-		return "logical";
+		return can_azalea();
 	},
 	"TM02_HEADBUTT": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	// 34
 	"ROUTE_34_HIDDEN_SUPER_POTION": function() {
-		return hidden_logic();
+		if (can_goldenrod()) {
+			return hidden_logic();
+		}
 	},
 	"SOFT_SAND_FROM_KATE": function() {
-		return can_surf();
+		if (can_goldenrod()) {
+			return can_surf();
+		}
 	},
 	"TM12_SWEET_SCENT": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"ROUTE_34_NUGGET": function() {
-		return can_surf();
+		if (can_goldenrod()) {
+			return can_surf();
+		}
 	},
 	"ROUTE_34_HIDDEN_RARE_CANDY": function() {
-		if (can_surf()) {
+		if (can_surf() && can_goldenrod()) {
 			return hidden_logic();
 		}
 	},
 	// 35
 	"NATIONAL_PARK_HIDDEN_FULL_HEAL": function() {
-		return hidden_logic();
+		if (can_goldenrod()) {
+			return hidden_logic();
+		}
 	},
 	"NATIONAL_PARK_PARLYZ_HEAL": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"NATIONAL_PARK_TM_DIG": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"QUICK_CLAW": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"ROUTE_35_TM_ROLLOUT": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"FRUITTREE_ROUTE_35": function() {
-		return can_surf();
+		if (can_goldenrod()) {
+			return can_surf();
+		}
 	},
 	"HP_UP_FROM_RANDY": function() {
-		return has("EVENT_DELIVERED_KENYA");
+		if (can_goldenrod()) {
+			return has("EVENT_DELIVERED_KENYA");
+		}
 	},
 	// 36
 	"TM08_ROCK_SMASH": function() {
@@ -1470,7 +1581,7 @@ const locationLogic = {
 		return "logical";
 	},
 	"FRUITTREE_ROUTE_36": function() {
-		return "logical";
+		return can_goldenrod();
 	},
 	"PICKED_UP_ENERGY_ROOT_FROM_AERODACTYL_ITEM_ROOM": function() {
 		if (can_surf() && can_flash()) {
@@ -1521,6 +1632,26 @@ const locationLogic = {
 	},
 	"PICKED_UP_STARDUST_FROM_OMANYTE_ITEM_ROOM": function() {
 		if (can_surf() && can_strength() && has("ITEM_WATER_STONE")) {
+			return "logical";
+		}
+	},
+	"PICKED_UP_GOLD_BERRY_FROM_HO_OH_ITEM_ROOM": function() {
+		if (can_surf() && has("ITEM_RAINBOW_WING")) {
+			return "logical";
+		}
+	},
+	"PICKED_UP_MYSTERYBERRY_FROM_HO_OH_ITEM_ROOM": function() {
+		if (can_surf() && has("ITEM_RAINBOW_WING")) {
+			return "logical";
+		}
+	},
+	"PICKED_UP_REVIVAL_HERB_FROM_HO_OH_ITEM_ROOM": function() {
+		if (can_surf() && has("ITEM_RAINBOW_WING")) {
+			return "logical";
+		}
+	},
+	"PICKED_UP_CHARCOAL_FROM_HO_OH_ITEM_ROOM": function() {
+		if (can_surf() && has("ITEM_RAINBOW_WING")) {
 			return "logical";
 		}
 	},
