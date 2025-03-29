@@ -730,44 +730,28 @@ const locationLogic = {
 		}
 	},
 	"TEAM_ROCKET_BASE_B2F_TM_THIEF": function() {
-		if (can_rocket_hideout()) {
-			return hidden_logic();
-		}
+		return can_rocket_hideout();
 	},
 	"HM06_WHIRLPOOL": function() {
-		if (can_rocket_hideout()) {
-			return hidden_logic();
-		}
+		return can_rocket_hideout();
 	},
 	"EVENT_CLEARED_ROCKET_HIDEOUT": function() {
-		if (can_rocket_hideout()) {
-			return hidden_logic();
-		}
+		return can_rocket_hideout();
 	},
 	"TEAM_ROCKET_BASE_B3F_FULL_HEAL": function() {
-		if (can_rocket_hideout()) {
-			return hidden_logic();
-		}
+		return can_rocket_hideout();
 	},
 	"TEAM_ROCKET_BASE_B3F_ICE_HEAL": function() {
-		if (can_rocket_hideout()) {
-			return hidden_logic();
-		}
+		return can_rocket_hideout();
 	},
 	"TEAM_ROCKET_BASE_B3F_PROTEIN": function() {
-		if (can_rocket_hideout()) {
-			return hidden_logic();
-		}
+		return can_rocket_hideout();
 	},
 	"TEAM_ROCKET_BASE_B3F_ULTRA_BALL": function() {
-		if (can_rocket_hideout()) {
-			return hidden_logic();
-		}
+		return can_rocket_hideout();
 	},
 	"TEAM_ROCKET_BASE_B3F_X_SPECIAL": function() {
-		if (can_rocket_hideout()) {
-			return hidden_logic();
-		}
+		return can_rocket_hideout();
 	},
 	// Blackthorn City
 	"SPELL_TAG_FROM_SANTOS": function() {
