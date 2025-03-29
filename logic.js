@@ -452,38 +452,28 @@ const locationLogic = {
 		}
 	},
 	"GOLDENROD_UNDERGROUND_SWITCH_ROOM_ENTRANCES_SMOKE_BALL": function() {
-		if (can_goldenrod()) {
-			if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-				return hidden_logic();
-			}
+		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
+			return can_goldenrod();
 		}
 	},
 	"GOLDENROD_UNDERGROUND_WAREHOUSE_MAX_ETHER": function() {
-		if (can_goldenrod()) {
-			if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-				return hidden_logic();
-			}
+		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
+			return can_goldenrod();
 		}
 	},
 	"GOLDENROD_UNDERGROUND_WAREHOUSE_TM_SLEEP_TALK": function() {
-		if (can_goldenrod()) {
-			if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-				return hidden_logic();
-			}
+		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
+			return can_goldenrod();
 		}
 	},
 	"GOLDENROD_UNDERGROUND_WAREHOUSE_ULTRA_BALL": function() {
-		if (can_goldenrod()) {
-			if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-				return hidden_logic();
-			}
+		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
+			return can_goldenrod();
 		}
 	},
 	"RECEIVED_CARD_KEY": function() {
-		if (can_goldenrod()) {
-			if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
-				return hidden_logic();
-			}
+		if (has("ITEM_CARD_KEY") || has("ITEM_BASEMENT_KEY")) {
+			return can_goldenrod();
 		}
 	},
 	"RADIO_CARD": function() {

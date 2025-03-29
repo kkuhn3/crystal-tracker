@@ -21,7 +21,7 @@ const idToString = {
 	"slowpoke_well": "Slowpoke Well",
 	"goldenrod_dept_store": "Goldenrod Department Store",
 	"goldenrod_gym": "Goldenrod Gym",
-	"goldenrod_underground": "Goldenrod Underground",
+	"goldenrod_underground": "Goldenrod Underground (3,2,1 - 1,3,2,1,3)",
 	"radio_tower": "Radio Tower",
 	"burned_tower": "Burned Tower",
 	"ecruteak_gym": "Ecruteak Gym",
