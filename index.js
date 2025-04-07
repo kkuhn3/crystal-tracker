@@ -176,9 +176,11 @@ function hideToMatch(div, prefix) {
 			ifTrueAddClass(sub, !show, hiddenClasses[0]);
 		}
 	}
-	//CERULEAN_CITY_BERSERK_GENE is a "hidden" item
+	//CERULEAN_CITY_BERSERK_GENE and CELADON_CAFE_LEFTOVERS are "hidden" items
 	if ("_HIDDEN_" === prefix) {
-		ifTrueAddClass(CERULEAN_CITY_BERSERK_GENE, !show, hiddenClasses[0]);
+		for (let locationId of hiddenLocations) {
+			ifTrueAddClass(document.getElementById(locationId), !show, hiddenClasses[0]);
+		}
 	}
 }
 function settingOnClick(div, prefix) {

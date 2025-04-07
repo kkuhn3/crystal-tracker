@@ -880,6 +880,11 @@ const locationLogic = {
 	"TM03_CURSE": function() {
 		return can_celadon();
 	},
+	"CELADON_CAFE_LEFTOVERS": function() {
+		if (can_celadon()) {
+			return hidden_logic();
+		}
+	},
 	// Saffron City
 	"PASS_FROM_COPYCAT": function() {
 		if (has("ITEM_LOST_ITEM")) {
@@ -963,6 +968,12 @@ const locationLogic = {
 	},
 	"NUGGET_FROM_GUY": function() {
 		return can_viridian();
+	},
+	// 3
+	"MOUNT_MOON_SQUARE_HIDDEN_MOON_STONE": function() {
+		if (can_pewter() && has("ITEM_TM_ROCK_SMASH")) {
+			return hidden_logic();
+		}
 	},
 	// 4
 	"ROUTE_4_HIDDEN_ULTRA_BALL": function() {
