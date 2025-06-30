@@ -31,67 +31,30 @@
 		Randomizer Settings
 	</div>
 	<div>
-		<label>Berry Trees</label>
-		<select id="BT">
-			<option value="0">Excluded</option>
-			<option value="" selected>Randomized</option>
-		</select>
-	</div>
-	<div>
-		<label>Hidden Items</label>
-		<select id="HI">
-			<option value="" selected>Excluded</option>
-			<option value="1">Randomized</option>
+		<label>Goal</label>
+		<select id="goal">
+			<option value="" selected>Elite Four</option>
+			<option value="1">Red</option>
 		</select>
 	</div>
 	<div>
 		<label>Johto Only</label>
-		<select id="JO">
+		<select id="johto_only">
 			<option value="" selected>All Regions</option>
 			<option value="1">Only Johto</option>
 			<option value="2">Johto and Mt. Silver</option>
 		</select>
 	</div>
 	<div>
-		<label>Route 32 Requirement</label>
-		<select id="R32">
-			<option value="0">None</option>
-			<option value="" selected>Egg from Elm's Aide</option>
-			<option value="2">One Badge</option>
+		<label>Elite Four Requirement</label>
+		<select id="elite_four_requirement">
+			<option value="0">Badges</option>
+			<option value="" selected>Gyms</option>
 		</select>
 	</div>
 	<div>
-		<label>Ilex Forest Cut Tree</label>
-		<select id="IF">
-			<option value="0">Removed</option>
-			<option value="" selected>Exists</option>
-		</select>
-	</div>
-	<div>
-		<label>Badges for Radio Tower</label>
-		<select id="RT">
-			<option value="0">0</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-			<option value="" selected>7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
-			<option value="10">10</option>
-			<option value="11">11</option>
-			<option value="12">12</option>
-			<option value="13">13</option>
-			<option value="14">14</option>
-			<option value="15">15</option>
-			<option value="16">16</option>
-		</select>
-	</div>
-	<div>
-		<label>Badges for Victory Road</label>
-		<select id="VR">
+		<label>Elite Four Count</label>
+		<select id="elite_four_count">
 			<option value="0">0</option>
 			<option value="1">1</option>
 			<option value="2">2</option>
@@ -112,8 +75,15 @@
 		</select>
 	</div>
 	<div>
-		<label>Badges for Mt. Silver</label>
-		<select id="MS">
+		<label>Red Requirement</label>
+		<select id="red_requirement">
+			<option value="0">Badges</option>
+			<option value="" selected>Gyms</option>
+		</select>
+	</div>
+	<div>
+		<label>Red Count</label>
+		<select id="red_count">
 			<option value="0">0</option>
 			<option value="1">1</option>
 			<option value="2">2</option>
@@ -134,10 +104,271 @@
 		</select>
 	</div>
 	<div>
-		<label>Goal</label>
-		<select id="G">
-			<option value="0">Defeat Lance</option>
-			<option value="" selected>Defeat Red</option>
+		<label>Mt. Silver Requirement</label>
+		<select id="mt_silver_requirement">
+			<option value="0">Badges</option>
+			<option value="" selected>Gyms</option>
+		</select>
+	</div>
+	<div>
+		<label>Mt. Silver Count</label>
+		<select id="mt_silver_count">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+			<option value="13">13</option>
+			<option value="14">14</option>
+			<option value="15">15</option>
+			<option value="" selected>16</option>
+		</select>
+	</div>
+	<div>
+		<label>Radio Tower Requirement</label>
+		<select id="radio_tower_requirement">
+			<option value="0">Badges</option>
+			<option value="" selected>Gyms</option>
+		</select>
+	</div>
+	<div>
+		<label>Radio Tower Count</label>
+		<select id="radio_tower_count">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="" selected>7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+			<option value="13">13</option>
+			<option value="14">14</option>
+			<option value="15">15</option>
+			<option value="16">16</option>
+		</select>
+	</div>
+	<div>
+		<label>Route 44 Access Requirement</label>
+		<select id="route_44_access_requirement">
+			<option value="0">Badges</option>
+			<option value="" selected>Gyms</option>
+		</select>
+	</div>
+	<div>
+		<label>Route 44 Access Count</label>
+		<select id="route_44_access_count">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="" selected>7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+			<option value="13">13</option>
+			<option value="14">14</option>
+			<option value="15">15</option>
+			<option value="16">16</option>
+		</select>
+	</div>
+	<div>
+		<label>Kanto Access Requirement</label>
+		<select id="kanto_access_requirement">
+			<option value="" selected>Wake Snorlax</option>
+			<option value="1">Badges</option>
+			<option value="2">Gyms</option>
+			<option value="3">Become Champion</option>
+		</select>
+	</div>
+	<div>
+		<label>Kanto Access Count</label>
+		<select id="kanto_access_count">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="" selected>8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+			<option value="13">13</option>
+			<option value="14">14</option>
+			<option value="15">15</option>
+			<option value="16">16</option>
+		</select>
+	</div>
+	<div>
+		<label>Route 32 Condition</label>
+		<select id="route_32_condition">
+			<option value="" selected>Egg from Elm's Aide</option>
+			<option value="1">Any Badge</option>
+			<option value="2">Any Gym</option>
+			<option value="3">Zephyr Badge</option>
+			<option value="4">None</option>
+		</select>
+	</div>
+	<div>
+		<label>Route 2 Access</label>
+		<select id="route_2_access">
+			<option value="" selected>Vanilla (cut)</option>
+			<option value="1">Ledge</option>
+			<option value="2">Open</option>
+		</select>
+	</div>
+	<div>
+		<label>Route 3 Access</label>
+		<select id="route_3_access">
+			<option value="" selected>Vanilla (open)</option>
+			<option value="1">Boulder Badge</option>
+		</select>
+	</div>
+	<div>
+		<label>Red Gyarados Access</label>
+		<select id="red_gyarados_access">
+			<option value="" selected>Vanilla (surf)</option>
+			<option value="1">Whirlpool</option>
+		</select>
+	</div>
+	<div>
+		<label>Blackthorn Dark Cave Access</label>
+		<select id="blackthorn_dark_cave_access">
+			<option value="" selected>Vanilla (impossible)</option>
+			<option value="1">Waterfall</option>
+		</select>
+	</div>
+	<div>
+		<label>National Park Access</label>
+		<select id="national_park_access">
+			<option value="" selected>Vanilla (open)</option>
+			<option value="1">Bicycle</option>
+		</select>
+	</div>
+	<div>
+		<label>Saffron Gatehouse Tea - North</label>
+		<select id="saffron_gatehouse_tea_north">
+			<option value="" selected>Vanilla (open)</option>
+			<option value="1">Tea</option>
+		</select>
+	</div>
+	<div>
+		<label>Saffron Gatehouse Tea - East</label>
+		<select id="saffron_gatehouse_tea_east">
+			<option value="" selected>Vanilla (open)</option>
+			<option value="1">Tea</option>
+		</select>
+	</div>
+	<div>
+		<label>Saffron Gatehouse Tea - South</label>
+		<select id="saffron_gatehouse_tea_south">
+			<option value="" selected>Vanilla (open)</option>
+			<option value="1">Tea</option>
+		</select>
+	</div>
+	<div>
+		<label>Saffron Gatehouse Tea - West</label>
+		<select id="saffron_gatehouse_tea_west">
+			<option value="" selected>Vanilla (open)</option>
+			<option value="1">Tea</option>
+		</select>
+	</div>
+	<div>
+		<label>Remove Ilex Cut Tree</label>
+		<select id="remove_ilex_cut_tree">
+			<option value="" selected>Vanilla (cut)</option>
+			<option value="1">Removed</option>
+		</select>
+	</div>
+	<div>
+		<label>Undergrounds Require Power</label>
+		<select id="undergrounds_require_power">
+			<option value="" selected>Both</option>
+			<option value="1">North - South</option>
+			<option value="2">East - West</option>
+			<option value="3">Neither</option>
+		</select>
+	</div>
+	<div>
+		<label>East West Underground</label>
+		<select id="east_west_underground">
+			<option value="" selected>Vanilla (none)</option>
+			<option value="1">Exists</option>
+		</select>
+	</div>
+	<div>
+		<label>Vanilla Clair</label>
+		<select id="vanilla_clair">
+			<option value="0">Abreviated</option>
+			<option value="" selected>Vanilla (whirlpool)</option>
+		</select>
+	</div>
+	<div>
+		<label>Randomize Badges</label>
+		<select id="randomize_badges">
+			<option value="0">Vanilla</option>
+			<option value="">Shuffle</option>
+			<option value="" selected>Randomized</option>
+		</select>
+	</div>
+	<div>
+		<label>Randomize Pokegear</label>
+		<select id="randomize_pokegear">
+			<option value="0">Vanilla</option>
+			<option value="" selected>Randomized</option>
+		</select>
+	</div>
+	<div>
+		<label>Randomize Hidden Items</label>
+		<select id="randomize_hidden_items">
+			<option value="" selected>Vanilla</option>
+			<option value="1">Randomized</option>
+		</select>
+	</div>
+	<div>
+		<label>Randomize Berry Trees</label>
+		<select id="randomize_berry_trees">
+			<option value="0">Vanilla</option>
+			<option value="" selected>Randomized</option>
+		</select>
+	</div>
+	<div>
+		<label>Require Itemfinder</label>
+		<select id="require_itemfinder">
+			<option value="0">Not Required</option>
+			<option value="" selected>Logically Required</option>
+			<option value="2">Hard Required</option>
+		</select>
+	</div>
+	<div>
+		<label>HM Badge Requirements</label>
+		<select id="hm_badge_requirements">
+			<option value="" selected>Vanilla</option>
+			<option value="1">No Badges</option>
+			<option value="2">Add Kanto</option>
+			<option value="3">Regional/option>
 		</select>
 	</div>
 

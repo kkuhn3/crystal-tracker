@@ -23,8 +23,8 @@ body {
 }
 /*Settings*/
 .setting {
-	width: 1.66666666667vw;
-	height: 1.66666666667vw;
+	width: calc(20vw/12);
+	height: calc(20vw/12);
 	background-size: contain;
 	float: left;
 	cursor: pointer;
@@ -32,6 +32,10 @@ body {
 	background-repeat: no-repeat;
 	background-position: center;
 	position: relative;
+}
+.smallsetting {
+	width: calc(20vw/13);
+	height: calc(20vw/13);
 }
 .setting:hover {
 	transform: scale(1.2);
@@ -54,8 +58,8 @@ body {
 	float: left;
 }
 .item {
-	width: 2.5vw;
-	height: 2.5vw;
+	width: calc(20vw/8);
+	height: calc(20vw/8);
 	background-size: contain;
 	float: left;
 	filter: grayscale(100%);
@@ -71,14 +75,18 @@ body {
 	z-index: 100;
 }
 .notItem {
-	width: 2.5vw;
-	height: 2.5vw;
+	width: calc(20vw/8);
+	height: calc(20vw/8);
 	background-color: #293541;
 	float: left;
 }
 .smallItem {
-	width: 2vw;
-	height: 2vw;
+	width: calc(20vw/10);
+	height: calc(20vw/10);
+}
+.smallerItem {
+	width: calc(20vw/11);
+	height: calc(20vw/11);
 }
 .itemchecked {
 	filter: grayscale(0%);
@@ -244,15 +252,6 @@ body {
 
 /*various aliases for display none*/
 .hidden {
-	display: none;
-}
-.hiddenhidden {
-	display: none;
-}
-.victoryhidden {
-	display: none;
-}
-.kantohidden {
 	display: none;
 }
 

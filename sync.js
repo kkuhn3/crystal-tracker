@@ -55,6 +55,7 @@ function connect() {
 					if (currentGroup) {
 						groupFocus(document.getElementById(currentGroup));
 					}
+					settingsFromSlotData(command.slot_data);
 					updateLocations();
 					updateGroups();
 					countchecks();
@@ -133,4 +134,32 @@ function gotLocation(id) {
 		}
 
 	}
+}
+
+function settingsFromSlotData(slotData) {
+	for (const setting of document.getElementsByClassName("setting")) {
+		if (slotData[setting.id] != null) {
+			setSettingClass(setting, "_" + slotData[setting.id]);
+		}
+	}
+	setSettingClass(saffron_gatehouse_tea_north, "_" + slotData["tea_north"]);
+	setSettingClass(saffron_gatehouse_tea_east, "_" + slotData["tea_east"]);
+	setSettingClass(saffron_gatehouse_tea_south, "_" + slotData["tea_south"]);
+	setSettingClass(saffron_gatehouse_tea_west, "_" + slotData["tea_west"]);
+	if (slotData["hiddenitem_logic"] < 3) {
+		setSettingClass(randomize_hidden_items, "_0");
+	}
+	else {
+		setSettingClass(randomize_hidden_items, "_1");
+	}
+	if (slotData["hiddenitem_logic"] === 0 || slotData["hiddenitem_logic"] === 3) {
+		setSettingClass(require_itemfinder, "_0");
+	}
+	if (slotData["hiddenitem_logic"] === 1 || slotData["hiddenitem_logic"] === 4) {
+		setSettingClass(require_itemfinder, "_1");
+	}
+	if (slotData["hiddenitem_logic"] === 2 || slotData["hiddenitem_logic"] === 5) {
+		setSettingClass(require_itemfinder, "_2");
+	}
+	hideToMatch();
 }

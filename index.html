@@ -14,18 +14,43 @@
 	<body>
 		<div id="leftCol">
 			<div id="settings">
-				<img class="setting _1" id="RandomizeBerryTrees" onclick="settingOnClick(this, 'FRUITTREE_')">
-				<img class="setting _0" id="RandomizeHiddenItems" onclick="settingOnClick(this, '_HIDDEN_')">
-				<img class="setting _0" id="RandomizeKanto" onclick="ranomizeKantoOnClick(this)">
-				<img class="setting _1" id="Route32Guy" onclick="settingIterateOnClick(this, 2)">
-				<img class="setting _1" id="IlexCutTree" onclick="settingIterateOnClick(this, 1)">
-				<img class="setting _7" id="RadioTowerBadges" onclick="settingIterateOnClick(this, 16)">
-				<img class="setting _8" id="EliteFourBadges" onclick="settingIterateOnClick(this, 16)">
-				<img class="setting _16" id="RedBadges" onclick="settingIterateOnClick(this, 16)">
-				<img class="setting _1" id="Goal" onclick="goalOnClick(this)">
-				<div class="setting notImageImage" id="CHECK_CHECKED">0</div>
-				<div class="setting notImageImage" id="CHECK_LOGICAL">50</div>
-				<div class="setting notImageImage" id="CHECK_TOTAL">300</div>
+				<img class="setting _1" id="elite_four_requirement" onclick="settingLogic(this, 1)">
+				<img class="setting _8" id="elite_four_count" onclick="settingLogic(this, 16)">
+				<img class="setting _1" id="red_requirement" onclick="settingLogic(this, 1)">
+				<img class="setting _16" id="red_count" onclick="settingLogic(this, 16)">
+				<img class="setting _1" id="mt_silver_requirement" onclick="settingLogic(this, 1)">
+				<img class="setting _16" id="mt_silver_count" onclick="settingLogic(this, 16)">
+				<img class="setting _1" id="radio_tower_requirement" onclick="settingLogic(this, 1)">
+				<img class="setting _7" id="radio_tower_count" onclick="settingLogic(this, 16)">
+				<img class="setting _1" id="route_44_access_requirement" onclick="settingLogic(this, 1)">
+				<img class="setting _7" id="route_44_access_count" onclick="settingLogic(this, 16)">
+				<img class="setting _0" id="kanto_access_requirement" onclick="settingLogic(this, 3)">
+				<img class="setting _8" id="kanto_access_count" onclick="settingLogic(this, 16)">
+				<img class="setting _0" id="goal" onclick="settingHide(this, 1)">
+				<img class="setting _0" id="johto_only" onclick="settingLogicHide(this, 2)">
+				<img class="setting _0" id="route_32_condition" onclick="settingLogic(this, 4)">
+				<img class="setting _0" id="route_2_access" onclick="settingLogic(this, 2)">
+				<img class="setting _0" id="route_3_access" onclick="settingLogic(this, 1)">
+				<img class="setting _0" id="red_gyarados_access" onclick="settingLogic(this, 1)">
+				<img class="setting _0" id="blackthorn_dark_cave_access" onclick="settingLogic(this, 1)">
+				<img class="setting _0" id="national_park_access" onclick="settingLogic(this, 1)">
+				<img class="setting _0" id="saffron_gatehouse_tea_north" onclick="settingLogicHide(this, 1)">
+				<img class="setting _0" id="saffron_gatehouse_tea_east" onclick="settingLogicHide(this, 1)">
+				<img class="setting _0" id="saffron_gatehouse_tea_south" onclick="settingLogicHide(this, 1)">
+				<img class="setting _0" id="saffron_gatehouse_tea_west" onclick="settingLogicHide(this, 1)">
+				<img class="setting smallsetting _0" id="remove_ilex_cut_tree" onclick="settingLogic(this, 1)">
+				<img class="setting smallsetting _0" id="undergrounds_require_power" onclick="settingLogic(this, 3)">
+				<img class="setting smallsetting _0" id="east_west_underground" onclick="settingLogic(this, 1)">
+				<img class="setting smallsetting _1" id="vanilla_clair" onclick="settingLogicHide(this, 1)">
+				<img class="setting smallsetting _1" id="randomize_badges" onclick="settingHide(this, 1)">
+				<img class="setting smallsetting _1" id="randomize_pokegear" onclick="settingHide(this, 1)">
+				<img class="setting smallsetting _0" id="randomize_hidden_items" onclick="settingHide(this, 1)">
+				<img class="setting smallsetting _1" id="randomize_berry_trees" onclick="settingHide(this, 1)">
+				<img class="setting smallsetting _1" id="require_itemfinder" onclick="settingLogic(this, 2)">
+				<img class="setting smallsetting _0" id="hm_badge_requirements" onclick="settingLogic(this, 3)">
+				<div class="setting smallsetting notImageImage" id="CHECK_CHECKED">0</div>
+				<div class="setting smallsetting notImageImage" id="CHECK_LOGICAL">50</div>
+				<div class="setting smallsetting notImageImage" id="CHECK_TOTAL">300</div>
 			</div>
 			<div id="items">
 				<img class="item" id="ZEPHYR_BADGE">
@@ -44,12 +69,12 @@
 				<img class="notItem">
 				<img class="item" id="HM_WHIRLPOOL">
 				<img class="item" id="HM_WATERFALL">
-				<img class="item" id="THUNDER_BADGE">
-				<img class="item" id="MARSH_BADGE">
+				<img class="item" id="BOULDER_BADGE">
 				<img class="item" id="CASCADE_BADGE">
 				<img class="item" id="RAINBOW_BADGE">
 				<img class="item" id="SOUL_BADGE">
-				<img class="item" id="BOULDER_BADGE">
+				<img class="item" id="THUNDER_BADGE">
+				<img class="item" id="MARSH_BADGE">
 				<img class="item" id="VOLCANO_BADGE">
 				<img class="item" id="EARTH_BADGE">
 				<img class="item smallItem" id="ITEM_BICYCLE">
@@ -61,17 +86,18 @@
 				<img class="item smallItem" id="ITEM_S_S_TICKET">
 				<img class="item smallItem" id="ITEM_MYSTERY_EGG">
 				<img class="item smallItem" id="ITEM_CLEAR_BELL">
-				<img class="item smallItem" id="ITEM_RAINBOW_WING">
 				<img class="item smallItem" id="ITEM_CARD_KEY">
-				<img class="item smallItem" id="ITEM_MACHINE_PART">
-				<img class="item smallItem" id="ITEM_LOST_ITEM">
-				<img class="item smallItem" id="ITEM_BASEMENT_KEY">
-				<img class="item smallItem" id="ITEM_PASS">
-				<img class="item smallItem" id="ITEM_SQUIRTBOTTLE">
-				<img class="item smallItem" id="ITEM_RADIO_CARD">
-				<img class="item smallItem" id="ITEM_EXPN_CARD">
-				<img class="item smallItem" id="ITEM_POKE_GEAR">
-				<img class="item smallItem" id="ITEM_TM_ROCK_SMASH">
+				<img class="item smallerItem" id="ITEM_MACHINE_PART">
+				<img class="item smallerItem" id="ITEM_LOST_ITEM">
+				<img class="item smallerItem" id="ITEM_BASEMENT_KEY">
+				<img class="item smallerItem" id="ITEM_PASS">
+				<img class="item smallerItem" id="ITEM_SQUIRTBOTTLE">
+				<img class="item smallerItem" id="ITEM_RAINBOW_WING">
+				<img class="item smallerItem" id="ITEM_RADIO_CARD">
+				<img class="item smallerItem" id="ITEM_EXPN_CARD">
+				<img class="item smallerItem" id="ITEM_POKE_GEAR">
+				<img class="item smallerItem" id="ITEM_TEA">
+				<img class="item smallerItem" id="ITEM_TM_ROCK_SMASH">
 			</div>
 			<div id="itemHoverDesc">
 				&nbsp
@@ -88,6 +114,7 @@
 			<!---------------------------------------------------------------------------->
 			<!-- JOHTO -->
 			<!--New Bark Town-->
+			<!-- TODO - reorder groups to make more sense as a player -->
 			<div class="group" id="elms_lab">
 				<div class="sub" id="MASTER_BALL_FROM_ELM"></div>
 				<div class="sub" id="SS_TICKET_FROM_ELM"></div>
@@ -111,12 +138,14 @@
 			<div class="location" id="VIOLET_CITY_PP_UP"></div>
 			<div class="location" id="VIOLET_CITY_RARE_CANDY"></div>
 			<div class="group" id="violet_gym">
+				<div class="sub" id="EVENT_DEFEAT_FALKNER"></div>
 				<div class="sub" id="ZEPHYR_BADGE_FROM_FALKNER"></div>
 				<div class="sub" id="TM31_MUD_SLAP"></div>
 			</div>
 			<div class="location" id="EVENT_GET_EGG"></div>
 			<!--Azalea Town-->
 			<div class="group" id="azalea_gym">
+				<div class="sub" id="EVENT_DEFEAT_BUGSY"></div>
 				<div class="sub" id="HIVE_BADGE_FROM_BUGSY"></div>
 				<div class="sub" id="TM49_FURY_CUTTER"></div>
 			</div>
@@ -135,6 +164,8 @@
 			<!--Goldenrod City-->
 			<div class="location" id="BICYCLE"></div>
 			<div class="group" id="goldenrod_dept_store">
+				<div class="sub" id="TM27_RETURN"></div>
+				<div class="sub" id="TM21_FRUSTRATION"></div>
 				<div class="sub" id="GOLDENROD_DEPT_STORE_B1F_BURN_HEAL"></div>
 				<div class="sub" id="GOLDENROD_DEPT_STORE_B1F_ETHER"></div>
 				<div class="sub" id="GOLDENROD_DEPT_STORE_B1F_ULTRA_BALL"></div>
@@ -142,6 +173,7 @@
 			</div>
 			<div class="location" id="SQUIRTBOTTLE"></div>
 			<div class="group" id="goldenrod_gym">
+				<div class="sub" id="EVENT_DEFEAT_WHITNEY"></div>
 				<div class="sub" id="PLAIN_BADGE_FROM_WHITNEY"></div>
 				<div class="sub" id="TM45_ATTRACT"></div>
 			</div>
@@ -180,6 +212,7 @@
 			<div class="location" id="HM03_SURF"></div>
 			<div class="location" id="ECRUTEAK_CITY_HIDDEN_HYPER_POTION"></div>
 			<div class="group" id="ecruteak_gym">
+				<div class="sub" id="EVENT_DEFEAT_MORTY"></div>
 				<div class="sub" id="FOG_BADGE_FROM_MORTY"></div>
 				<div class="sub" id="TM30_SHADOW_BALL"></div>
 			</div>
@@ -206,6 +239,7 @@
 			<div class="location" id="HM04_STRENGTH"></div>
 			<div class="location" id="GOOD_ROD"></div>
 			<div class="group" id="olivine_gym">
+				<div class="sub" id="EVENT_DEFEAT_JASMINE"></div>
 				<div class="sub" id="MINERAL_BADGE_FROM_JASMINE"></div>
 				<div class="sub" id="TM23_IRON_TAIL"></div>
 			</div>
@@ -230,6 +264,7 @@
 			<div class="location" id="SECRETPOTION_FROM_PHARMACY"></div>
 			<!--Mahogany Town-->
 			<div class="group" id="mahogany_gym">
+				<div class="sub" id="EVENT_DEFEAT_PRYCE"></div>
 				<div class="sub" id="GLACIER_BADGE_FROM_PRYCE"></div>
 				<div class="sub" id="TM16_ICY_WIND"></div>
 			</div>
@@ -251,11 +286,14 @@
 			<!--Blackthorn City-->
 			<div class="location" id="SPELL_TAG_FROM_SANTOS"></div>
 			<div class="group" id="blackthorn_gym">
-				<div class="sub" id="EVENT_DEFEAT_CLAIR"></div>
-				<div class="sub" id="RISING_BADGE_FROM_CLAIR"></div>
-				<div class="sub" id="TM24_DRAGONBREATH"></div>
+				<div class="sub" id="EVENT_DEFEAT_CLAIR_GYM"></div>
+				<div class="sub" id="RISING_BADGE_FROM_CLAIR_GYM"></div>
+				<div class="sub" id="TM24_DRAGONBREATH_GYM"></div>
 			</div>
 			<div class="group" id="dragons_den">
+				<div class="sub" id="EVENT_DEFEAT_CLAIR_SHRINE"></div>
+				<div class="sub" id="RISING_BADGE_FROM_CLAIR_SHRINE"></div>
+				<div class="sub" id="TM24_DRAGONBREATH_SHRINE"></div>
 				<div class="sub" id="DRAGONS_DEN_B1F_CALCIUM"></div>
 				<div class="sub" id="DRAGONS_DEN_B1F_DRAGON_FANG"></div>
 				<div class="sub" id="DRAGONS_DEN_B1F_MAX_ELIXER"></div>
@@ -268,18 +306,25 @@
 			<!--Pallet Town-->
 			<!--Viridian City-->
 			<div class="location" id="TM42_DREAM_EATER"></div>
-			<div class="location" id="EARTH_BADGE_FROM_BLUE"></div>
+			<div class="group" id="viridian_gym">
+				<div class="sub" id="EVENT_DEFEAT_BLUE"></div>
+				<div class="sub" id="EARTH_BADGE_FROM_BLUE"></div>
+			</div>
 			<!--Pewter City-->
 			<div class="location" id="SILVER_WING"></div>
 			<div class="group" id="pewter_berry_trees">
 				<div class="sub" id="FRUITTREE_PEWTER_CITY_1"></div>
 				<div class="sub" id="FRUITTREE_PEWTER_CITY_2"></div>
 			</div>
-			<div class="location" id="BOULDER_BADGE_FROM_BROCK"></div>
+			<div class="group" id="pewter_gym">
+				<div class="sub" id="EVENT_DEFEAT_BROCK"></div>
+				<div class="sub" id="BOULDER_BADGE_FROM_BROCK"></div>
+			</div>
 			<!--Cerulean City-->
 			<div class="location" id="CERULEAN_CITY_BERSERK_GENE"></div>
 			<div class="group" id="cerulean_gym">
 				<div class="sub" id="CERULEAN_GYM_MACHINE_PART"></div>
+				<div class="sub" id="EVENT_DEFEAT_MISTY"></div>
 				<div class="sub" id="CASCADE_BADGE_FROM_MISTY"></div>
 			</div>
 			<!--Vermilion City-->
@@ -289,6 +334,7 @@
 			</div>
 			<div class="group" id="vermilion_gym">
 				<div class="sub" id="VERMILION_CITY_HIDDEN_FULL_HEAL"></div>
+				<div class="sub" id="EVENT_DEFEAT_SURGE"></div>
 				<div class="sub" id="THUNDER_BADGE_FROM_LTSURGE"></div>
 			</div>
 			<div class="location" id="HP_UP_FROM_VERMILION_GUY"></div>
@@ -298,20 +344,28 @@
 			<!--Celadon City-->
 			<div class="location" id="CELADON_CITY_HIDDEN_PP_UP"></div>
 			<div class="group" id="celadon_gym">
+				<div class="sub" id="EVENT_DEFEAT_ERIKA"></div>
 				<div class="sub" id="RAINBOW_BADGE_FROM_ERIKA"></div>
 				<div class="sub" id="TM19_GIGA_DRAIN"></div>
 			</div>
-			<div class="location" id="TM03_CURSE"></div>
+			<div class="group" id="celadon_condominiums">
+				<div class="sub" id="CELADON_MANSION_1F_TEA"></div>
+				<div class="sub" id="TM03_CURSE"></div>
+			</div>
 			<div class="location" id="CELADON_CAFE_LEFTOVERS"></div>
 			<!--Saffron City-->
 			<div class="location" id="PASS_FROM_COPYCAT"></div>
 			<div class="location" id="PICKED_UP_FOCUS_BAND"></div>
 			<div class="location" id="TM29_PSYCHIC"></div>
-			<div class="location" id="MARSH_BADGE_FROM_SABRINA"></div>
+			<div class="group" id="saffron_gym">
+				<div class="sub" id="EVENT_DEFEAT_SABRINA"></div>
+				<div class="sub" id="MARSH_BADGE_FROM_SABRINA"></div>
+			</div>
 			<div class="location" id="UP_GRADE"></div>
 			<!--Fuchsia City-->
 			<div class="location" id="FRUITTREE_FUCHSIA_CITY"></div>
 			<div class="group" id="fuchsia_gym">
+				<div class="sub" id="EVENT_DEFEAT_JANINE"></div>
 				<div class="sub" id="SOUL_BADGE_FROM_JANINE"></div>
 				<div class="sub" id="TM06_TOXIC"></div>
 			</div>
@@ -383,7 +437,10 @@
 			<div class="location" id="ROUTE_17_HIDDEN_MAX_ELIXER"></div>
 			<div class="location" id="ROUTE_17_HIDDEN_MAX_ETHER"></div>
 			<!--20-->
-			<div class="location" id="VOLCANO_BADGE_FROM_BLAINE"></div>
+			<div class="group" id="seafoam_gym">
+				<div class="sub" id="EVENT_DEFEAT_BLAINE"></div>
+				<div class="sub" id="VOLCANO_BADGE_FROM_BLAINE"></div>
+			</div>
 			<!--23-->
 			<div class="group" id="victory_road">
 				<div class="sub" id="VICTORY_ROAD_FULL_HEAL"></div>
@@ -676,10 +733,7 @@
 	<script>
 		addOnClick();
 		parseSettings();
-		hideToMatch(RandomizeBerryTrees, "FRUITTREE_");
-		hideToMatch(RandomizeHiddenItems, "_HIDDEN_");
-		hideToMatchKanto(RandomizeKanto);
-		hideToMatchGoal(Goal)
+		hideToMatch();
 		updateLocations();
 		updateGroups();
 		countchecks();

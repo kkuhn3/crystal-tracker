@@ -35,7 +35,6 @@ function isIntLessThan(check, max) {
 	let intValue = parseInt(check, 10);
 	return Number.isInteger(intValue) && intValue <= max && intValue >= 0;
 }
-const hiddenClasses = ["hiddenhidden", "victoryhidden", "kantohidden"];
 
 // Locations
 function locationOnHover(location) {
@@ -81,6 +80,7 @@ function updateLocations() {
 	if (currentGroup) {
 		groupBreakDown.innerHTML = "";
 	}
+	revaluate();
 	for (const locationId in locationLogic) {
 		updateLocation(locationId);
 	}
@@ -114,14 +114,6 @@ function updateLocation(locationId) {
 	}
 	setLogicClass(div, logicClass);
 }
-function ishidden(div) {
-	for (let i of hiddenClasses) {
-		if (div.classList.contains(i)) {
-			return true;
-		}
-	}
-	return false;
-}
 
 // Items
 function itemOnHover(item) {
@@ -145,104 +137,85 @@ function itemOnClick(item) {
 //Settings
 //Settings - Helper
 function settingIterate(setting, max) {
-	let count = parseInt(setting.classList[1].substring(1), 10);
-	setting.classList.remove(setting.classList[1]);
+	let count = getSettingState(setting);
+	setting.classList.remove("_" + count);
 	count = count + 1;
 	if (count > max) {
 		count = 0;
 	}
 	setting.classList.add("_" + count);
 }
-function ifTrueAddClass(div, shouldAddClass, className) {
-	if (shouldAddClass) {
-		addClassName(div, className);
-	}
-	else {
-		div.classList.remove(className);
-	}
+function getSettingState(setting) {
+	return parseInt(setting.classList[setting.classList.length - 1].substring(1), 10);
 }
 
 //Settings - items in logic
-function hideToMatch(div, prefix) {
-	let show = parseInt(div.classList[1].substring(1), 10);
-	for (let location of document.getElementsByClassName("location")) {
-		if (location.id.includes(prefix)) {
-			ifTrueAddClass(location, !show, hiddenClasses[0]);
+function hideToMatch() {
+	let shouldHide = [];
+	if (getSettingState(goal) === 0) {
+		shouldHide = shouldHide.concat(locationTags["PostE4"]);
+	}
+	if (getSettingState(johto_only) > 0) {
+		shouldHide = shouldHide.concat(kantoLocations);
+		if (getSettingState(johto_only) === 1) {
+			shouldHide = shouldHide.concat(mtSilverLocations);
 		}
+	}
+	if (getSettingState(saffron_gatehouse_tea_north) === 0 && 
+		getSettingState(saffron_gatehouse_tea_east) === 0 && 
+		getSettingState(saffron_gatehouse_tea_south) === 0 && 
+		getSettingState(saffron_gatehouse_tea_west) === 0) {
+		shouldHide = shouldHide.concat(locationTags["RequiresSaffronGatehouses"]);
+	}
+	if (getSettingState(vanilla_clair) === 0) {
+		shouldHide = shouldHide.concat(locationTags["VanillaClairOn"]);
+	}
+	else {
+		shouldHide = shouldHide.concat(locationTags["VanillaClairOff"]);
+	}
+	if (getSettingState(randomize_badges) === 0) {
+		shouldHide = shouldHide.concat(locationTags["Badge"]);
+	}
+	if (getSettingState(randomize_pokegear) === 0) {
+		shouldHide = shouldHide.concat(locationTags["Pokegear"]);
+	}
+	if (getSettingState(randomize_hidden_items) === 0) {
+		shouldHide = shouldHide.concat(locationTags["Hidden"]);
+	}
+	if (getSettingState(randomize_berry_trees) === 0) {
+		shouldHide = shouldHide.concat(locationTags["BerryTree"]);
 	}
 	for (let sub of document.getElementsByClassName("sub")) {
-		//TM10_HIDDEN_POWER is not "hidden" despite the name
-		if (sub.id.includes(prefix) && sub.id !== "TM10_HIDDEN_POWER") {
-			ifTrueAddClass(sub, !show, hiddenClasses[0]);
+		sub.classList.remove("hidden");
+		if (shouldHide.includes(sub.id)) {
+			sub.classList.add("hidden");
 		}
 	}
-	//CERULEAN_CITY_BERSERK_GENE and CELADON_CAFE_LEFTOVERS are "hidden" items
-	if ("_HIDDEN_" === prefix) {
-		for (let locationId of hiddenLocations) {
-			ifTrueAddClass(document.getElementById(locationId), !show, hiddenClasses[0]);
+	for (let loc of document.getElementsByClassName("location")) {
+		loc.classList.remove("hidden");
+		if (shouldHide.includes(loc.id)) {
+			loc.classList.add("hidden");
 		}
 	}
 }
-function settingOnClick(div, prefix) {
-	settingIterate(div, 1);
-	hideToMatch(div, prefix);
-	updateGroups();
-	countchecks();
-}
-function settingIterateOnClick(div, count) {
+function settingLogic(div, count) {
 	settingIterate(div, count);
 	updateLocations();
 	updateGroups();
 	countchecks();
 }
-function hideToMatchKanto(div) {
-	const set = parseInt(div.classList[1].substring(1), 10);
-	let showKanto = true;
-	let showSilver = true;
-	if (set) {
-		showKanto = false;
-		if (set === 1) {
-			setSettingClass(Goal, "_0");
-			hideToMatchGoal(Goal);
-			showSilver = false;
-		}
-	}
-	for (let id of kantoLocations) {
-		ifTrueAddClass(document.getElementById(id), !showKanto, hiddenClasses[2]);
-	}
-	for (let id of mtSilverLocations) {
-		ifTrueAddClass(document.getElementById(id), !showSilver, hiddenClasses[2]);
-	}
+function settingHide(div, count) {
+	settingIterate(div, count);
+	hideToMatch();
+	updateGroups();
+	countchecks();
 }
-function ranomizeKantoOnClick(div) {
-	settingIterate(div, 2);
-	groupBreakDown.innerHTML = "";
-	hideToMatchKanto(div);
+function settingLogicHide(div, count) {
+	settingIterate(div, count);
+	hideToMatch();
 	updateLocations();
 	updateGroups();
 	countchecks();
-	if (currentGroup) {
-		groupFocus(document.getElementById(currentGroup));
-	}
-}
-function hideToMatchGoal(div) {
-	const isRed = parseInt(div.classList[1].substring(1), 10);
-	for (let id of postE4Locations) {
-		ifTrueAddClass(document.getElementById(id), !isRed, hiddenClasses[1]);
-	}
-}
-function goalOnClick(div) {
-	if (parseInt(RandomizeKanto.classList[1].substring(1), 10) == 1) {
-		return;
-	}
-	settingIterate(div, 1);
-	groupBreakDown.innerHTML = "";
-	hideToMatchGoal(div);
-	updateGroups();
-	countchecks();
-	if (currentGroup) {
-		groupFocus(document.getElementById(currentGroup));
-	}
 }
 
 // Groups
@@ -276,7 +249,7 @@ function updateGroup(group) {
 	let event = false;
 	let checked = true;
 	for (let sub of group.getElementsByClassName("sub")) {
-		if (!ishidden(sub)) {
+		if (!sub.classList.contains("hidden")) {
 			hidden = false;
 			if (!sub.classList.contains("subchecked")) {
 				checked = false;
@@ -351,7 +324,7 @@ function countchecks() {
 	for (let child of map.children) {
 		if (child.classList.contains("group")) {
 			for (let sub of child.children) {
-				if (!sub.id.includes("EVENT_") && !ishidden(sub)) {
+				if (!sub.id.includes("EVENT_") && !sub.classList.contains("hidden")) {
 					total = total + 1;
 					if (sub.classList.contains("subchecked")) {
 						checked = checked + 1;
@@ -363,7 +336,7 @@ function countchecks() {
 			}
 		}
 		else if (child.classList.contains("location")) {
-			if (!child.id.includes("EVENT_") && !ishidden(child)) {
+			if (!child.id.includes("EVENT_") && !child.classList.contains("hidden")) {
 				total = total + 1;
 				if (child.classList.contains("locationchecked")) {
 					checked = checked + 1;
@@ -388,32 +361,11 @@ function setSettingClass(div, className) {
 }
 function parseSettings() {
 	const urlSearch = new URLSearchParams(window.location.search);
-	if (isIntLessThan(urlSearch.get("bt"), 1)) {
-		setSettingClass(RandomizeBerryTrees, "_" + urlSearch.get("bt"));
-	}
-	if (isIntLessThan(urlSearch.get("hi"), 1)) {
-		setSettingClass(RandomizeHiddenItems, "_" + urlSearch.get("hi"));
-	}
-	if (isIntLessThan(urlSearch.get("jo"), 2)) {
-		setSettingClass(RandomizeKanto, "_" + urlSearch.get("jo"));
-	}
-	if (isIntLessThan(urlSearch.get("r32"), 2)) {
-		setSettingClass(Route32Guy, "_" + urlSearch.get("r32"));
-	}
-	if (isIntLessThan(urlSearch.get("if"), 1)) {
-		setSettingClass(IlexCutTree, "_" + urlSearch.get("if"));
-	}
-	if (isIntLessThan(urlSearch.get("rt"), 16)) {
-		setSettingClass(RadioTowerBadges, "_" + urlSearch.get("rt"));
-	}
-	if (isIntLessThan(urlSearch.get("vr"), 16)) {
-		setSettingClass(EliteFourBadges, "_" + urlSearch.get("vr"));
-	}
-	if (isIntLessThan(urlSearch.get("ms"), 16)) {
-		setSettingClass(RedBadges, "_" + urlSearch.get("ms"));
-	}
-	if (isIntLessThan(urlSearch.get("g"), 1)) {
-		setSettingClass(Goal, "_" + urlSearch.get("g"));
+	for (const [key, value] of urlSearch) {
+		let div = document.getElementById(key);
+		if (div) {
+			setSettingClass(div, "_" + value);
+		}
 	}
 
 	if (urlSearch.get("name") && urlSearch.get("port")) {
