@@ -3,9 +3,6 @@ let aport = false;
 let aname = false;
 let apass = "";
 
-// https://github.com/ArchipelagoMW/Archipelago/pull/3865
-const offset = 0;
-
 function connect() {
 	if (!aport || !aname) {
 		return;
@@ -22,7 +19,7 @@ function connect() {
 			"version" : {
 				"major": 0,
 				"minor": 6,
-				"build": 1,
+				"build": 7,
 				"class": "Version"
 			},
 			"items_handling" : 7,
@@ -105,14 +102,20 @@ function connect() {
 }
 
 function gotItem(id) {
-	let itemName = idToItem[id - offset];
+	let itemName = idToItem[id];
 	if (itemName) {
-		addClassName(document.getElementById(itemName), "itemchecked")
+		let itemDiv = document.getElementById(itemName);
+		if (itemDiv) {
+			addClassName(document.getElementById(itemName), "itemchecked");
+		}
+		else {
+			console.log("Unknown Item: " + itemName);
+		}
 	}
 }
 
 function gotLocation(id) {
-	let locationName = idToLocation[id - offset];
+	let locationName = idToLocation[id];
 	if (locationName) {
 		let div = document.getElementById(locationName);
 		if (div.classList.contains("sub")) {
@@ -122,7 +125,7 @@ function gotLocation(id) {
 			addClassName(document.getElementById(locationName), "locationchecked");
 		}
 	}
-	let eventName = idToEvent[id - offset];
+	let eventName = idToEvent[id];
 	if (eventName) {
 		let div = document.getElementById(eventName);
 
@@ -155,11 +158,29 @@ function settingsFromSlotData(slotData) {
 	if (slotData["hiddenitem_logic"] === 0 || slotData["hiddenitem_logic"] === 3) {
 		setSettingClass(require_itemfinder, "_0");
 	}
-	if (slotData["hiddenitem_logic"] === 1 || slotData["hiddenitem_logic"] === 4) {
+	else if (slotData["hiddenitem_logic"] === 1 || slotData["hiddenitem_logic"] === 4) {
 		setSettingClass(require_itemfinder, "_1");
 	}
-	if (slotData["hiddenitem_logic"] === 2 || slotData["hiddenitem_logic"] === 5) {
+	else if (slotData["hiddenitem_logic"] === 2 || slotData["hiddenitem_logic"] === 5) {
 		setSettingClass(require_itemfinder, "_2");
+	}
+	if (slotData["goal"] > 1) {
+		setSettingClass(goal, "_1");
+	}
+	if (slotData["randomize_badges"] > 1) {
+		setSettingClass(randomize_badges, "_1");
+	}
+	if (slotData["randomize_pokedex"] > 1) {
+		setSettingClass(randomize_pokedex, "_1");
+	}
+	if (slotData["randomize_pokemon_requests"] === 2) {
+		setSettingClass(randomize_pokemon_requests, "_0");
+	}
+	else if (slotData["randomize_pokemon_requests"] === 3) {
+		setSettingClass(randomize_pokemon_requests, "_1");
+	}
+	if (slotData["randomize_phone_call_items"] > 1) {
+		setSettingClass(randomize_phone_call_items, "_1");
 	}
 	hideToMatch();
 }

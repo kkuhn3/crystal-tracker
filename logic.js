@@ -21,6 +21,16 @@ function count_badges() {
 	}
 	return count;
 }
+function count_johto_badges() {
+	let count = 0;
+	const badges = ["ZEPHYR_BADGE", "HIVE_BADGE", "PLAIN_BADGE", "FOG_BADGE", "STORM_BADGE", "MINERAL_BADGE", "GLACIER_BADGE", "RISING_BADGE"];
+	for (const badge of badges) {
+		if (has(badge)) {
+			count += 1;
+		}
+	}
+	return count;
+}
 function count_gyms() {
 	let count = 0;
 	const badges = ["EVENT_DEFEAT_FALKNER", "EVENT_DEFEAT_BUGSY", "EVENT_DEFEAT_WHITNEY", "EVENT_DEFEAT_MORTY", "EVENT_DEFEAT_JASMINE", "EVENT_DEFEAT_CHUCK", "EVENT_DEFEAT_PRYCE",
@@ -59,28 +69,64 @@ function can_hm_region(hm, badgeJohto, badgeKanto, region) {
 	}
 }
 function can_flash(region) {
-	if (can_hm_region("HM_FLASH", "ZEPHYR_BADGE", "BOULDER_BADGE", region)) {
+	const flash = getSettingState(require_flash);
+	if (flash === 0 || can_hm_region("HM_FLASH", "ZEPHYR_BADGE", "BOULDER_BADGE", region)) {
 		return "logical";
 	}
-	return "possible";
+	if (flash === 1) {
+		return "possible";
+	}
 }
 function can_cut(region) {
-	return can_hm_region("HM_CUT", "HIVE_BADGE", "CASCADE_BADGE", region)
+	return can_hm_region("HM_CUT", "HIVE_BADGE", "CASCADE_BADGE", region);
 }
 function can_strength(region) {
-	return can_hm_region("HM_STRENGTH", "PLAIN_BADGE", "RAINBOW_BADGE", region)
+	return can_hm_region("HM_STRENGTH", "PLAIN_BADGE", "RAINBOW_BADGE", region);
 }
 function can_surf(region) {
-	return can_hm_region("HM_SURF", "FOG_BADGE", "SOUL_BADGE", region)
+	return can_hm_region("HM_SURF", "FOG_BADGE", "SOUL_BADGE", region);
 }
 function can_whirlpool(region) {
 	if (can_surf(region)) {
-		return can_hm_region("HM_WHIRLPOOL", "GLACIER_BADGE", "VOLCANO_BADGE", region)
+		return can_hm_region("HM_WHIRLPOOL", "GLACIER_BADGE", "VOLCANO_BADGE", region);
 	}
 }
 function can_waterfall(region) {
 	if (can_surf(region)) {
-		return can_hm_region("HM_WATERFALL", "RISING_BADGE", "EARTH_BADGE", region)
+		return can_hm_region("HM_WATERFALL", "RISING_BADGE", "EARTH_BADGE", region);
+	}
+}
+function can_fly(region) {
+	return can_hm_region("HM_FLY", "STORM_BADGE", "THUNDER_BADGE", region);
+}
+function can_sail() {
+	if (has("ITEM_S_S_TICKET") && getSettingState(johto_only) === 0) {
+		if (getSettingState(ss_aqua_access) === 1) {
+			return has("ITEM_SECRETPOTION");
+		}
+		return "logical";
+	}
+}
+function can_pokedex() {
+	if (has("ITEM_POKEDEX") || getSettingState(randomize_pokedex) === 0) {
+		return "logical";
+	}
+}
+function can_phone() {
+	if (has("ITEM_POKE_GEAR") && has("ITEM_PHONE_CARD")) {
+		return "logical";
+	}
+}
+function can_fly_cheese(region) {
+	const fc = getSettingState(fly_cheese);
+	if (fc === 1) {
+		return false;
+	}
+	if (can_fly(region)) {
+		if (fc === 2) {
+			return "logical";
+		}
+		return "possible";
 	}
 }
 
@@ -113,8 +159,13 @@ function assess_count(req_div, count_div) {
 			return "logical";
 		}
 	}
-	else {
+	else if (req === 1) {
 		if (count_gyms() >= count) {
+			return "logical";
+		}
+	}
+	else {
+		if (count_johto_gyms() >= count) {
 			return "logical";
 		}
 	}
@@ -129,6 +180,28 @@ function saffron_tea(direction) {
 // Region Graph
 const regions = {
 	"New Bark Town": {
+		"Tohjo": function() {
+			return can_waterfall("johto");
+		},
+		"Violet City": function() {
+			if (getSettingState(route_30_access) === 0) {
+				return has("EVENT_VISIT_MR_POKEMON");
+			}
+			if (has("EVENT_RETURN_EGG") || can_cut("johto")) {
+				return "logical";
+			}
+		}
+	},
+	"Violet City": {
+		"New Bark Town": function() {
+			if (getSettingState(route_30_battle) === 0 || can_cut("johto")) {
+				return "logical";
+			}
+			if (getSettingState(route_30_access) === 0) {
+				return has("EVENT_VISIT_MR_POKEMON");
+			}
+			return has("EVENT_RETURN_EGG");
+		},
 		"Azalea Town": function() {
 			const r32 = getSettingState(route_32_condition);
 			if (r32 === 4) {
@@ -160,12 +233,25 @@ const regions = {
 				}
 			}
 		},
-		"Tohjo": function() {
-			return can_waterfall("johto");
-		},
 		"Route 46": function() {
 			if (has("ITEM_TM_ROCK_SMASH")) {
 				return can_flash("johto");
+			}
+		},
+		"Dark Cave Violet": function() {
+			return can_flash("johto");
+		},
+		"Aerodactyl Room": function() {
+			if (can_surf("johto")) {
+				return can_hm_region("HM_FLASH", "ZEPHYR_BADGE", "BOULDER_BADGE", "Johto");
+			}
+		},
+		"Kabuto Room": function() {
+			return has("ITEM_ESCAPE_ROPE");
+		},
+		"Hooh Room": function() {
+			if (has("ITEM_RAINBOW_WING")) {
+				return can_surf("kanto");
 			}
 		}
 	},
@@ -178,6 +264,11 @@ const regions = {
 				return "logical";
 			}
 			return can_cut("johto");
+		},
+		"Omanyte Room": function() {
+			if (has("ITEM_WATER_STONE") && can_surf("johto")) {
+				return can_strength("johto");
+			}
 		}
 	},
 	"Goldenrod City": {
@@ -194,8 +285,15 @@ const regions = {
 			return can_cut("johto");
 		},
 		"Saffron City": function() {
-			if (getSettingState(johto_only) === 0) {
-				return has("ITEM_PASS");
+			if (getSettingState(johto_only) === 0 && has("ITEM_PASS")) {
+				if (getSettingState(magnet_train_access) === 0 || has("EVENT_RESTORED_POWER")) {
+					return "logical";
+				}
+			}
+		},
+		"National Park": function() {
+			if (getSettingState(national_park_access) === 0 || has("ITEM_BICYCLE")) {
+				return "logical";
 			}
 		}
 	},
@@ -209,13 +307,102 @@ const regions = {
 		"Cianwood City": function() {
 			return can_surf("johto");
 		},
+		"Vermilion City": function() {
+			return can_sail();
+		},
+		"Route 42 Center": function() {
+			const r42 = getSettingState(route_42_access);
+			if (r42 === 0) {
+				return can_surf("johto");
+			}
+			if (r42 === 1 || r42 === 3) {
+				return can_whirlpool("johto");
+			}
+		},
+		"Mount Mortar": function() {
+			return "logical";
+		},
+		"Tin Tower": function() {
+			if (has("ITEM_CLEAR_BELL") && has("ITEM_RAINBOW_WING")) {
+				return "logical";
+			}
+		},
+		"Whirl Islands": function() {
+			if (can_whirlpool("johto")) {
+				return can_flash("johto");
+			}
+		}
+	},
+	"Mount Mortar": {
+		"Ecruteak City": function() {
+			return "logical";
+		},
+		"Route 42 Center": function() {
+			if (getSettingState(route_42_access) > 1) {
+				return "logical";
+			}
+		},
+		"Mahogany Town": function() {
+			if (getSettingState(mount_mortar_access) === 0 || has("ITEM_TM_ROCK_SMASH")) {
+				return "logical";
+			}
+		}
+	},
+	"Route 42 Center": {
+		"Ecruteak City": function() {
+			const r42 = getSettingState(route_42_access);
+			if (r42 === 0) {
+				return can_surf("johto");
+			}
+			if (r42 === 1 || r42 === 3) {
+				return can_whirlpool("johto");
+			}
+		},
+		"Mount Mortar": function() {
+			if (getSettingState(route_42_access) > 1) {
+				return "logical";
+			}
+		},
+		"Mahogany Town": function() {
+			const r42 = getSettingState(route_42_access);
+			if (r42 === 0) {
+				return can_surf("johto");
+			}
+			if (r42 === 1 || r42 === 3) {
+				return can_whirlpool("johto");
+			}
+		}
+	},
+	"Mahogany Town": {
+		"Mount Mortar": function() {
+			if (getSettingState(mount_mortar_access) === 0 || has("ITEM_TM_ROCK_SMASH")) {
+				return "logical";
+			}
+		},
+		"Route 42 Center": function() {
+			const r42 = getSettingState(route_42_access);
+			if (r42 === 0) {
+				return can_surf("johto");
+			}
+			if (r42 === 1 || r42 === 3) {
+				return can_whirlpool("johto");
+			}
+		},
 		"Route 44": function() {
 			return assess_count(route_44_access_requirement, route_44_access_count);
 		},
-		"Vermilion City": function() {
-			if (getSettingState(johto_only) === 0) {
-				return has("ITEM_S_S_TICKET");
+		"Gyarados": function() {
+			const gyar = getSettingState(red_gyarados_access);
+			if (gyar === 0) {
+				return can_surf("johto");
 			}
+			if (gyar === 1) {
+				return can_whirlpool("johto");
+			}
+			return "logical";
+		},
+		"Rocket Hideout": function() {
+			return has("EVENT_AGREED_TO_ASSIST_LANCE");
 		}
 	},
 	"Cianwood City": {
@@ -224,17 +411,17 @@ const regions = {
 		}
 	},
 	"Route 44": {
-		"Ecruteak City": function() {
-			return "logical";
+		"Mahogany Town": function() {
+			if (assess_count(route_44_access_requirement, route_44_access_count)) {
+				return "logical";
+			}
+			return can_fly_cheese("johto");
 		},
 		"Blackthorn City": function() {
 			return can_strength("johto");
 		}
 	},
 	"Blackthorn City": {
-		"Ecruteak City": function() {
-			return "logical";
-		},
 		"New Bark Town": function() {
 			return "logical";
 		},
@@ -243,6 +430,19 @@ const regions = {
 		},
 		"Route 46": function() {
 			return "logical";
+		},
+		"Dragons Den": function() {
+			if (can_surf("johto") && has("EVENT_CLEARED_RADIO_TOWER")) {
+				if (getSettingState(vanilla_clair) === 1) {
+					return can_strength("johto");
+				}
+				return has("EVENT_DEFEAT_CLAIR_GYM");
+			}
+		},
+		"Dark Cave Blackthorn": function() {
+			if (can_surf("johto")) {
+				return can_flash("johto");
+			}
 		}
 	},
 	"Route 46": {
@@ -253,6 +453,20 @@ const regions = {
 	"Tohjo": {
 		"New Bark Town": function() {
 			return can_waterfall("johto");
+		},
+		"Victory Road": function() {
+			return assess_count(elite_four_requirement, elite_four_count);
+		}
+	},
+	"Victory Road": {
+		"Elite Four": function() {
+			if (getSettingState(victory_road_access) === 0) {
+				return "logical";
+			}
+			return can_strength("johto");
+		},
+		"Tohjo": function() {
+			return "logical";
 		},
 		"Viridian City": function() {
 			if (getSettingState(johto_only) === 0) {
@@ -277,31 +491,40 @@ const regions = {
 				}
 			}
 		},
-		"Mt Silver": function() {
+		"Mount Silver": function() {
 			const johtoOnly = getSettingState(johto_only);
 			if (johtoOnly === 0 || johtoOnly === 2) {
 				return assess_count(mt_silver_requirement, mt_silver_count);
 			}
-		},
-		"Elite Four": function() {
-			return assess_count(elite_four_requirement, elite_four_count);
 		}
 	},
-	"Mt Silver": {
-		"Tohjo": function() {
+	"Mount Silver": {
+		"Victory Road": function() {
 			return "logical";
+		},
+		"Silver Cave": function() {
+			return can_flash("johto");
 		}
 	},
 	"Elite Four": {
-		"Tohjo": function() {
-			return "logical";
+		"Victory Road": function() {
+			if (getSettingState(victory_road_access) === 0) {
+				return "logical";
+			}
+			return can_strength("johto");
 		}
 	},
 	"Viridian City": {
-		"Tohjo": function() {
+		"Victory Road": function() {
 			return "logical";
 		},
 		"Cinnabar Island": function() {
+			if (getSettingState(south_kanto_access) === 1) {
+				if (getSettingState(south_kanto_condition) === 1) {
+					return has("EVENT_RESTORED_POWER");
+				}
+				return false;
+			}
 			return can_surf("kanto");
 		},
 		"Diglett Cave": function() {
@@ -309,50 +532,77 @@ const regions = {
 				return "logical";
 			}
 			return can_cut("kanto");
+		},
+		"Mount Moon": function() {
+			if (getSettingState(route_3_access) === 0 || has("BOULDER_BADGE")) {
+				return "logical";
+			}
 		}
 	},
 	"Cinnabar Island": {
 		"Viridian City": function() {
+			if (getSettingState(south_kanto_access) === 1) {
+				if (getSettingState(south_kanto_condition) === 1) {
+					return has("EVENT_RESTORED_POWER");
+				}
+			}
 			return can_surf("kanto");
 		},
 		"Fuchsia City": function() {
+			if (getSettingState(south_kanto_access) === 0) {
+				if (getSettingState(south_kanto_condition) === 1) {
+					return has("EVENT_RESTORED_POWER");
+				}
+			}
 			return can_surf("kanto");
 		}
 	},
 	"Fuchsia City": {
 		"Cinnabar Island": function() {
-			// Maybe add a "already been" check?
-			return false;
-		},
-		"Celadon City": function() {
-			if (has("ITEM_BICYCLE")) {
-				return "logical";
-			}
-			if (getSettingState(east_west_underground) === 1) {
-				const power = getSettingState(undergrounds_require_power);
-				if (power === 1 || power === 3) {
-					return "logical";
+			if (getSettingState(south_kanto_access) === 0) {
+				if (getSettingState(south_kanto_condition) === 1) {
+					return has("EVENT_RESTORED_POWER");
 				}
-				return has("EVENT_RESTORED_POWER");
+				return false;
 			}
+			return can_surf("kanto");
 		},
-		"Saffron City": function() {
-			return saffron_tea("east");
+		"Cycling Road": function() {
+			return has("ITEM_BICYCLE");
 		},
 		"Vermilion City": function() {
 			if (has("ITEM_RADIO_CARD") && has("ITEM_EXPN_CARD") && has("ITEM_POKE_GEAR")) {
 				return "logical";
 			}
+			return can_fly_cheese("kanto");
 		},
-		"Route 10": function() {
-			return can_flash("kanto");
-		}
-	},
-	"Celadon City": {
-		"Fuchsia City": function() {
-			if (has("ITEM_BICYCLE")) {
+		"Lavender Town": function() {
+			if (getSettingState(route_12_access) === 0 || has("ITEM_SQUIRTBOTTLE") || can_surf()) {
 				return "logical";
 			}
+		}
+	},
+	"Cycling Road": {
+		"Fuchsia City": function() {
+			return "logical";
+		},
+		"Celadon City": function() {
+			return "logical";
+		}
+	},
+	"Lavender Town": {
+		"Fuchsia City": function() {
+			if (getSettingState(route_12_access) === 0 || has("ITEM_SQUIRTBOTTLE") || can_surf()) {
+				return "logical";
+			}
+		},
+		"Rock Tunnel": function() {
+			return can_flash("kanto");
+		},
+		"Saffron City": function() {
+			return saffron_tea("east");
+		},
+		"Celadon City": function() {
 			if (getSettingState(east_west_underground) === 1) {
 				const power = getSettingState(undergrounds_require_power);
 				if (power === 1 || power === 3) {
@@ -360,9 +610,23 @@ const regions = {
 				}
 				return has("EVENT_RESTORED_POWER");
 			}
+		}
+	},
+	"Celadon City": {
+		"Cycling Road": function() {
+			return has("ITEM_BICYCLE");
 		},
 		"Saffron City": function() {
 			return saffron_tea("west");
+		},
+		"Lavender Town": function() {
+			if (getSettingState(east_west_underground) === 1) {
+				const power = getSettingState(undergrounds_require_power);
+				if (power === 1 || power === 3) {
+					return "logical";
+				}
+				return has("EVENT_RESTORED_POWER");
+			}
 		}
 	},
 	"Saffron City": {
@@ -379,11 +643,13 @@ const regions = {
 			return saffron_tea("west");
 		},
 		"Goldenrod City": function() {
-			return has("ITEM_PASS");
+			if (getSettingState(magnet_train_access) === 0 || has("EVENT_RESTORED_POWER")) {
+				return has("ITEM_PASS");
+			}
 		}
 	},
 	"Vermilion City": {
-		"Cerulean City": function() {
+		"Underground NS": function() {
 			const power = getSettingState(undergrounds_require_power);
 			if (power === 2 || power === 3) {
 				return "logical";
@@ -418,11 +684,24 @@ const regions = {
 		}
 	},
 	"Route 10": {
-		"Fuchsia City": function() {
+		"Rock Tunnel": function() {
 			return can_flash("kanto");
 		},
 		"Cerulean City": function() {
 			return can_cut("kanto");
+		},
+		"Power Plant": function() {
+			if (has("ITEM_MACHINE_PART")) {
+				return can_surf("Kanto");
+			}
+		}
+	},
+	"Rock Tunnel": {
+		"Lavender Town": function() {
+			return "logical";
+		},
+		"Route 10": function() {
+			return "logical";
 		}
 	},
 	"Cerulean City": {
@@ -432,12 +711,23 @@ const regions = {
 		"Saffron City": function() {
 			return saffron_tea("north");
 		},
-		"Vermilion City": function() {
+		"Underground NS": function() {
 			const power = getSettingState(undergrounds_require_power);
 			if (power === 2 || power === 3) {
 				return "logical";
 			}
 			return has("EVENT_RESTORED_POWER");
+		},
+		"Bills House": function() {
+			return can_pokedex();
+		}
+	},
+	"Underground NS": {
+		"Cerulean City": function() {
+			return "logical";
+		},
+		"Vermilion City": function() {
+			return "logical";
 		}
 	}
 };
@@ -481,41 +771,16 @@ function revaluate() {
 	logicalRegions = evaluate_graph_logical();
 	possibleRegions = evaluate_graph_possible();
 }
+let logiclessRegions = [];
 function can_reach(region) {
+	if (!regions[region] && !logiclessRegions.includes(region)) {
+		logiclessRegions.push(region);
+	}
 	if (logicalRegions.includes(region)) {
 		return "logical";
 	}
 	if (possibleRegions.includes(region)) {
 		return "possible"
-	}
-}
-
-// Quick helpers
-function can_tin_tower() {
-	if (has("ITEM_CLEAR_BELL") && has("ITEM_RAINBOW_WING")) {
-		return can_reach("Ecruteak City");
-	}
-}
-function can_rocket_hideout() {
-	if (has("EVENT_AGREED_TO_ASSIST_LANCE")) {
-		return can_reach("Ecruteak City");
-	}
-}
-function can_dragons_den() {
-	if (can_surf("johto")) {
-		if (getSettingState(vanilla_clair) === 1) {
-			if (can_strength("johto")) {
-				return can_reach("Blackthorn City");
-			}
-		}
-		if (has("EVENT_DEFEAT_CLAIR_GYM")) {
-			return can_reach("Blackthorn City");
-		}
-	}
-}
-function can_whirl_islands() {
-	if (can_whirlpool("johto")) {
-		return min(can_flash("johto"), can_reach("Ecruteak City"));
 	}
 }
 
@@ -526,6 +791,11 @@ const locationLogic = {
 	// Cities
 	// ////////////////////
 	// New Bark Town
+	"EVERSTONE_FROM_ELM": function() {
+		if (has("EVENT_GET_EGG")) {
+			return can_reach("New Bark Town");
+		}
+	},
 	"MASTER_BALL_FROM_ELM": function() {
 		if (has("RISING_BADGE")) {
 			return can_reach("New Bark Town");
@@ -539,12 +809,20 @@ const locationLogic = {
 	"POTION_FROM_ELMS_AIDE": function() {
 		return can_reach("New Bark Town");
 	},
+	"EVENT_RETURN_EGG": function() {
+		if (has("ITEM_MYSTERY_EGG")) {
+			return can_reach("New Bark Town");
+		}
+	},
 	"POKE_BALL_FROM_ELMS_AIDE": function() {
 		if (has("ITEM_MYSTERY_EGG")) {
 			return can_reach("New Bark Town");
 		}
 	},
 	"POKEGEAR": function() {
+		return can_reach("New Bark Town");
+	},
+	"PHONE_CARD": function() {
 		return can_reach("New Bark Town");
 	},
 	// Cherrygrove
@@ -558,47 +836,47 @@ const locationLogic = {
 	},
 	// Violet City
 	"SPROUT_TOWER_1F_PARLYZ_HEAL": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	"SPROUT_TOWER_2F_X_ACCURACY": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	"SPROUT_TOWER_3F_ESCAPE_ROPE": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	"SPROUT_TOWER_3F_POTION": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	"HM05_FLASH": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	"FRUITTREE_VIOLET_CITY": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	"VIOLET_CITY_HIDDEN_HYPER_POTION": function() {
-		return min(hidden_logic(), can_reach("New Bark Town"));
+		return min(hidden_logic(), can_reach("Violet City"));
 	},
 	"VIOLET_CITY_PP_UP": function() {
 		if (can_surf("johto")) {
-			return can_reach("New Bark Town");
+			return can_reach("Violet City");
 		}
 	},
 	"VIOLET_CITY_RARE_CANDY": function() {
 		if (can_surf("johto")) {
-			return can_reach("New Bark Town");
+			return can_reach("Violet City");
 		}
 	},
 	"EVENT_DEFEAT_FALKNER": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	"ZEPHYR_BADGE_FROM_FALKNER": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	"TM31_MUD_SLAP": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	"EVENT_GET_EGG": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	// Azalea Town
 	"EVENT_DEFEAT_BUGSY": function() {
@@ -775,6 +1053,11 @@ const locationLogic = {
 			return can_reach("Goldenrod City");
 		}
 	},
+	"REVIVE_FROM_GOLDENROD_POKEMON_CENTER": function() {
+		if (can_reach("Ecruteak City") && can_reach("Route 42 Center") && can_reach("Cianwood City")) {
+			return can_reach("Goldenrod City");
+		}
+	},
 	// Ecruteak City
 	"BURNED_TOWER_1F_HIDDEN_ETHER": function() {
 		return min(hidden_logic(), can_reach("Ecruteak City"));
@@ -811,55 +1094,55 @@ const locationLogic = {
 		return can_reach("Ecruteak City");
 	},
 	"TIN_TOWER_3F_FULL_HEAL": function() {
-		return can_tin_tower();
+		return can_reach("Tin Tower");
 	},
 	"TIN_TOWER_4F_ESCAPE_ROPE": function() {
-		return can_tin_tower();
+		return can_reach("Tin Tower");
 	},
 	"TIN_TOWER_4F_HIDDEN_MAX_POTION": function() {
-		return min(hidden_logic(), can_tin_tower());
+		return min(hidden_logic(), can_reach("Tin Tower"));
 	},
 	"TIN_TOWER_4F_PP_UP": function() {
-		return can_tin_tower();
+		return can_reach("Tin Tower");
 	},
 	"TIN_TOWER_4F_ULTRA_BALL": function() {
-		return can_tin_tower();
+		return can_reach("Tin Tower");
 	},
 	"TIN_TOWER_5F_HIDDEN_CARBOS": function() {
-		return min(hidden_logic(), can_tin_tower());
+		return min(hidden_logic(), can_reach("Tin Tower"));
 	},
 	"TIN_TOWER_5F_HIDDEN_FULL_RESTORE": function() {
-		return min(hidden_logic(), can_tin_tower());
+		return min(hidden_logic(), can_reach("Tin Tower"));
 	},
 	"TIN_TOWER_5F_RARE_CANDY": function() {
-		return can_tin_tower();
+		return can_reach("Tin Tower");
 	},
 	"TIN_TOWER_6F_MAX_POTION": function() {
-		return can_tin_tower();
+		return can_reach("Tin Tower");
 	},
 	"TIN_TOWER_7F_MAX_REVIVE": function() {
-		return can_tin_tower();
+		return can_reach("Tin Tower");
 	},
 	"TIN_TOWER_8F_FULL_RESTORE": function() {
-		return can_tin_tower();
+		return can_reach("Tin Tower");
 	},
 	"TIN_TOWER_8F_MAX_ELIXER": function() {
-		return can_tin_tower();
+		return can_reach("Tin Tower");
 	},
 	"TIN_TOWER_8F_NUGGET": function() {
-		return can_tin_tower();
+		return can_reach("Tin Tower");
 	},
 	"TIN_TOWER_9F_HP_UP": function() {
-		return can_tin_tower();
+		return can_reach("Tin Tower");
 	},
 	"TIN_TOWER_1F_RAINBOW_WING": function() {
 		if (has("EVENT_DEFEAT_LANCE")) {
-			return can_tin_tower();
+			return can_reach("Tin Tower");
 		}
 	},
 	// Olivine City
 	"METAL_COAT_FROM_GRANDPA_ON_SS_AQUA": function() {
-		if (has("ITEM_S_S_TICKET")) {
+		if (can_sail()) {
 			return can_reach("Ecruteak City");
 		}
 	},
@@ -884,6 +1167,11 @@ const locationLogic = {
 			return can_reach("Ecruteak City");
 		}
 	},
+	"PROTEIN_FROM_HUEY": function() {
+		if (can_phone() && has("EVENT_RESTORED_POWER")) {
+			return can_reach("Ecruteak City");
+		}
+	},
 	"OLIVINE_LIGHTHOUSE_3F_ETHER": function() {
 		return can_reach("Ecruteak City");
 	},
@@ -903,7 +1191,7 @@ const locationLogic = {
 		return can_reach("Ecruteak City");
 	},
 	"OLIVINE_PORT_HIDDEN_PROTEIN": function() {
-		if (can_surf("johto") && has("ITEM_S_S_TICKET")) {
+		if (can_surf("johto") && can_sail()) {
 			return min(hidden_logic(), can_reach("Ecruteak City"));
 		}
 	},
@@ -944,57 +1232,57 @@ const locationLogic = {
 	// Mahogany Town
 	"EVENT_DEFEAT_PRYCE": function() {
 		if (has("EVENT_CLEARED_ROCKET_HIDEOUT")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mahogany Town");
 		}
 	},
 	"GLACIER_BADGE_FROM_PRYCE": function() {
 		if (has("EVENT_CLEARED_ROCKET_HIDEOUT")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mahogany Town");
 		}
 	},
 	"TM16_ICY_WIND": function() {
 		if (has("EVENT_CLEARED_ROCKET_HIDEOUT")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mahogany Town");
 		}
 	},
 	"TEAM_ROCKET_BASE_B1F_GUARD_SPEC": function() {
-		return can_rocket_hideout();
+		return can_reach("Rocket Hideout");
 	},
 	"TEAM_ROCKET_BASE_B1F_HIDDEN_REVIVE": function() {
-		return min(hidden_logic(), can_rocket_hideout());
+		return min(hidden_logic(), can_reach("Rocket Hideout"));
 	},
 	"TEAM_ROCKET_BASE_B1F_HYPER_POTION": function() {
-		return can_rocket_hideout();
+		return can_reach("Rocket Hideout");
 	},
 	"TEAM_ROCKET_BASE_B1F_NUGGET": function() {
-		return can_rocket_hideout();
+		return can_reach("Rocket Hideout");
 	},
 	"TEAM_ROCKET_BASE_B2F_HIDDEN_FULL_HEAL": function() {
-		return min(hidden_logic(), can_rocket_hideout());
+		return min(hidden_logic(), can_reach("Rocket Hideout"));
 	},
 	"TEAM_ROCKET_BASE_B2F_TM_THIEF": function() {
-		return can_rocket_hideout();
+		return can_reach("Rocket Hideout");
 	},
 	"HM06_WHIRLPOOL": function() {
-		return can_rocket_hideout();
+		return can_reach("Rocket Hideout");
 	},
 	"EVENT_CLEARED_ROCKET_HIDEOUT": function() {
-		return can_rocket_hideout();
+		return can_reach("Rocket Hideout");
 	},
 	"TEAM_ROCKET_BASE_B3F_FULL_HEAL": function() {
-		return can_rocket_hideout();
+		return can_reach("Rocket Hideout");
 	},
 	"TEAM_ROCKET_BASE_B3F_ICE_HEAL": function() {
-		return can_rocket_hideout();
+		return can_reach("Rocket Hideout");
 	},
 	"TEAM_ROCKET_BASE_B3F_PROTEIN": function() {
-		return can_rocket_hideout();
+		return can_reach("Rocket Hideout");
 	},
 	"TEAM_ROCKET_BASE_B3F_ULTRA_BALL": function() {
-		return can_rocket_hideout();
+		return can_reach("Rocket Hideout");
 	},
 	"TEAM_ROCKET_BASE_B3F_X_SPECIAL": function() {
-		return can_rocket_hideout();
+		return can_reach("Rocket Hideout");
 	},
 	// Blackthorn City
 	"SPELL_TAG_FROM_SANTOS": function() {
@@ -1016,42 +1304,42 @@ const locationLogic = {
 		}
 	},
 	"EVENT_DEFEAT_CLAIR_SHRINE": function() {
-		if (has("EVENT_CLEARED_RADIO_TOWER") && can_strength("johto") && can_whirlpool("johto")) {
-			return can_reach("Blackthorn City");
+		if (can_whirlpool("johto")) {
+			return can_reach("Dragons Den");
 		}
 	},
 	"RISING_BADGE_FROM_CLAIR_SHRINE": function() {
-		if (has("EVENT_CLEARED_RADIO_TOWER") && can_strength("johto") && can_whirlpool("johto")) {
-			return can_reach("Blackthorn City");
+		if (can_whirlpool("johto")) {
+			return can_reach("Dragons Den");
 		}
 	},
 	"TM24_DRAGONBREATH_SHRINE": function() {
-		if (has("EVENT_CLEARED_RADIO_TOWER") && can_strength("johto") && can_whirlpool("johto")) {
-			return can_reach("Blackthorn City");
+		if (can_whirlpool("johto")) {
+			return can_reach("Dragons Den");
 		}
 	},
 	"DRAGONS_DEN_B1F_CALCIUM": function() {
-		return can_dragons_den();
+		return can_reach("Dragons Den");
 	},
 	"DRAGONS_DEN_B1F_HIDDEN_MAX_POTION": function() {
-		return min(hidden_logic(), can_dragons_den());
+		return min(hidden_logic(), can_reach("Dragons Den"));
 	},
 	"DRAGONS_DEN_B1F_MAX_ELIXER": function() {
-		return can_dragons_den();
+		return can_reach("Dragons Den");
 	},
 	"DRAGONS_DEN_B1F_DRAGON_FANG": function() {
 		if (can_whirlpool("johto")) {
-			return can_dragons_den();
+			return can_reach("Dragons Den");
 		}
 	},
 	"DRAGONS_DEN_B1F_HIDDEN_MAX_ELIXER": function() {
 		if (can_whirlpool("johto")) {
-			return min(hidden_logic(), can_dragons_den());
+			return min(hidden_logic(), can_reach("Dragons Den"));
 		}
 	},
 	"DRAGONS_DEN_B1F_HIDDEN_REVIVE": function() {
 		if (can_whirlpool("johto")) {
-			return min(hidden_logic(), can_dragons_den());
+			return min(hidden_logic(), can_reach("Dragons Den"));
 		}
 	},
 
@@ -1065,10 +1353,14 @@ const locationLogic = {
 		}
 	},
 	"EVENT_DEFEAT_BLUE": function() {
-		return can_reach("Cinnabar Island");
+		if (can_reach("Cinnabar Island")) {
+			return can_reach("Viridian City");
+		}
 	},
 	"EARTH_BADGE_FROM_BLUE": function() {
-		return can_reach("Cinnabar Island");
+		if (can_reach("Cinnabar Island")) {
+			return can_reach("Viridian City");
+		}
 	},
 	// Pewter City
 	"SILVER_WING": function() {
@@ -1131,14 +1423,14 @@ const locationLogic = {
 		}
 	},
 	"VERMILION_PORT_HIDDEN_IRON": function() {
-		if (has("ITEM_S_S_TICKET") && can_surf("kanto")) {
+		if (can_sail() && can_surf("kanto")) {
 			return min(hidden_logic(), can_reach("Vermilion City"));
 		}
 	},
 	// Lavender Town
 	"EXPN_CARD": function() {
 		if (has("EVENT_RESTORED_POWER")) {
-			return can_reach("Fuchsia City");
+			return can_reach("Lavender Town");
 		}
 	},
 	// Celadon City
@@ -1252,21 +1544,15 @@ const locationLogic = {
 	// 3
 	"MOUNT_MOON_SQUARE_HIDDEN_MOON_STONE": function() {
 		if (has("ITEM_TM_ROCK_SMASH")) {
-			if (getSettingState(route_3_access) === 0 || has("BOULDER_BADGE")) {
-				return min(hidden_logic(), can_reach("Viridian City"))
-			}
+			return min(hidden_logic(), can_reach("Mount Moon"));
 		}
 	},
 	// 4
 	"ROUTE_4_HIDDEN_ULTRA_BALL": function() {
-		if (getSettingState(route_3_access) === 0 || has("BOULDER_BADGE")) {
-			return min(hidden_logic(), can_reach("Viridian City"))
-		}
+		return min(hidden_logic(), can_reach("Mount Moon"));
 	},
 	"ROUTE_4_HP_UP": function() {
-		if (getSettingState(route_3_access) === 0 || has("BOULDER_BADGE")) {
-			return can_reach("Viridian City");
-		}
+		return can_reach("Mount Moon");
 	},
 	// 5
 	"CLEANSE_TAG": function() {
@@ -1274,26 +1560,14 @@ const locationLogic = {
 	},
 	// 6
 	"UNDERGROUND_PATH_HIDDEN_FULL_RESTORE": function() {
-		if (can_reach("Vermilion City")) {
-			const power = getSettingState(undergrounds_require_power);
-			if (power === 2 || power === 3) {
-				return hidden_logic();
-			}
-			return min(hidden_logic(), has("EVENT_RESTORED_POWER"));
-		}
+		return min(hidden_logic(), can_reach("Underground NS"));
 	},
 	"UNDERGROUND_PATH_HIDDEN_X_SPECIAL": function() {
-		if (can_reach("Vermilion City")) {
-			const power = getSettingState(undergrounds_require_power);
-			if (power === 2 || power === 3) {
-				return hidden_logic();
-			}
-			return min(hidden_logic(), has("EVENT_RESTORED_POWER"));
-		}
+		return min(hidden_logic(), can_reach("Underground NS"));
 	},
 	// 8
 	"FRUITTREE_ROUTE_8": function() {
-		return can_reach("Fuchsia City");
+		return can_reach("Lavender Town");
 	},
 	// 9
 	"ROUTE_9_HIDDEN_ETHER": function() {
@@ -1301,44 +1575,34 @@ const locationLogic = {
 	},
 	// 10
 	"TM07_ZAP_CANNON": function() {
-		if (has("ITEM_MACHINE_PART") && can_surf("kanto")) {
-			return can_reach("Route 10");
-		}
+		return can_reach("Power Plant");
 	},
 	"EVENT_RESTORED_POWER": function() {
-		if (has("ITEM_MACHINE_PART") && can_surf("kanto")) {
-			return can_reach("Route 10");
-		}
+		return can_reach("Power Plant");
 	},
 	"ROCK_TUNNEL_1F_ELIXER": function() {
-		return min(can_flash("kanto"), can_reach("Route 10"));
+		return can_reach("Rock Tunnel");
 	},
 	"ROCK_TUNNEL_1F_HIDDEN_X_ACCURACY": function() {
-		if (can_reach("Route 10")) {
-			return min(hidden_logic(), can_flash("kanto"));
-		}
+		return min(hidden_logic(), can_reach("Rock Tunnel"));
 	},
 	"ROCK_TUNNEL_1F_HIDDEN_X_DEFEND": function() {
-		if (can_reach("Route 10")) {
-			return min(hidden_logic(), can_flash("kanto"));
-		}
+		return min(hidden_logic(), can_reach("Rock Tunnel"));
 	},
 	"ROCK_TUNNEL_1F_TM_STEEL_WING": function() {
-		return min(can_flash("kanto"), can_reach("Route 10"));
+		return can_reach("Rock Tunnel");
 	},
 	"ROCK_TUNNEL_B1F_HIDDEN_MAX_POTION": function() {
-		if (can_reach("Route 10")) {
-			return min(hidden_logic(), can_flash("kanto"));
-		}
+		return min(hidden_logic(), can_reach("Rock Tunnel"));
 	},
 	"ROCK_TUNNEL_B1F_IRON": function() {
-		return min(can_flash("kanto"), can_reach("Route 10"));
+		return can_reach("Rock Tunnel");
 	},
 	"ROCK_TUNNEL_B1F_PP_UP": function() {
-		return min(can_flash("kanto"), can_reach("Route 10"));
+		return can_reach("Rock Tunnel");
 	},
 	"ROCK_TUNNEL_B1F_REVIVE": function() {
-		return min(can_flash("kanto"), can_reach("Route 10"));
+		return can_reach("Rock Tunnel");
 	},
 	// 11
 	"DIGLETTS_CAVE_HIDDEN_MAX_REVIVE": function() {
@@ -1381,14 +1645,10 @@ const locationLogic = {
 	},
 	// 17
 	"ROUTE_17_HIDDEN_MAX_ELIXER": function() {
-		if (has("ITEM_BICYCLE")) {
-			return min(hidden_logic(), can_reach("Fuchsia City"));
-		}
+		return min(hidden_logic(), can_reach("Cycling Road"));
 	},
 	"ROUTE_17_HIDDEN_MAX_ETHER": function() {
-		if (has("ITEM_BICYCLE")) {
-			return min(hidden_logic(), can_reach("Fuchsia City"));
-		}
+		return min(hidden_logic(), can_reach("Fuchsia City"));
 	},
 	// 20
 	"EVENT_DEFEAT_BLAINE": function() {
@@ -1399,25 +1659,25 @@ const locationLogic = {
 	},
 	// 23
 	"VICTORY_ROAD_FULL_HEAL": function() {
-		return can_reach("Elite Four");
+		return can_reach("Victory Road");
 	},
 	"VICTORY_ROAD_FULL_RESTORE": function() {
-		return can_reach("Elite Four");
+		return can_reach("Victory Road");
 	},
 	"VICTORY_ROAD_HIDDEN_FULL_HEAL": function() {
-		return min(hidden_logic(), can_reach("Elite Four"));
+		return min(hidden_logic(), can_reach("Victory Road"));
 	},
 	"VICTORY_ROAD_HIDDEN_MAX_POTION": function() {
-		return min(hidden_logic(), can_reach("Elite Four"));
+		return min(hidden_logic(), can_reach("Victory Road"));
 	},
 	"VICTORY_ROAD_HP_UP": function() {
-		return can_reach("Elite Four");
+		return can_reach("Victory Road");
 	},
 	"VICTORY_ROAD_MAX_REVIVE": function() {
-		return can_reach("Elite Four");
+		return can_reach("Victory Road");
 	},
 	"VICTORY_ROAD_TM_EARTHQUAKE": function() {
-		return can_reach("Elite Four");
+		return can_reach("Victory Road");
 	},
 	// 25
 	"ROUTE_25_HIDDEN_POTION": function() {
@@ -1430,6 +1690,21 @@ const locationLogic = {
 	},
 	"CLEARED_NUGGET_BRIDGE": function() {
 		return can_reach("Cerulean City");
+	},
+	"EVERSTONE_FROM_BILLS_GRANDPA": function() {
+		return can_reach("Bills House");
+	},
+	"FIRE_STONE_FROM_BILLS_GRANDPA": function() {
+		return can_reach("Bills House");
+	},
+	"LEAF_STONE_FROM_BILLS_GRANDPA": function() {
+		return can_reach("Bills House");
+	},
+	"THUNDERSTONE_FROM_BILLS_GRANDPA": function() {
+		return can_reach("Bills House");
+	},
+	"WATER_STONE_FROM_BILLS_GRANDPA": function() {
+		return can_reach("Bills House");
 	},
 	// JOHTO //
 	// 26
@@ -1450,6 +1725,11 @@ const locationLogic = {
 			return can_reach("Tohjo");
 		}
 	},
+	"STAR_PIECE_FROM_BIRD_KEEPER_JOSE": function() {
+		if (can_whirlpool("johto") && can_phone()) {
+			return can_reach("Tohjo");
+		}
+	},
 	"TM37_SANDSTORM": function() {
 		if (can_surf("johto")) {
 			return can_reach("Tohjo");
@@ -1463,72 +1743,68 @@ const locationLogic = {
 	// 28
 	"ROUTE_28_HIDDEN_RARE_CANDY": function() {
 		if (can_cut("johto")) {
-			return min(hidden_logic(), can_reach("Mt Silver"));
+			return min(hidden_logic(), can_reach("Mount Silver"));
 		}
 	},
 	"TM47_STEEL_WING": function() {
 		if (can_cut("johto")) {
-			return can_reach("Mt Silver");
+			return can_reach("Mount Silver");
 		}
 	},
 	"SILVER_CAVE_OUTSIDE_HIDDEN_FULL_RESTORE": function() {
 		if (can_surf("johto")) {
-			return min(hidden_logic(), can_reach("Mt Silver"));
+			return min(hidden_logic(), can_reach("Mount Silver"));
 		}
 	},
 	"SILVER_CAVE_ITEM_ROOMS_FULL_RESTORE": function() {
 		if (can_waterfall("johto")) {
-			return min(can_flash("johto"), can_reach("Mt Silver"));
+			return can_reach("Silver Cave");
 		}
 	},
 	"SILVER_CAVE_ITEM_ROOMS_MAX_REVIVE": function() {
 		if (can_waterfall("johto")) {
-			return min(can_flash("johto"), can_reach("Mt Silver"));
+			return can_reach("Silver Cave");
 		}
 	},
 	"SILVER_CAVE_ROOM_1_ESCAPE_ROPE": function() {
 		if (can_waterfall("johto")) {
-			return min(can_flash("johto"), can_reach("Mt Silver"));
+			return can_reach("Silver Cave");
 		}
 	},
 	"SILVER_CAVE_ROOM_1_HIDDEN_DIRE_HIT": function() {
-		if (can_reach("Mt Silver")) {
-			return min(hidden_logic(), can_flash("johto"));
-		}
+		return min(hidden_logic(), can_reach("Silver Cave"));
 	},
 	"SILVER_CAVE_ROOM_1_HIDDEN_ULTRA_BALL": function() {
-		if (can_reach("Mt Silver")) {
-			return min(hidden_logic(), can_flash("johto"));
-		}
+		return min(hidden_logic(), can_reach("Silver Cave"));
 	},
 	"SILVER_CAVE_ROOM_1_MAX_ELIXER": function() {
-		return min(can_flash("johto"), can_reach("Mt Silver"));
+		return can_reach("Silver Cave");
 	},
 	"SILVER_CAVE_ROOM_1_PROTEIN": function() {
-		return min(can_flash("johto"), can_reach("Mt Silver"));
+		return can_reach("Silver Cave");
 	},
 	"SILVER_CAVE_ROOM_1_ULTRA_BALL": function() {
-		return min(can_flash("johto"), can_reach("Mt Silver"));
+		return can_reach("Silver Cave");
 	},
 	"SILVER_CAVE_ROOM_2_CALCIUM": function() {
 		if (can_waterfall("johto")) {
-			return min(can_flash("johto"), can_reach("Mt Silver"));
+			return can_reach("Silver Cave");
 		}
 	},
 	"SILVER_CAVE_ROOM_2_HIDDEN_MAX_POTION": function() {
-		return min(can_flash("johto"), can_reach("Mt Silver"));
+		return can_reach("Silver Cave");
 	},
 	"SILVER_CAVE_ROOM_2_PP_UP": function() {
 		if (can_waterfall("johto")) {
-			return min(can_flash("johto"), can_reach("Mt Silver"));
+			return can_reach("Silver Cave");
 		}
 	},
 	"SILVER_CAVE_ROOM_2_ULTRA_BALL": function() {
-		return min(can_flash("johto"), can_reach("Mt Silver"));
+		return can_reach("Silver Cave");
 	},
 	"EVENT_DEFEAT_RED": function() {
 		if (assess_count(red_requirement, red_count)) {
-			return min(can_flash("johto"), can_reach("Mt Silver"));
+			return can_reach("Silver Cave");
 		}
 	},
 	// 29
@@ -1544,7 +1820,13 @@ const locationLogic = {
 		return can_reach("New Bark Town");
 	},
 	// 30
+	"EVENT_VISIT_MR_POKEMON": function() {
+		return can_reach("New Bark Town");
+	},
 	"MYSTERY_EGG": function() {
+		return can_reach("New Bark Town");
+	},
+	"POKEDEX": function() {
 		return can_reach("New Bark Town");
 	},
 	"EXP_SHARE": function() {
@@ -1567,44 +1849,54 @@ const locationLogic = {
 	"ROUTE_30_ANTIDOTE": function() {
 		return can_reach("New Bark Town");
 	},
+	"HP_UP_FROM_JOEY": function() {
+		if (can_phone() && has("EVENT_DEFEAT_LANCE")) {
+			return can_reach("New Bark Town");
+		}
+	},
 	// 31
 	"DARK_CAVE_VIOLET_ENTRANCE_DIRE_HIT": function() {
 		if (has("ITEM_TM_ROCK_SMASH")) {
-			return min(can_flash("johto"), can_reach("New Bark Town"));
+			return can_reach("Dark Cave Violet");
 		}
 	},
 	"DARK_CAVE_VIOLET_ENTRANCE_FULL_HEAL": function() {
 		if (has("ITEM_TM_ROCK_SMASH")) {
-			return min(can_flash("johto"), can_reach("New Bark Town"));
+			return can_reach("Dark Cave Violet");
 		}
 	},
 	"DARK_CAVE_VIOLET_ENTRANCE_HIDDEN_ELIXER": function() {
-		if (has("ITEM_TM_ROCK_SMASH") && can_reach("New Bark Town")) {
-			return min(hidden_logic(), can_flash("johto"));
+		if (has("ITEM_TM_ROCK_SMASH")) {
+			return min(hidden_logic(), can_reach("Dark Cave Violet"));
 		}
 	},
 	"DARK_CAVE_VIOLET_ENTRANCE_HYPER_POTION": function() {
 		if (has("ITEM_TM_ROCK_SMASH")) {
-			return min(can_flash("johto"), can_reach("New Bark Town"));
+			return can_reach("Dark Cave Violet");
 		}
 	},
 	"DARK_CAVE_VIOLET_ENTRANCE_POTION": function() {
-		return min(can_flash("johto"), can_reach("New Bark Town"));
+		return can_reach("Dark Cave Violet");
 	},
 	"ROUTE_31_POKE_BALL": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
+	},
+	"BERRY_FROM_BUG_CATCHER_WADE": function() {
+		if (can_phone()) {
+			return can_reach("Violet City");
+		}
 	},
 	"ROUTE_31_POTION": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	"TM50_NIGHTMARE": function() {
-		return min(can_reach("Goldenrod City"), can_reach("New Bark Town"));
+		return min(can_reach("Goldenrod City"), can_reach("Violet City"));
 	},
 	"EVENT_DELIVERED_KENYA": function() {
-		return min(can_reach("Goldenrod City"), can_reach("New Bark Town"));
+		return min(can_reach("Goldenrod City"), can_reach("Violet City"));
 	},
 	"FRUITTREE_ROUTE_31": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	// 32
 	"ROUTE_32_GREAT_BALL": function() {
@@ -1623,7 +1915,7 @@ const locationLogic = {
 	},
 	"MIRACLE_SEED_IN_ROUTE_32": function() {
 		if (has("ZEPHYR_BADGE")) {
-			return can_reach("New Bark Town");
+			return can_reach("Violet City");
 		}
 	},
 	"OLD_ROD": function() {
@@ -1717,25 +2009,45 @@ const locationLogic = {
 			return min(hidden_logic(), can_reach("Goldenrod City"));
 		}
 	},
+	"LEAF_STONE_FROM_GINA": function() {
+		if (can_phone() && has("EVENT_CLEARED_RADIO_TOWER")) {
+			return can_reach("Goldenrod City");
+		}
+	},
 	// 35
 	"NATIONAL_PARK_HIDDEN_FULL_HEAL": function() {
-		if (getSettingState(national_park_access) === 0 || has("ITEM_BICYCLE")) {
-			return min(hidden_logic(), can_reach("Goldenrod City"));
-		}
+		return min(hidden_logic(), can_reach("National Park"));
 	},
 	"NATIONAL_PARK_PARLYZ_HEAL": function() {
-		if (getSettingState(national_park_access) === 0 || has("ITEM_BICYCLE")) {
-			return can_reach("Goldenrod City");
-		}
+		return can_reach("National Park");
 	},
 	"NATIONAL_PARK_TM_DIG": function() {
-		if (getSettingState(national_park_access) === 0 || has("ITEM_BICYCLE")) {
-			return can_reach("Goldenrod City");
-		}
+		return can_reach("National Park");
+	},
+	"CONTEST_FIRST_PLACE": function() {
+		return can_reach("National Park");
+	},
+	"CONTEST_SECOND_PLACE": function() {
+		return can_reach("National Park");
+	},
+	"CONTEST_THIRD_PLACE": function() {
+		return can_reach("National Park");
+	},
+	"CONTEST_SECOND_THIRD_PLACE": function() {
+		return can_reach("National Park");
+	},
+	"CONTEST_FOURTH_PLACE": function() {
+		return can_reach("National Park");
+	},
+	"CONTEST_PARTICIPATION_PRIZE": function() {
+		return can_reach("National Park");
 	},
 	"QUICK_CLAW": function() {
-		if (getSettingState(national_park_access) === 0 || has("ITEM_BICYCLE")) {
-			return can_reach("Goldenrod City");
+		return can_reach("National Park");
+	},
+	"NUGGET_FROM_BEVERLY": function() {
+		if (can_phone() && can_pokedex()) {
+			return can_reach("National Park");
 		}
 	},
 	"ROUTE_35_TM_ROLLOUT": function() {
@@ -1754,94 +2066,62 @@ const locationLogic = {
 	// 36
 	"TM08_ROCK_SMASH": function() {
 		if (has("ITEM_SQUIRTBOTTLE")) {
-			return can_reach("New Bark Town");
+			return can_reach("Violet City");
 		}
 	},
 	"HARD_STONE_FROM_ARTHUR": function() {
-		return can_reach("New Bark Town");
+		return can_reach("Violet City");
 	},
 	"FRUITTREE_ROUTE_36": function() {
 		return can_reach("Goldenrod City");
 	},
 	"PICKED_UP_ENERGY_ROOT_FROM_AERODACTYL_ITEM_ROOM": function() {
-		if (can_surf("johto") && can_flash("johto")) {
-			return can_reach("New Bark Town");
-		}
+		return can_reach("Aerodactyl Room");
 	},
 	"PICKED_UP_GOLD_BERRY_FROM_AERODACTYL_ITEM_ROOM": function() {
-		if (can_surf("johto") && can_flash("johto")) {
-			return can_reach("New Bark Town");
-		}
+		return can_reach("Aerodactyl Room");
 	},
 	"PICKED_UP_HEAL_POWDER_FROM_AERODACTYL_ITEM_ROOM": function() {
-		if (can_surf("johto") && can_flash("johto")) {
-			return can_reach("New Bark Town");
-		}
+		return can_reach("Aerodactyl Room");
 	},
 	"PICKED_UP_MOON_STONE_FROM_AERODACTYL_ITEM_ROOM": function() {
-		if (can_surf("johto") && can_flash("johto")) {
-			return can_reach("New Bark Town");
-		}
+		return can_reach("Aerodactyl Room");
 	},
 	"PICKED_UP_BERRY_FROM_KABUTO_ITEM_ROOM": function() {
-		if (has("ITEM_ESCAPE_ROPE")) {
-			return can_reach("New Bark Town");
-		}
+		return can_reach("Kabuto Room");
 	},
 	"PICKED_UP_ENERGYPOWDER_FROM_KABUTO_ITEM_ROOM": function() {
-		if (has("ITEM_ESCAPE_ROPE")) {
-			return can_reach("New Bark Town");
-		}
+		return can_reach("Kabuto Room");
 	},
 	"PICKED_UP_HEAL_POWDER_FROM_KABUTO_ITEM_ROOM": function() {
-		if (has("ITEM_ESCAPE_ROPE")) {
-			return can_reach("New Bark Town");
-		}
+		return can_reach("Kabuto Room");
 	},
 	"PICKED_UP_PSNCUREBERRY_FROM_KABUTO_ITEM_ROOM": function() {
-		if (has("ITEM_ESCAPE_ROPE")) {
-			return can_reach("New Bark Town");
-		}
+		return can_reach("Kabuto Room");
 	},
 	"PICKED_UP_MYSTERYBERRY_FROM_OMANYTE_ITEM_ROOM": function() {
-		if (can_surf("kanto") && can_strength("kanto") && has("ITEM_WATER_STONE")) {
-			return can_reach("Azalea Town");
-		}
+		return can_reach("Omanyte Room");
 	},
 	"PICKED_UP_MYSTIC_WATER_FROM_OMANYTE_ITEM_ROOM": function() {
-		if (can_surf("kanto") && can_strength("kanto") && has("ITEM_WATER_STONE")) {
-			return can_reach("Azalea Town");
-		}
+		return can_reach("Omanyte Room");
 	},
 	"PICKED_UP_STAR_PIECE_FROM_OMANYTE_ITEM_ROOM": function() {
-		if (can_surf("kanto") && can_strength("kanto") && has("ITEM_WATER_STONE")) {
-			return can_reach("Azalea Town");
-		}
+		return can_reach("Omanyte Room");
 	},
 	"PICKED_UP_STARDUST_FROM_OMANYTE_ITEM_ROOM": function() {
-		if (can_surf("kanto") && can_strength("kanto") && has("ITEM_WATER_STONE")) {
-			return can_reach("Azalea Town");
-		}
+		return can_reach("Omanyte Room");
 	},
 	"PICKED_UP_GOLD_BERRY_FROM_HO_OH_ITEM_ROOM": function() {
-		if (can_surf("kanto") && has("ITEM_RAINBOW_WING")) {
-			return can_reach("New Bark Town");
-		}
+		return can_reach("Hooh Room");
 	},
 	"PICKED_UP_MYSTERYBERRY_FROM_HO_OH_ITEM_ROOM": function() {
-		if (can_surf("kanto") && has("ITEM_RAINBOW_WING")) {
-			return can_reach("New Bark Town");
-		}
+		return can_reach("Hooh Room");
 	},
 	"PICKED_UP_REVIVAL_HERB_FROM_HO_OH_ITEM_ROOM": function() {
-		if (can_surf("kanto") && has("ITEM_RAINBOW_WING")) {
-			return can_reach("New Bark Town");
-		}
+		return can_reach("Hooh Room");
 	},
 	"PICKED_UP_CHARCOAL_FROM_HO_OH_ITEM_ROOM": function() {
-		if (can_surf("kanto") && has("ITEM_RAINBOW_WING")) {
-			return can_reach("New Bark Town");
-		}
+		return can_reach("Hooh Room");
 	},
 	// 37
 	"ROUTE_37_HIDDEN_ETHER": function() {
@@ -1863,6 +2143,11 @@ const locationLogic = {
 	"FRUITTREE_ROUTE_38": function() {
 		return can_reach("Ecruteak City");
 	},
+	"THUNDERSTONE_FROM_DANA": function() {
+		if (can_phone()) {
+			return can_reach("Ecruteak City");
+		}
+	},
 	// 39
 	"ROUTE_39_HIDDEN_NUGGET": function() {
 		return min(hidden_logic(), can_reach("Ecruteak City"));
@@ -1873,6 +2158,14 @@ const locationLogic = {
 	"TM13_SNORE_FROM_MOOMOO_FARM": function() {
 		return can_reach("Ecruteak City");
 	},
+	"MOOMOO_MILK_FROM_MOOMOO_FARM": function() {
+		return can_reach("Ecruteak City");
+	},
+	"NUGGET_FROM_DEREK": function() {
+		if (can_phone() && can_pokedex()) {
+			return can_reach("Ecruteak City");
+		}
+	},
 	// 40
 	"SHARP_BEAK_FROM_MONICA": function() {
 		return can_reach("Ecruteak City");
@@ -1882,43 +2175,43 @@ const locationLogic = {
 	},
 	// 41
 	"WHIRL_ISLAND_B1F_CALCIUM": function() {
-		return can_whirl_islands();
+		return can_reach("Whirl Islands");
 	},
 	"WHIRL_ISLAND_B1F_CARBOS": function() {
-		return can_whirl_islands();
+		return can_reach("Whirl Islands");
 	},
 	"WHIRL_ISLAND_B1F_ESCAPE_ROPE": function() {
-		return can_whirl_islands();
+		return can_reach("Whirl Islands");
 	},
 	"WHIRL_ISLAND_B1F_FULL_RESTORE": function() {
-		return can_whirl_islands();
+		return can_reach("Whirl Islands");
 	},
 	"WHIRL_ISLAND_B1F_HIDDEN_FULL_RESTORE": function() {
-		return min(hidden_logic(), can_whirl_islands());
+		return min(hidden_logic(), can_reach("Whirl Islands"));
 	},
 	"WHIRL_ISLAND_B1F_HIDDEN_RARE_CANDY": function() {
-		return min(hidden_logic(), can_whirl_islands());
+		return min(hidden_logic(), can_reach("Whirl Islands"));
 	},
 	"WHIRL_ISLAND_B1F_HIDDEN_ULTRA_BALL": function() {
-		return min(hidden_logic(), can_whirl_islands());
+		return min(hidden_logic(), can_reach("Whirl Islands"));
 	},
 	"WHIRL_ISLAND_B1F_NUGGET": function() {
-		return can_whirl_islands();
+		return can_reach("Whirl Islands");
 	},
 	"WHIRL_ISLAND_B2F_FULL_RESTORE": function() {
-		return can_whirl_islands();
+		return can_reach("Whirl Islands");
 	},
 	"WHIRL_ISLAND_B2F_MAX_ELIXER": function() {
-		return can_whirl_islands();
+		return can_reach("Whirl Islands");
 	},
 	"WHIRL_ISLAND_B2F_MAX_REVIVE": function() {
-		return can_whirl_islands();
+		return can_reach("Whirl Islands");
 	},
 	"WHIRL_ISLAND_NE_ULTRA_BALL": function() {
-		return can_whirl_islands();
+		return can_reach("Whirl Islands");
 	},
 	"WHIRL_ISLAND_SW_ULTRA_BALL": function() {
-		return can_whirl_islands();
+		return can_reach("Whirl Islands");
 	},
 	"ROUTE_41_HIDDEN_MAX_ETHER": function() {
 		if (can_whirlpool("johto")) {
@@ -1928,199 +2221,206 @@ const locationLogic = {
 	// 42
 	"MOUNT_MORTAR_1F_INSIDE_ESCAPE_ROPE": function() {
 		if (can_strength("johto") && can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_1F_INSIDE_HYPER_POTION": function() {
 		if (can_strength("johto") && can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_1F_INSIDE_NUGGET": function() {
 		if (can_strength("johto") && can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_1F_INSIDE_ULTRA_BALL": function() {
 		if (can_strength("johto") && can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_1F_INSIDE_IRON": function() {
 		if (can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_1F_INSIDE_MAX_POTION": function() {
 		if (can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_1F_INSIDE_MAX_REVIVE": function() {
 		if (can_strength("johto") && can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_1F_INSIDE_HIDDEN_MAX_REPEL": function() {
 		if (can_waterfall("johto")) {
-			return min(hidden_logic(), can_reach("Ecruteak City"));
+			return min(hidden_logic(), can_reach("Mount Mortar"));
 		}
 	},
 	"MOUNT_MORTAR_1F_OUTSIDE_HIDDEN_HYPER_POTION": function() {
-		return min(hidden_logic(), can_reach("Ecruteak City"));
+		return min(hidden_logic(), can_reach("Mount Mortar"));
 	},
 	"MOUNT_MORTAR_1F_OUTSIDE_ETHER": function() {
-		return can_reach("Ecruteak City");
+		return can_reach("Mount Mortar");
 	},
 	"MOUNT_MORTAR_1F_OUTSIDE_REVIVE": function() {
-		return can_reach("Ecruteak City");
+		return can_reach("Mount Mortar");
 	},
 	"MOUNT_MORTAR_2F_INSIDE_DRAGON_SCALE": function() {
 		if (can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_2F_INSIDE_ELIXER": function() {
 		if (can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_2F_INSIDE_ESCAPE_ROPE": function() {
 		if (can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_2F_INSIDE_MAX_POTION": function() {
 		if (can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_2F_INSIDE_RARE_CANDY": function() {
 		if (can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_2F_INSIDE_TM_DEFENSE_CURL": function() {
 		if (can_waterfall("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_2F_INSIDE_HIDDEN_FULL_RESTORE": function() {
 		if (can_waterfall("johto")) {
-			return min(hidden_logic(), can_reach("Ecruteak City"));
+			return min(hidden_logic(), can_reach("Mount Mortar"));
 		}
 	},
 	"MOUNT_MORTAR_B1F_CARBOS": function() {
 		if (can_surf("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_B1F_FULL_RESTORE": function() {
 		if (can_surf("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_B1F_HYPER_POTION": function() {
 		if (can_surf("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_B1F_MAX_ETHER": function() {
 		if (can_surf("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_B1F_PP_UP": function() {
 		if (can_surf("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mount Mortar");
 		}
 	},
 	"MOUNT_MORTAR_B1F_HIDDEN_MAX_REVIVE": function() {
 		if (can_surf("johto")) {
-			return min(hidden_logic(), can_reach("Ecruteak City"));
+			return min(hidden_logic(), can_reach("Mount Mortar"));
 		}
 	},
 	"ROUTE_42_HIDDEN_MAX_POTION": function() {
 		if (can_surf("johto")) {
-			return min(hidden_logic(), can_reach("Ecruteak City"));
+			return min(hidden_logic(), can_reach("Mahogany Town"));
 		}
 	},
 	"ROUTE_42_ULTRA_BALL": function() {
 		return can_reach("Ecruteak City");
 	},
 	"ROUTE_42_SUPER_POTION": function() {
-		if (can_surf("johto")) {
-			return can_reach("Ecruteak City");
-		}
+		return can_reach("Route 42 Center");
 	},
 	"FRUITTREE_ROUTE_42_1": function() {
-		if (can_surf("johto") && can_cut("johto")) {
-			return can_reach("Ecruteak City");
+		if (can_cut("johto")) {
+			return can_reach("Route 42 Center");
 		}
 	},
 	"FRUITTREE_ROUTE_42_2": function() {
-		if (can_surf("johto") && can_cut("johto")) {
-			return can_reach("Ecruteak City");
+		if (can_cut("johto")) {
+			return can_reach("Route 42 Center");
 		}
 	},
 	"FRUITTREE_ROUTE_42_3": function() {
-		if (can_surf("johto") && can_cut("johto")) {
-			return can_reach("Ecruteak City");
+		if (can_cut("johto")) {
+			return can_reach("Route 42 Center");
 		}
+	},
+	"WATER_STONE_FROM_TULLY": function() {
+		return can_reach("Mahogany Town");
 	},
 	// 43
 	"LAKE_OF_RAGE_HIDDEN_FULL_RESTORE": function() {
-		return min(hidden_logic(), can_reach("Ecruteak City"));
+		return min(hidden_logic(), can_reach("Mahogany Town"));
 	},
 	"LAKE_OF_RAGE_HIDDEN_MAX_POTION": function() {
-		return min(hidden_logic(), can_reach("Ecruteak City"));
+		return min(hidden_logic(), can_reach("Mahogany Town"));
 	},
 	"RED_SCALE": function() {
-		if (can_whirlpool("johto") || (getSettingState(red_gyarados_access) == 0 && can_surf("johto"))) {
-			return can_reach("Ecruteak City");
-		}
+		return can_reach("Gyarados");
 	},
 	"EVENT_AGREED_TO_ASSIST_LANCE": function() {
-		if (can_whirlpool("johto") || (getSettingState(red_gyarados_access) == 0 && can_surf("johto"))) {
-			return can_reach("Ecruteak City");
-		}
+		return can_reach("Gyarados");
 	},
 	"LAKE_OF_RAGE_TM_DETECT": function() {
 		if (can_cut("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mahogany Town");
 		}
 	},
 	"ROUTE_43_MAX_ETHER": function() {
-		return can_reach("Ecruteak City");
+		return can_reach("Mahogany Town");
 	},
 	"FRUITTREE_ROUTE_43": function() {
 		if (can_surf("johto") && can_cut("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mahogany Town");
 		}
 	},
 	"TM36_SLUDGE_BOMB": function() {
 		if (has("EVENT_CLEARED_ROCKET_HIDEOUT")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mahogany Town");
 		}
 	},
 	"BLACKBELT_FROM_WESLEY": function() {
 		if (can_cut("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mahogany Town");
 		}
 	},
 	"LAKE_OF_RAGE_HIDDEN_RARE_CANDY": function() {
 		if (can_cut("johto")) {
-			return min(hidden_logic(), can_reach("Ecruteak City"));
+			return min(hidden_logic(), can_reach("Mahogany Town"));
 		}
 	},
 	"TM10_HIDDEN_POWER": function() {
 		if (can_cut("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mahogany Town");
 		}
 	},
 	"LAKE_OF_RAGE_ELIXER": function() {
 		if (can_cut("johto")) {
-			return can_reach("Ecruteak City");
+			return can_reach("Mahogany Town");
+		}
+	},
+	"LAKE_OF_RAGE_MAGIKARP_PRIZE": function() {
+		if (can_pokedex()) {
+			return can_reach("Mahogany Town");
+		}
+	},
+	"PINK_BOW_FROM_TIFFANY": function() {
+		if (can_phone() && can_pokedex()) {
+			return can_reach("Mahogany Town");
 		}
 	},
 	// 44
@@ -2176,26 +2476,28 @@ const locationLogic = {
 			return min(hidden_logic(), can_reach("Route 44"));
 		}
 	},
+	"CARBOS_FROM_VANCE": function() {
+		if (can_phone() && has("EVENT_RESTORED_POWER")) {
+			return can_reach("Route 44");
+		}
+	},
+	"POKE_BALL_FROM_WILTON": function() {
+		if (can_phone()) {
+			return can_reach("Route 44");
+		}
+	},
 	// 45
 	"DARK_CAVE_BLACKTHORN_ENTRANCE_REVIVE": function() {
-		if (can_surf("johto")) {
-			return min(can_flash("johto"), can_reach("Blackthorn City"));
-		}
+		return can_reach("Dark Cave Blackthorn");
 	},
 	"DARK_CAVE_BLACKTHORN_ENTRANCE_TM_SNORE": function() {
-		if (can_surf("johto")) {
-			return min(can_flash("johto"), can_reach("Blackthorn City"));
-		}
+		return can_reach("Dark Cave Blackthorn");
 	},
 	"BLACKGLASSES_IN_DARK_CAVE": function() {
-		if (can_surf("johto")) {
-			return min(can_flash("johto"), can_reach("Blackthorn City"));
-		}
+		return can_reach("Dark Cave Blackthorn");
 	},
 	"ROUTE_45_HIDDEN_PP_UP": function() {
-		if (can_surf("johto")) {
-			return min(hidden_logic(), can_reach("Blackthorn City"));
-		}
+		return can_reach("Dark Cave Blackthorn");
 	},
 	"FRUITTREE_ROUTE_45": function() {
 		return can_reach("Blackthorn City");
@@ -2212,6 +2514,16 @@ const locationLogic = {
 	"ROUTE_45_REVIVE": function() {
 		return can_reach("Blackthorn City");
 	},
+	"PP_UP_FROM_KENJI": function() {
+		if (can_phone()) {
+			return can_reach("Blackthorn City");
+		}
+	},
+	"IRON_FROM_PARRY": function() {
+		if (can_phone() && has("EVENT_RESTORED_POWER")) {
+			return can_reach("Blackthorn City");
+		}
+	},
 	// 46
 	"ROUTE_46_X_SPEED": function() {
 		return can_reach("Route 46");
@@ -2221,6 +2533,11 @@ const locationLogic = {
 	},
 	"FRUITTREE_ROUTE_46_2": function() {
 		return can_reach("Route 46");
+	},
+	"CALCIUM_FROM_ERIN": function() {
+		if (can_phone() && has("EVENT_RESTORED_POWER")) {
+			return can_reach("Route 46");
+		}
 	},
 	// E4
 	"EVENT_DEFEAT_LANCE": function() {

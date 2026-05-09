@@ -176,14 +176,30 @@ function hideToMatch() {
 	if (getSettingState(randomize_badges) === 0) {
 		shouldHide = shouldHide.concat(locationTags["Badge"]);
 	}
-	if (getSettingState(randomize_pokegear) === 0) {
-		shouldHide = shouldHide.concat(locationTags["Pokegear"]);
-	}
 	if (getSettingState(randomize_hidden_items) === 0) {
 		shouldHide = shouldHide.concat(locationTags["Hidden"]);
 	}
 	if (getSettingState(randomize_berry_trees) === 0) {
 		shouldHide = shouldHide.concat(locationTags["BerryTree"]);
+	}
+	if (getSettingState(randomize_pokemon_requests) === 0) {
+		shouldHide = shouldHide.concat(locationTags["PokemonRequest"]);
+		shouldHide = shouldHide.concat(locationTags["BillsGrandpa"]);
+	}
+	if (getSettingState(randomize_bug_catching_contest) === 0) {
+		shouldHide = shouldHide.concat(locationTags["Contest"]);
+	}
+	else if (getSettingState(randomize_bug_catching_contest) === 1) {
+		shouldHide = shouldHide.concat(locationTags["ContestAllRemoved"]);
+	}
+	else if (getSettingState(randomize_bug_catching_contest) === 2) {
+		shouldHide = shouldHide.concat(locationTags["Contest23Removed"]);
+	}
+	else {
+		shouldHide = shouldHide.concat(locationTags["ContestParticipateRemoved"]);
+	}
+	if (getSettingState(randomize_phone_call_items) === 0) {
+		shouldHide = shouldHide.concat(locationTags["PhoneCalls"]);
 	}
 	for (let sub of document.getElementsByClassName("sub")) {
 		sub.classList.remove("hidden");

@@ -74,6 +74,9 @@
 }
 
 /* Items, Row 4 */
+#ITEM_POKEDEX {
+	background-image: url(./images/items/Pokedex.png);
+}
 #ITEM_BICYCLE {
 	background-image: url(./images/items/Bicycle.png);
 }
@@ -126,6 +129,9 @@
 }
 #ITEM_RADIO_CARD {
 	background-image: url(./images/items/Radio_Card.png);
+}
+#ITEM_PHONE_CARD {
+	background-image: url(./images/items/Phone_Card.png);
 }
 #ITEM_EXPN_CARD {
 	background-image: url(./images/items/Expn_Card.png);
@@ -505,19 +511,19 @@
 	background-image: url(./images/settings/kanto_access_count_16.png);
 }
 #route_32_condition._0 {
-	background-image: url(./images/settings/Route32Guy_1.png);
+	background-image: url(./images/settings/route_32_condition_0.png);
 }
 #route_32_condition._1 {
-	background-image: url(./images/settings/Route32Guy_2.png);
+	background-image: url(./images/settings/route_32_condition_1.png);
 }
 #route_32_condition._2 {
-	background-image: url(./images/settings/Route32Guy_22.png);
+	background-image: url(./images/settings/route_32_condition_2.png);
 }
 #route_32_condition._3 {
-	background-image: url(./images/settings/Route32Guy_3.png);
+	background-image: url(./images/settings/route_32_condition_3.png);
 }
 #route_32_condition._4 {
-	background-image: url(./images/settings/Route32Guy_0.png);
+	background-image: url(./images/settings/route_32_condition_4.png);
 }
 #route_2_access._0 {
 	background-image: url(./images/settings/route_2_access_0.png);
@@ -532,13 +538,16 @@
 	background-image: url(./images/settings/r3_0.png);
 }
 #route_3_access._1 {
-	background-image: url(./images/settings/r3_3.png);
+	background-image: url(./images/settings/r3_1.png);
 }
 #red_gyarados_access._0 {
 	background-image: url(./images/settings/red_gyarados_access_0.png);
 }
 #red_gyarados_access._1 {
 	background-image: url(./images/settings/red_gyarados_access_1.png);
+}
+#red_gyarados_access._2 {
+	background-image: url(./images/settings/red_gyarados_access_2.png);
 }
 #blackthorn_dark_cave_access._0 {
 	background-image: url(./images/settings/blackthorn_dark_cave_access_0.png);
@@ -650,4 +659,122 @@
 }
 #hm_badge_requirements._3 {
 	background-image: url(./images/settings/hm_badge_requirements_3.png);
+}
+
+#victory_road_access._0 {
+	background-image: url(./images/settings/victory_road_access_0.png);
+}
+#victory_road_access._1 {
+	background-image: url(./images/settings/victory_road_access_1.png);
+}
+#route_42_access._0 {
+	background-image: url(./images/settings/route_42_access_0.png);
+}
+#route_42_access._1 {
+	background-image: url(./images/settings/route_42_access_1.png);
+}
+#route_42_access._2 {
+	background-image: url(./images/settings/route_42_access_2.png);
+}
+#route_42_access._3 {
+	background-image: url(./images/settings/route_42_access_3.png);
+}
+#mount_mortar_access._0 {
+	background-image: url(./images/settings/mount_mortar_access_0.png);
+}
+#mount_mortar_access._1 {
+	background-image: url(./images/settings/mount_mortar_access_1.png);
+}
+#route_12_access._0 {
+	background-image: url(./images/settings/route_12_access_0.png);
+}
+#route_12_access._1 {
+	background-image: url(./images/settings/route_12_access_1.png);
+}
+#magnet_train_access._0 {
+	background-image: url(./images/settings/magnet_train_access_0.png);
+}
+#magnet_train_access._1 {
+	background-image: url(./images/settings/magnet_train_access_1.png);
+}
+#ss_aqua_access._0 {
+	background-image: url(./images/settings/ss_aqua_access_0.png);
+}
+#ss_aqua_access._1 {
+	background-image: url(./images/settings/ss_aqua_access_1.png);
+}
+#route_30_access._0 {
+	background-image: url(./images/settings/route_30_access_0.png);
+}
+#route_30_access._1 {
+	background-image: url(./images/settings/route_30_access_1.png);
+}
+#route_30_battle._0 {
+	background-image: url(./images/settings/route_30_battle_0.png);
+}
+#route_30_battle._1 {
+	background-image: url(./images/settings/route_30_battle_1.png);
+}
+#south_kanto_access._0 {
+	background-image: url(./images/settings/south_kanto_access_0.png);
+}
+#south_kanto_access._1 {
+	background-image: url(./images/settings/south_kanto_access_1.png);
+}
+#south_kanto_access._2 {
+	background-image: url(./images/settings/south_kanto_access_2.png);
+}
+#south_kanto_condition._0 {
+	background-image: url(./images/settings/south_kanto_condition_0.png);
+}
+#south_kanto_condition._1 {
+	background-image: url(./images/settings/south_kanto_condition_1.png);
+}
+#randomize_pokedex._0 {
+	background-image: url(./images/settings/randomize_pokedex_0.png);
+}
+#randomize_pokedex._1 {
+	background-image: url(./images/settings/randomize_pokedex_1.png);
+}
+#randomize_pokemon_requests._0 {
+	background-image: url(./images/settings/randomize_pokemon_requests_0.png);
+}
+#randomize_pokemon_requests._1 {
+	background-image: url(./images/settings/randomize_pokemon_requests_1.png);
+}
+#randomize_phone_call_items._0 {
+	background-image: url(./images/settings/randomize_phone_call_items_0.png);
+}
+#randomize_phone_call_items._1 {
+	background-image: url(./images/settings/randomize_phone_call_items_1.png);
+}
+#randomize_bug_catching_contest._0 {
+	background-image: url(./images/settings/randomize_bug_catching_contest_0.png);
+}
+#randomize_bug_catching_contest._1 {
+	background-image: url(./images/settings/randomize_bug_catching_contest_1.png);
+}
+#randomize_bug_catching_contest._2 {
+	background-image: url(./images/settings/randomize_bug_catching_contest_2.png);
+}
+#randomize_bug_catching_contest._3 {
+	background-image: url(./images/settings/randomize_bug_catching_contest_3.png);
+}
+#require_flash._0 {
+	background-image: url(./images/settings/require_flash_0.png);
+}
+#require_flash._1 {
+	background-image: url(./images/settings/require_flash_1.png);
+}
+#require_flash._2 {
+	background-image: url(./images/settings/require_flash_2.png);
+}
+#fly_cheese._0 {
+	background-image: url(./images/settings/fly_cheese_0.png);
+}
+#fly_cheese._1 {
+	background-image: url(./images/settings/fly_cheese_1.png);
+}
+#fly_cheese._2 {
+	background-image: url(./images/settings/fly_cheese_2.png);
 }

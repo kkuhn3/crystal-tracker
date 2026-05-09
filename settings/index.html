@@ -30,13 +30,25 @@
 	<div class="header">
 		Randomizer Settings
 	</div>
+
+	<!-- ################ -->
+	<!-- # Game Options # -->
+	<!-- ################ -->
 	<div>
 		<label>Goal</label>
 		<select id="goal">
 			<option value="" selected>Elite Four</option>
 			<option value="1">Red</option>
+			<option value="1">Diploma</option>
+			<option value="1">Rival</option>
+			<option value="1">Defeat Team Rocket</option>
+			<option value="1">Unown Hunt</option>
 		</select>
 	</div>
+
+	<!-- ####### -->
+	<!-- # Map # -->
+	<!-- ####### -->
 	<div>
 		<label>Johto Only</label>
 		<select id="johto_only">
@@ -45,11 +57,16 @@
 			<option value="2">Johto and Mt. Silver</option>
 		</select>
 	</div>
+
+	<!-- ############## -->
+	<!-- # Roadblocks # -->
+	<!-- ############## -->
 	<div>
 		<label>Elite Four Requirement</label>
 		<select id="elite_four_requirement">
 			<option value="0">Badges</option>
 			<option value="" selected>Gyms</option>
+			<option value="2">Johto Badges</option>
 		</select>
 	</div>
 	<div>
@@ -222,6 +239,13 @@
 		</select>
 	</div>
 	<div>
+		<label>Victory Road Access</label>
+		<select id="victory_road_access">
+			<option value="" selected>Vanilla</option>
+			<option value="1">Strength</option>
+		</select>
+	</div>
+	<div>
 		<label>Route 32 Condition</label>
 		<select id="route_32_condition">
 			<option value="" selected>Egg from Elm's Aide</option>
@@ -234,7 +258,7 @@
 	<div>
 		<label>Route 2 Access</label>
 		<select id="route_2_access">
-			<option value="" selected>Vanilla (cut)</option>
+			<option value="" selected>Vanilla (Cut)</option>
 			<option value="1">Ledge</option>
 			<option value="2">Open</option>
 		</select>
@@ -242,63 +266,80 @@
 	<div>
 		<label>Route 3 Access</label>
 		<select id="route_3_access">
-			<option value="" selected>Vanilla (open)</option>
+			<option value="" selected>Vanilla (Open)</option>
 			<option value="1">Boulder Badge</option>
+		</select>
+	</div>
+	<div>
+		<label>Route 42 Access</label>
+		<select id="route_42_access">
+			<option value="" selected>Vanilla (Surf)</option>
+			<option value="1">Whirlpool</option>
+			<option value="2">Blocked (Open Mortar)</option>
+			<option value="3">Whirlpool and Open Mortar</option>
+		</select>
+	</div>
+	<div>
+		<label>Mount Mortar Acess</label>
+		<select id="mount_mortar_access">
+			<option value="" selected>Vanilla (Open)</option>
+			<option value="1">Rock Smash</option>
 		</select>
 	</div>
 	<div>
 		<label>Red Gyarados Access</label>
 		<select id="red_gyarados_access">
-			<option value="" selected>Vanilla (surf)</option>
+			<option value="" selected>Vanilla (Surf)</option>
 			<option value="1">Whirlpool</option>
+			<option value="2">Shore</option>
 		</select>
 	</div>
 	<div>
 		<label>Blackthorn Dark Cave Access</label>
 		<select id="blackthorn_dark_cave_access">
-			<option value="" selected>Vanilla (impossible)</option>
+			<option value="" selected>Vanilla (Impossible)</option>
 			<option value="1">Waterfall</option>
 		</select>
 	</div>
 	<div>
 		<label>National Park Access</label>
 		<select id="national_park_access">
-			<option value="" selected>Vanilla (open)</option>
+			<option value="" selected>Vanilla (Open)</option>
 			<option value="1">Bicycle</option>
 		</select>
 	</div>
 	<div>
 		<label>Saffron Gatehouse Tea - North</label>
 		<select id="saffron_gatehouse_tea_north">
-			<option value="" selected>Vanilla (open)</option>
+			<option value="" selected>Vanilla (Open)</option>
 			<option value="1">Tea</option>
 		</select>
 	</div>
 	<div>
 		<label>Saffron Gatehouse Tea - East</label>
 		<select id="saffron_gatehouse_tea_east">
-			<option value="" selected>Vanilla (open)</option>
+			<option value="" selected>Vanilla (Open)</option>
 			<option value="1">Tea</option>
 		</select>
 	</div>
 	<div>
 		<label>Saffron Gatehouse Tea - South</label>
 		<select id="saffron_gatehouse_tea_south">
-			<option value="" selected>Vanilla (open)</option>
+			<option value="" selected>Vanilla (Open)</option>
 			<option value="1">Tea</option>
 		</select>
 	</div>
 	<div>
 		<label>Saffron Gatehouse Tea - West</label>
 		<select id="saffron_gatehouse_tea_west">
-			<option value="" selected>Vanilla (open)</option>
+			<option value="" selected>Vanilla (Open)</option>
 			<option value="1">Tea</option>
 		</select>
 	</div>
 	<div>
 		<label>Remove Ilex Cut Tree</label>
 		<select id="remove_ilex_cut_tree">
-			<option value="" selected>Vanilla (cut)</option>
+			<option value="" selected>Vanilla (Cut)</option>
 			<option value="1">Removed</option>
 		</select>
 	</div>
@@ -314,7 +355,7 @@
 	<div>
 		<label>East West Underground</label>
 		<select id="east_west_underground">
-			<option value="" selected>Vanilla (none)</option>
+			<option value="" selected>Vanilla (None)</option>
 			<option value="1">Exists</option>
 		</select>
 	</div>
@@ -326,6 +367,60 @@
 		</select>
 	</div>
 	<div>
+		<label>Route 12 Access</label>
+		<select id="route_12_access">
+			<option value="" selected>Vanilla (Open)</option>
+			<option value="1">Weird Tree (Squirtbottle)</option>
+		</select>
+	</div>
+	<div>
+		<label>Magnet Train Access</label>
+		<select id="magnet_train_access">
+			<option value="" selected>Pass</option>
+			<option value="1">Pass and Restore Power</option>
+		</select>
+	</div>
+	<div>
+		<label>S.S. Aqua Access</label>
+		<select id="ss_aqua_access">
+			<option value="" selected>S.S. Ticket</option>
+			<option value="1">S.S. Ticket and Lighthouse</option>
+		</select>
+	</div>
+	<div>
+		<label>Route 30 Access</label>
+		<select id="route_30_access">
+			<option value="" selected>Mr. Pokemon</option>
+			<option value="1">Mystery Egg</option>
+		</select>
+	</div>
+	<div>
+		<label>Route 30 Battle</label>
+		<select id="route_30_battle">
+			<option value="" selected>Blocks North bound</option>
+			<option value="1">Blocks North and South Bound</option>
+		</select>
+	</div>
+	<div>
+		<label>South Kanto Access</label>
+		<select id="south_kanto_access">
+			<option value="" selected>Route 19</option>
+			<option value="1">Route 21</option>
+			<option value="2">Neither</option>
+		</select>
+	</div>
+	<div>
+		<label>South Kanto Condition</label>
+		<select id="south_kanto_condition">
+			<option value="" selected>Enter South Kanto</option>
+			<option value="1">Restore Power</option>
+		</select>
+	</div>
+
+	<!-- ######### -->
+	<!-- # Items # -->
+	<!-- ######### -->
+	<div>
 		<label>Randomize Badges</label>
 		<select id="randomize_badges">
 			<option value="0">Vanilla</option>
@@ -333,13 +428,14 @@
 			<option value="" selected>Randomized</option>
 		</select>
 	</div>
+	<!-- even when not randomized, the location and item are still in the pool 
 	<div>
 		<label>Randomize Pokegear</label>
 		<select id="randomize_pokegear">
 			<option value="0">Vanilla</option>
 			<option value="" selected>Randomized</option>
 		</select>
-	</div>
+	</div> -->
 	<div>
 		<label>Randomize Hidden Items</label>
 		<select id="randomize_hidden_items">
@@ -354,6 +450,41 @@
 			<option value="" selected>Randomized</option>
 		</select>
 	</div>
+	<!-- start with and randomizer are effectively the same -->
+	<div> 
+		<label>Randomize Pokedex</label>
+		<select id="randomize_pokedex">
+			<option value="0">Vanilla</option>
+			<option value="">Start With</option>
+			<option value="" selected>Randomize</option>
+		</select>
+	</div>
+	<div>
+		<label>Randomize Pokemon Requests</label>
+		<select id="randomize_pokemon_requests">
+			<option value="" selected>Off</option>
+			<option value="1">Items</option>
+			<option value="">Pokemon</option>
+			<option value="1">Items and Pokemon</option>
+		</select>
+	</div>
+	<div>
+		<label>Randomize Bug Catching Contest</label>
+		<select id="randomize_bug_catching_contest">
+			<option value="" selected>Off</option>
+			<option value="1">Randomized First, Second, Third, and Fourth</option>
+			<option value="2">Combine Second and Third</option>
+			<option value="3">Participate</option>
+		</select>
+	</div>
+	<div>
+		<label>Randomize Phone Call Items</label>
+		<select id="randomize_phone_call_items">
+			<option value="" selected>Off</option>
+			<option value="1">On</option>
+			<option value="1">On Simplified</option>
+		</select>
+	</div>
 	<div>
 		<label>Require Itemfinder</label>
 		<select id="require_itemfinder">
@@ -362,6 +493,10 @@
 			<option value="2">Hard Required</option>
 		</select>
 	</div>
+
+	<!-- ####### -->
+	<!-- # HMs # -->
+	<!-- ####### -->
 	<div>
 		<label>HM Badge Requirements</label>
 		<select id="hm_badge_requirements">
@@ -369,6 +504,22 @@
 			<option value="1">No Badges</option>
 			<option value="2">Add Kanto</option>
 			<option value="3">Regional/option>
+		</select>
+	</div>
+	<div>
+		<label>Require Flash</label>
+		<select id="require_flash">
+			<option value="0">Not Required</option>
+			<option value="" selected>Logically Required</option>
+			<option value="2">Hard Required</option>
+		</select>
+	</div>
+	<div>
+		<label>Fly Cheese</label>
+		<select id="fly_cheese">
+			<option value="" selected>Out of Logic</option>
+			<option value="1">Disallow</option>
+			<option value="2">In Logic</option>
 		</select>
 	</div>
 

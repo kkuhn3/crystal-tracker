@@ -14,7 +14,9 @@
 	<body>
 		<div id="leftCol">
 			<div id="settings">
-				<img class="setting _1" id="elite_four_requirement" onclick="settingLogic(this, 1)">
+				<!-- Row 1 -->
+				<img class="setting _0" id="goal" onclick="settingHide(this, 1)">
+				<img class="setting _1" id="elite_four_requirement" onclick="settingLogic(this, 2)">
 				<img class="setting _8" id="elite_four_count" onclick="settingLogic(this, 16)">
 				<img class="setting _1" id="red_requirement" onclick="settingLogic(this, 1)">
 				<img class="setting _16" id="red_count" onclick="settingLogic(this, 16)">
@@ -25,32 +27,52 @@
 				<img class="setting _1" id="route_44_access_requirement" onclick="settingLogic(this, 1)">
 				<img class="setting _7" id="route_44_access_count" onclick="settingLogic(this, 16)">
 				<img class="setting _0" id="kanto_access_requirement" onclick="settingLogic(this, 3)">
+
+				<!-- Row 2 -->
 				<img class="setting _8" id="kanto_access_count" onclick="settingLogic(this, 16)">
-				<img class="setting _0" id="goal" onclick="settingHide(this, 1)">
-				<img class="setting _0" id="johto_only" onclick="settingLogicHide(this, 2)">
+				<img class="setting _0" id="victory_road_access" onclick="settingLogic(this, 1)">
 				<img class="setting _0" id="route_32_condition" onclick="settingLogic(this, 4)">
 				<img class="setting _0" id="route_2_access" onclick="settingLogic(this, 2)">
 				<img class="setting _0" id="route_3_access" onclick="settingLogic(this, 1)">
-				<img class="setting _0" id="red_gyarados_access" onclick="settingLogic(this, 1)">
+				<img class="setting _0" id="route_42_access" onclick="settingLogic(this, 3)">
+				<img class="setting _0" id="mount_mortar_access" onclick="settingLogic(this, 1)">
+				<img class="setting _0" id="red_gyarados_access" onclick="settingLogic(this, 2)">
 				<img class="setting _0" id="blackthorn_dark_cave_access" onclick="settingLogic(this, 1)">
 				<img class="setting _0" id="national_park_access" onclick="settingLogic(this, 1)">
 				<img class="setting _0" id="saffron_gatehouse_tea_north" onclick="settingLogicHide(this, 1)">
 				<img class="setting _0" id="saffron_gatehouse_tea_east" onclick="settingLogicHide(this, 1)">
 				<img class="setting _0" id="saffron_gatehouse_tea_south" onclick="settingLogicHide(this, 1)">
+
+				<!-- Row 3 -->
 				<img class="setting _0" id="saffron_gatehouse_tea_west" onclick="settingLogicHide(this, 1)">
-				<img class="setting smallsetting _0" id="remove_ilex_cut_tree" onclick="settingLogic(this, 1)">
-				<img class="setting smallsetting _0" id="undergrounds_require_power" onclick="settingLogic(this, 3)">
-				<img class="setting smallsetting _0" id="east_west_underground" onclick="settingLogic(this, 1)">
-				<img class="setting smallsetting _1" id="vanilla_clair" onclick="settingLogicHide(this, 1)">
-				<img class="setting smallsetting _1" id="randomize_badges" onclick="settingHide(this, 1)">
-				<img class="setting smallsetting _1" id="randomize_pokegear" onclick="settingHide(this, 1)">
-				<img class="setting smallsetting _0" id="randomize_hidden_items" onclick="settingHide(this, 1)">
-				<img class="setting smallsetting _1" id="randomize_berry_trees" onclick="settingHide(this, 1)">
-				<img class="setting smallsetting _1" id="require_itemfinder" onclick="settingLogic(this, 2)">
-				<img class="setting smallsetting _0" id="hm_badge_requirements" onclick="settingLogic(this, 3)">
-				<div class="setting smallsetting notImageImage" id="CHECK_CHECKED">0</div>
-				<div class="setting smallsetting notImageImage" id="CHECK_LOGICAL">50</div>
-				<div class="setting smallsetting notImageImage" id="CHECK_TOTAL">300</div>
+				<img class="setting _0" id="johto_only" onclick="settingLogicHide(this, 2)">
+				<img class="setting _0" id="remove_ilex_cut_tree" onclick="settingLogic(this, 1)">
+				<img class="setting _0" id="undergrounds_require_power" onclick="settingLogic(this, 3)">
+				<img class="setting _0" id="east_west_underground" onclick="settingLogic(this, 1)">
+				<img class="setting _1" id="vanilla_clair" onclick="settingLogicHide(this, 1)">
+				<img class="setting _0" id="route_12_access" onclick="settingLogic(this, 1)">
+				<img class="setting _0" id="magnet_train_access" onclick="settingLogic(this, 1)">
+				<img class="setting _0" id="ss_aqua_access" onclick="settingLogic(this, 1)">
+				<img class="setting _0" id="route_30_access" onclick="settingLogic(this, 1)">
+				<img class="setting _0" id="route_30_battle" onclick="settingLogic(this, 1)">
+				<img class="setting _0" id="south_kanto_access" onclick="settingLogic(this, 2)">
+				<img class="setting _0" id="south_kanto_condition" onclick="settingLogic(this, 1)">
+				<img class="setting _1" id="randomize_badges" onclick="settingHide(this, 1)">
+
+				<!-- Row 4 -->
+				<img class="setting _0" id="randomize_hidden_items" onclick="settingHide(this, 1)">
+				<img class="setting _1" id="randomize_berry_trees" onclick="settingHide(this, 1)">
+				<img class="setting _1" id="randomize_pokedex" onclick="settingLogicHide(this, 1)">
+				<img class="setting _0" id="randomize_pokemon_requests" onclick="settingHide(this, 1)">
+				<img class="setting _0" id="randomize_bug_catching_contest" onclick="settingHide(this, 3)">
+				<img class="setting _0" id="randomize_phone_call_items" onclick="settingHide(this, 1)">
+				<img class="setting _1" id="require_itemfinder" onclick="settingLogic(this, 2)">
+				<img class="setting _0" id="hm_badge_requirements" onclick="settingLogic(this, 3)">
+				<img class="setting _1" id="require_flash" onclick="settingLogic(this, 2)">
+				<img class="setting _0" id="fly_cheese" onclick="settingLogic(this, 2)">
+				<div class="setting notImageImage" id="CHECK_CHECKED">0</div>
+				<div class="setting notImageImage" id="CHECK_LOGICAL">50</div>
+				<div class="setting notImageImage" id="CHECK_TOTAL">300</div>
 			</div>
 			<div id="items">
 				<img class="item" id="ZEPHYR_BADGE">
@@ -87,16 +109,18 @@
 				<img class="item smallItem" id="ITEM_MYSTERY_EGG">
 				<img class="item smallItem" id="ITEM_CLEAR_BELL">
 				<img class="item smallItem" id="ITEM_CARD_KEY">
-				<img class="item smallerItem" id="ITEM_MACHINE_PART">
+				<img class="item smallItem" id="ITEM_MACHINE_PART">
 				<img class="item smallerItem" id="ITEM_LOST_ITEM">
 				<img class="item smallerItem" id="ITEM_BASEMENT_KEY">
 				<img class="item smallerItem" id="ITEM_PASS">
 				<img class="item smallerItem" id="ITEM_SQUIRTBOTTLE">
 				<img class="item smallerItem" id="ITEM_RAINBOW_WING">
 				<img class="item smallerItem" id="ITEM_RADIO_CARD">
+				<img class="item smallerItem" id="ITEM_PHONE_CARD">
 				<img class="item smallerItem" id="ITEM_EXPN_CARD">
 				<img class="item smallerItem" id="ITEM_POKE_GEAR">
 				<img class="item smallerItem" id="ITEM_TEA">
+				<img class="item smallerItem" id="ITEM_POKEDEX">
 				<img class="item smallerItem" id="ITEM_TM_ROCK_SMASH">
 			</div>
 			<div id="itemHoverDesc">
@@ -115,13 +139,19 @@
 			<!-- JOHTO -->
 			<!--New Bark Town-->
 			<!-- TODO - reorder groups to make more sense as a player -->
+			<!-- 22 "Visit *" locations not included here -->
 			<div class="group" id="elms_lab">
+				<div class="sub" id="EVERSTONE_FROM_ELM"></div>
 				<div class="sub" id="MASTER_BALL_FROM_ELM"></div>
 				<div class="sub" id="SS_TICKET_FROM_ELM"></div>
 				<div class="sub" id="POTION_FROM_ELMS_AIDE"></div>
+				<div class="sub" id="EVENT_RETURN_EGG"></div>
 				<div class="sub" id="POKE_BALL_FROM_ELMS_AIDE"></div>
 			</div>
-			<div class="location" id="POKEGEAR"></div>
+			<div class="group" id="players_house">
+				<div class="sub" id="POKEGEAR"></div>
+				<div class="sub" id="PHONE_CARD"></div>
+			</div>
 			<!--Cherrygrove City-->
 			<div class="location" id="MYSTIC_WATER_IN_CHERRYGROVE"></div>
 			<div class="location" id="MAP_CARD"></div>
@@ -201,7 +231,10 @@
 				<div class="sub" id="CLEAR_BELL"></div>
 				<div class="sub" id="EVENT_CLEARED_RADIO_TOWER"></div>
 			</div>
-			<div class="location" id="GS_BALL_FROM_GOLDENROD_POKEMON_CENTER"></div>
+			<div class="group" id="goldenrod_pokemon_center">
+				<div class="sub" id="GS_BALL_FROM_GOLDENROD_POKEMON_CENTER"></div>
+				<div class="sub" id="REVIVE_FROM_GOLDENROD_POKEMON_CENTER"></div>
+			</div>
 			<!--Ecruteak City-->
 			<div class="group" id="burned_tower">
 				<div class="sub" id="BURNED_TOWER_1F_HIDDEN_ETHER"></div>
@@ -244,6 +277,7 @@
 				<div class="sub" id="TM23_IRON_TAIL"></div>
 			</div>
 			<div class="group" id="olivine_lighthouse">
+				<div class="sub" id="PROTEIN_FROM_HUEY"></div>
 				<div class="sub" id="OLIVINE_LIGHTHOUSE_3F_ETHER"></div>
 				<div class="sub" id="OLIVINE_LIGHTHOUSE_5F_RARE_CANDY"></div>
 				<div class="sub" id="OLIVINE_LIGHTHOUSE_5F_SUPER_REPEL"></div>
@@ -455,14 +489,24 @@
 			<div class="location" id="ROUTE_25_HIDDEN_POTION"></div>
 			<div class="location" id="ROUTE_25_PROTEIN"></div>
 			<div class="location" id="CLEARED_NUGGET_BRIDGE"></div>
+			<div class="group" id="bills_house">
+				<div class="sub" id="EVERSTONE_FROM_BILLS_GRANDPA"></div>
+				<div class="sub" id="FIRE_STONE_FROM_BILLS_GRANDPA"></div>
+				<div class="sub" id="LEAF_STONE_FROM_BILLS_GRANDPA"></div>
+				<div class="sub" id="THUNDERSTONE_FROM_BILLS_GRANDPA"></div>
+				<div class="sub" id="WATER_STONE_FROM_BILLS_GRANDPA"></div>
+			</div>
 			<!--26-->
 			<div class="location" id="ROUTE_26_MAX_ELIXER"></div>
 			<div class="location" id="FRUITTREE_ROUTE_26"></div>
 			<!--27-->
 			<div class="location" id="ROUTE_27_RARE_CANDY"></div>
-			<div class="location" id="ROUTE_27_TM_SOLARBEAM"></div>
 			<div class="location" id="TM37_SANDSTORM"></div>
 			<div class="location" id="TOHJO_FALLS_MOON_STONE"></div>
+			<div class="group" id="route_27_whirlpool">
+				<div class="sub" id="ROUTE_27_TM_SOLARBEAM"></div>
+				<div class="sub" id="STAR_PIECE_FROM_BIRD_KEEPER_JOSE"></div>
+			</div>
 			<!--28-->
 			<div class="location" id="ROUTE_28_HIDDEN_RARE_CANDY"></div>
 			<div class="location" id="TM47_STEEL_WING"></div>
@@ -488,7 +532,9 @@
 			<div class="location" id="FRUITTREE_ROUTE_29"></div>
 			<!--30-->
 			<div class="group" id="mr_pokemons_house">
+				<div class="sub" id="EVENT_VISIT_MR_POKEMON"></div>
 				<div class="sub" id="MYSTERY_EGG"></div>
+				<div class="sub" id="POKEDEX"></div>
 				<div class="sub" id="EXP_SHARE"></div>
 				<div class="sub" id="ROUTE_30_HIDDEN_POTION"></div>
 				<div class="sub" id="FRUITTREE_ROUTE_30_2"></div>
@@ -498,6 +544,7 @@
 				<div class="sub" id="BERRY_FROM_ROUTE_30_HOUSE"></div>
 				<div class="sub" id="ROUTE_30_ANTIDOTE"></div>
 			</div>
+			<div class="location" id="HP_UP_FROM_JOEY"></div>
 			<!--31-->
 			<div class="group" id="dark_cave_violet">
 				<div class="sub" id="DARK_CAVE_VIOLET_ENTRANCE_DIRE_HIT"></div>
@@ -507,6 +554,7 @@
 				<div class="sub" id="DARK_CAVE_VIOLET_ENTRANCE_HIDDEN_ELIXER"></div>
 			</div>
 			<div class="location" id="ROUTE_31_POKE_BALL"></div>
+			<div class="location" id="BERRY_FROM_BUG_CATCHER_WADE"></div>
 			<div class="location" id="ROUTE_31_POTION"></div>
 			<div class="group" id="route_31_south_of_pond">
 				<div class="sub" id="EVENT_DELIVERED_KENYA"></div>
@@ -555,12 +603,20 @@
 				<div class="sub" id="ROUTE_34_NUGGET"></div>
 				<div class="sub" id="ROUTE_34_HIDDEN_RARE_CANDY"></div>
 			</div>
+			<div class="location" id="LEAF_STONE_FROM_GINA"></div>
 			<!--35-->
 			<div class="group" id="national_park">
 				<div class="sub" id="NATIONAL_PARK_PARLYZ_HEAL"></div>
 				<div class="sub" id="NATIONAL_PARK_TM_DIG"></div>
 				<div class="sub" id="QUICK_CLAW"></div>
 				<div class="sub" id="NATIONAL_PARK_HIDDEN_FULL_HEAL"></div>
+				<div class="sub" id="NUGGET_FROM_BEVERLY"></div>
+				<div class="sub" id="CONTEST_FIRST_PLACE"></div>
+				<div class="sub" id="CONTEST_SECOND_PLACE"></div>
+				<div class="sub" id="CONTEST_THIRD_PLACE"></div>
+				<div class="sub" id="CONTEST_SECOND_THIRD_PLACE"></div>
+				<div class="sub" id="CONTEST_FOURTH_PLACE"></div>
+				<div class="sub" id="CONTEST_PARTICIPATION_PRIZE"></div>
 			</div>
 			<div class="location" id="ROUTE_35_TM_ROLLOUT"></div>
 			<div class="location" id="FRUITTREE_ROUTE_35"></div>
@@ -571,6 +627,7 @@
 				<div class="sub" id="HARD_STONE_FROM_ARTHUR"></div>
 			</div>
 			<div class="location" id="FRUITTREE_ROUTE_36"></div>
+			<div class="location" id="FIRE_STONE_FROM_ALAN"></div>
 			<div class="group" id="ruins_of_alph_aerodactyl">
 				<div class="sub" id="PICKED_UP_ENERGY_ROOT_FROM_AERODACTYL_ITEM_ROOM"></div>
 				<div class="sub" id="PICKED_UP_GOLD_BERRY_FROM_AERODACTYL_ITEM_ROOM"></div>
@@ -605,10 +662,15 @@
 			</div>
 			<!--38-->
 			<div class="location" id="FRUITTREE_ROUTE_38"></div>
+			<div class="location" id="THUNDERSTONE_FROM_DANA"></div>
 			<!--39-->
 			<div class="location" id="ROUTE_39_HIDDEN_NUGGET"></div>
 			<div class="location" id="FRUITTREE_ROUTE_39"></div>
-			<div class="location" id="TM13_SNORE_FROM_MOOMOO_FARM"></div>
+			<div class="group" id="moomoo_farm">
+				<div class="sub" id="TM13_SNORE_FROM_MOOMOO_FARM"></div>
+				<div class="sub" id="MOOMOO_MILK_FROM_MOOMOO_FARM"></div>
+			</div>
+			<div class="location" id="NUGGET_FROM_DEREK"></div>
 			<!--40-->
 			<div class="group" id="route_40_beach">
 				<div class="sub" id="SHARP_BEAK_FROM_MONICA"></div>
@@ -666,6 +728,7 @@
 				<div class="sub" id="FRUITTREE_ROUTE_42_2"></div>
 				<div class="sub" id="FRUITTREE_ROUTE_42_3"></div>
 			</div>
+			<div class="location" id="WATER_STONE_FROM_TULLY"></div>
 			<!--43-->
 			<div class="location" id="LAKE_OF_RAGE_HIDDEN_FULL_RESTORE"></div>
 			<div class="location" id="LAKE_OF_RAGE_HIDDEN_MAX_POTION"></div>
@@ -683,6 +746,8 @@
 				<div class="sub" id="TM10_HIDDEN_POWER"></div>
 				<div class="sub" id="LAKE_OF_RAGE_ELIXER"></div>
 			</div>
+			<div class="location" id="LAKE_OF_RAGE_MAGIKARP_PRIZE"></div>
+			<div class="location" id="PINK_BOW_FROM_TIFFANY"></div>
 			<!--44-->
 			<div class="group" id="ice_path">
 				<div class="sub" id="HM07_WATERFALL"></div>
@@ -704,6 +769,8 @@
 				<div class="sub" id="ROUTE_44_MAX_REVIVE"></div>
 				<div class="sub" id="ROUTE_44_HIDDEN_ELIXER"></div>
 			</div>
+			<div class="location" id="CARBOS_FROM_VANCE"></div>
+			<div class="location" id="POKE_BALL_FROM_WILTON"></div>
 			<!--45-->
 			<div class="group" id="dark_cave_blackthorn">
 				<div class="sub" id="DARK_CAVE_BLACKTHORN_ENTRANCE_REVIVE"></div>
@@ -718,12 +785,15 @@
 			<div class="location" id="ROUTE_45_MAX_POTION"></div>
 			<div class="location" id="ROUTE_45_NUGGET"></div>
 			<div class="location" id="ROUTE_45_REVIVE"></div>
+			<div class="location" id="PP_UP_FROM_KENJI"></div>
+			<div class="location" id="IRON_FROM_PARRY"></div>
 			<!--46-->
 			<div class="location" id="ROUTE_46_X_SPEED"></div>
 			<div class="group" id="route_46_berry_trees">
 				<div class="sub" id="FRUITTREE_ROUTE_46_1"></div>
 				<div class="sub" id="FRUITTREE_ROUTE_46_2"></div>
 			</div>
+			<div class="location" id="CALCIUM_FROM_ERIN"></div>
 			<!--E4-->
 			<div class="location" id="EVENT_DEFEAT_LANCE"></div>
 			<!-- The on hover blurb -->

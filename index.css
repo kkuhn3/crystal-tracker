@@ -23,8 +23,8 @@ body {
 }
 /*Settings*/
 .setting {
-	width: calc(20vw/12);
-	height: calc(20vw/12);
+	width: calc(20vw/13);
+	height: calc(20vw/13);
 	background-size: contain;
 	float: left;
 	cursor: pointer;
@@ -33,21 +33,19 @@ body {
 	background-position: center;
 	position: relative;
 }
-.smallsetting {
-	width: calc(20vw/13);
-	height: calc(20vw/13);
-}
 .setting:hover {
 	transform: scale(1.2);
 	transition: 0.2s all ease-out;
 	z-index: 100;
 }
 .notImageImage {
+	width: calc(20vw/13);
+	height: calc(20vw/13);
 	cursor: auto;
 	color: silver;
 	font-size: 1vw;
 	text-align: center;
-	line-height: 1.66666666667vw;
+	line-height: calc(20vw/13);
 	box-shadow: 0 1px 0 0 #d3dfeb inset, 1px 0 0 0 #d3dfeb inset, -1px 0 0 0 #d3dfeb inset, 0 -1px 0 0 #d3dfeb inset;
 }
 .setting.notImageImage:hover {
@@ -81,12 +79,12 @@ body {
 	float: left;
 }
 .smallItem {
-	width: calc(20vw/10);
-	height: calc(20vw/10);
-}
-.smallerItem {
 	width: calc(20vw/11);
 	height: calc(20vw/11);
+}
+.smallerItem {
+	width: calc(20vw/12);
+	height: calc(20vw/12);
 }
 .itemchecked {
 	filter: grayscale(0%);
